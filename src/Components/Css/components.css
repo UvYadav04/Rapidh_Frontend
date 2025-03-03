@@ -1,0 +1,42 @@
+.operationCard:hover {
+    .pop {
+        display: block;
+    }
+}
+
+.operationCard .pop {
+    display: none;
+}
+
+
+.billpop {
+    top: -70px;
+    cursor: none;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.totalbutton:hover:not(.billpop) {
+    .billpop {
+        animation-name: rollup;
+        animation-duration: 0.5s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+}
+
+.billpop:hover {
+    animation: none;
+}
+
+@keyframes rollup {
+    0% {
+        left: -100px;
+        opacity: 0;
+    }
+
+    100% {
+        left: 0;
+        opacity: 1;
+    }
+}

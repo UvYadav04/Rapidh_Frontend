@@ -1,0 +1,14 @@
+.landingpage::after {
+    content: "";
+    background-image: url('../../../Images/Landipagebg//dummy2.jpg');
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: inherit;
+    z-index: -1;
+    opacity: 0.5;
+    filter: contrast(1) brightness(1) saturate(40%);
+}
