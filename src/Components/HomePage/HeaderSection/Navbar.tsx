@@ -1,12 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, AppStore, RootState } from '../../../../lib/Store';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/ContextProvider/LoginContext';
 import { LogOut } from '../../../../lib/redux/actions/user';
+import Sidebar from './Sidebar';
 
 function Navbar() {
     const router = useRouter();
@@ -16,8 +17,9 @@ function Navbar() {
     // console.log(profile)
 
     return (
-        <div className=" flex justify-center w-full bg-[#EDF6F9] items-center mt-2 sticky top-0 left-0">
-            <ul className="flex gap-10 text-teal-500 font-semibold text-lg ms-8 flex-1 justify-center">
+        <div className=" flex justify-center md:w-full w-fit bg-[#EDF6F9] items-center lg:mt-2 mt-0  sticky top-0 left-0">
+            <Sidebar />
+            <ul className=" gap-10 md:flex hidden text-teal-500 font-semibold text-lg ms-8 flex-1 justify-center">
                 <MenuItem title="Home" onClick={() => router.push('/')} />
                 <MenuItem title="Hospitals" />
                 <MenuItem title="Consult" />
@@ -35,7 +37,7 @@ function Navbar() {
             </ul>
 
             <button
-                className="text-md text-black rounded-s-full w-fit  bg-teal-500 ps-3 text-2xl py-2 flex items-center gap-2 pe-14"
+                className="text-md md:flex hidden text-black rounded-s-full w-fit  bg-teal-500 ps-3 text-2xl py-2  items-center gap-2 pe-14"
                 onClick={() => {
                     if (profile?.id !== "") {
                         alert('Profile clicked');
@@ -55,7 +57,6 @@ function Navbar() {
     );
 }
 
-// Reusable Menu Item Component
 const MenuItem = ({ title, onClick }: { title: string; onClick?: () => void }) => (
     <li className={`cursor-pointer ${title === "LogOut" ? "text-red-500" : ""}`} onClick={onClick}>
         {title}

@@ -4,7 +4,6 @@ import { hospitalInterface } from '../HospitalSeachPage/HospitalAbout'
 import { useRouter } from 'next/navigation'
 
 function HospitalList({ searchinput, city }: { searchinput: string, city: string }) {
-    console.log(searchinput)
 
     return (
         <div className='w-full flex flex-col bg-slate-200 rounded-md max-h-[200px] overflow-y-scroll' style={{ scrollbarWidth: "none" }}>
