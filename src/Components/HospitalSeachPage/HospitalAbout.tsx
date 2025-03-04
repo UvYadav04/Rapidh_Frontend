@@ -170,14 +170,14 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                     <div className="content">
                         <div className="kind flex gap-5 px-6 w-full justify-center">
                             <button
-                                className={`w-1/3 text-2xl pb-1 mb-[0px]  rounded-md ${selected === 1 ? 'bg-slate-200 text-teal-600  border-0 rounded-ss-md rounded-se-md rounded-none mb-[0px]' : 'bg-teal-400 text-slate-100'
+                                className={`w-1/3 text-2xl pb-1 mb-[0px]  rounded-md ${selected === 1 ? 'bg-slate-200 text-teal-600  border-none rounded-ss-md rounded-se-md rounded-none mb-[0px]' : 'bg-teal-400 text-slate-100'
                                     } border-[1px] border-teal-600`}
                                 onClick={() => setSelected(1)}
                             >
                                 Admit Patient
                             </button>
                             <button
-                                className={`w-1/3 text-2xl pb-1 mb-[0px]  rounded-md ${selected === 2 ? 'bg-slate-200 text-teal-600  border-0 rounded-ss-md rounded-se-md rounded-none mb-[0px]' : 'bg-teal-400 text-slate-100'
+                                className={`w-1/3 text-2xl pb-1 mb-[0px]  rounded-md ${selected === 2 ? 'bg-slate-200 text-teal-600  border-none rounded-ss-md rounded-se-md rounded-none mb-[0px]' : 'bg-teal-400 text-slate-100'
                                     } border-[1px] border-teal-600`}
                                 onClick={() => setSelected(2)}
                             >
