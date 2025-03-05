@@ -51,8 +51,14 @@ function page() {
             <div className="hospitalList w-[90%]  mt-10 relative">
                 <div className="filters flex sticky justify-end gap-5 rounded-md top-0 px-20 focus:outline-none py-4 w-full">
                     <p className='flex-1 text-3xl font-serif'>
-                        Showing result for : {
-                            searchinput.length < 20 ? searchinput : <>{searchinput.slice(0, 20)}...</>
+                        {
+                            searchinput !== "" ? (
+                                <>
+                                    Showing result for : {
+                                        searchinput.length < 20 ? searchinput : <>{searchinput.slice(0, 20)}...</>
+                                    }
+                                </>
+                            ) : null
                         }
                     </p>
 

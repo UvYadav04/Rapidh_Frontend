@@ -16,6 +16,7 @@ import LandingPageForm from '@/Components/HomePage/LandingPage/LandingPageForm'
 import Services from '@/Components/HomePage/ServicesSection/Services'
 import Banner1 from '@/Components/HomePage/Banners/Banner1'
 import Disease from '@/Components/HomePage/DiseaseSection/Disease'
+import SlideShow from '@/Components/HomePage/SlideShow/Carousel'
 const HospitalsColumn = lazy(() => import('@/Components/HomePage/HospitalListSection/HospitalsColumn'))
 const Review = lazy(() => import('@/Components/HomePage/ReviewSection/Review'))
 
@@ -36,13 +37,14 @@ function Page() {
             <Suspense fallback={<LoginLoader />}>
                 <HospitalsColumn />
             </Suspense>
-            <Disease />
+            {/* <Disease />
             <Banner1 />
             <Services />
             <Suspense fallback={<LoginLoader />}>
                 <Review />
             </Suspense>
-            <Footer />
+            <SlideShow />
+            <Footer /> */}
 
         </div>
     )

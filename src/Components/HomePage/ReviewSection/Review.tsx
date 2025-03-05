@@ -36,10 +36,10 @@ function Review() {
                 >
                     <CarouselContent >
                         {reviews.map((item, index) => (
-                            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 bg-transparent place-items-center ">
+                            <CarouselItem key={index} className="w-fit  lg:basis-1/3 sm:basis-1/2 place-items-center ">
                                 <div className="p-1">
                                     <Card>
-                                        <CardContent className="flex aspect-square items-center justify-center p-0 w-fit bg-transparent">
+                                        <CardContent className="flex aspect-square items-center justify-center p-0 w-fit bg-transparent ">
                                             <ReviewCard item={item} />
                                         </CardContent>
                                     </Card>

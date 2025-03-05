@@ -4,23 +4,14 @@ import doctors from '../../../Images/doctors.png'
 import whywe from '../Images/whywe.png'
 function Banner1() {
     return (
-        <div className='w-[90%] flex h-fit  mt-20'>
-            <div className="left w-[50%] text-slate-600 px-20 pt-28 pb-20 ">
-                <h1 className='text-4xl'>Why <span className='text-teal-400 text-6xl'>KareHive?</span></h1>
-                <p className='mt-10'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quaerat facilis quos velit? Atque, sed harum vero placeat quos culpa. Provident reiciendis quidem delectus quas explicabo? Atque ex delectus recusandae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio quaerat magnam unde cumque obcaecati
+        <div className='w-[90%] flex h-fit  xl:mt-10 lg:mt-8 md:mt-6 mt-0 relative '>
+            <div className="left lg:[w-50%] md:w-[50%] review:w-[68%] w-full z-50  text-slate-600 xl:py-24 lg:py-20 md:py-14 review:py-10 py-6   flex place-content-center place-items-start flex-col ">
+                <h1 className='xl:text-4xl lg:text-2xl mx:text-xl'>Why <span className='text-teal-400 xl:text-6xl lg:text-5xl text-4xl'>KareHive?</span></h1>
+                <p className='xl:mt-14 lg:mt-8 md:mt-6 mt-4 md:text-normal text-sm break-all'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quaerat facilis quos velit? Atque, sed harum vero placeat quos culpa. Provident reiciendis quidem delectus quas explicabo? Atque ex delectus recusandae! <span className=''>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio quaerat magnam unde cumque obcaecati</span>
                 </p>
             </div>
-            <div className="right flex-1 relative flex place-content-center place-items-center">
-                {/* <svg width={"100%"} className='z-10 w-full' height={"100%"}>
-                    <path d={`M 0 400 H 680 V 250 Q 500,150 250,330 Q 170,380 0,400`}
-                        stroke="rgb(45,212,191)"
-                        fill="rgb(45,212,191)"
-                        strokeWidth="3" />
-                </svg> */}
-                {/* <Image src={whywe} className='w-full' alt='image' /> */}
-                <Image src={doctors} alt='doctors' className='z-20 w-10/12' />
-                {/* <div className="z-10 opacity-70 vertical h-full w-16 bg-teal-400 absolute"></div>
-                <div className="z-10 opacity-70 horizontal w-full h-16 bg-teal-400 absolute"></div> */}
+            <div className="right flex-1 absolute place-content-center place-items-center review:block hidden top-0  right-0 w-1/2 h-full review:opacity-100 opacity-90">
+                <Image src={doctors} alt='doctors' className='z-20 lg:w-10/12 h-full w-full ' />
             </div>
         </div>
     )

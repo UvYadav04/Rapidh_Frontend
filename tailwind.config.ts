@@ -55,10 +55,16 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
-			},
-			screens: {
-				'nokia': '430px'
 			}
+		},
+		screens: {
+			xs: '480px', // Small devices like phones
+			sm: '640px',
+			md: '768px',
+			lg: '1024px',
+			xl: '1280px',
+			nokia: '500px',
+			review: '650px'
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
