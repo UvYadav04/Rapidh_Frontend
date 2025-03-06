@@ -3,14 +3,17 @@ import { hospitalInterface } from "@/Components/HospitalSeachPage/HospitalAbout"
 export const hospitals: hospitalInterface[] = [
     {
         name: "Artemis Hospital",
-        location: "Sector 51, Gurugram, Haryana-122001",
         city: "gurugram",
+        state: "Haryana",
+        PIN: "122001",
         contact: {
             emergency: "+91- 124 4588 888",
             appointments: "+91- 124 4511 111"
         },
         reviews: "3.2k reviews",
         admissionCharges: 3000,
+        rating: 4.2,  // Added rating
+        image: "/images/artemis_hospital.jpg",  // Added image
         wards: [
             {
                 name: "General Ward",
@@ -69,15 +72,17 @@ export const hospitals: hospitalInterface[] = [
     },
     {
         name: "Max Super Specialty Hospital",
-        location: "Saket, New Delhi",
         city: "delhi",
-
+        state: "Delhi",
+        PIN: "110017",
         contact: {
             emergency: "+91- 11 2641 1111",
             appointments: "+91- 11 2641 1112"
         },
         reviews: "4.5k reviews",
         admissionCharges: 3500,
+        rating: 4.6,  // Added rating
+        image: "/images/max_hospital.jpg",  // Added image
         wards: [
             {
                 name: "General Ward",
@@ -136,15 +141,17 @@ export const hospitals: hospitalInterface[] = [
     },
     {
         name: "Fortis Healthcare",
-        location: "Vasant Kunj, New Delhi",
-        city: "pune",
-
+        city: "Delhi",
+        state: "Delhi",
+        PIN: "110070",
         contact: {
             emergency: "+91- 11 4521 5555",
             appointments: "+91- 11 4521 5556"
         },
         reviews: "5k reviews",
         admissionCharges: 4000,
+        rating: 4.8,  // Added rating
+        image: "/images/fortis_hospital.jpg",  // Added image
         wards: [
             {
                 name: "General Ward",
@@ -177,71 +184,23 @@ export const hospitals: hospitalInterface[] = [
                 name: "Transplant Surgery",
                 operationCharges: 50000,
                 bedCharges: 4000
-            },
-            {
-                name: "Neurosurgery",
-                operationCharges: 20000,
-                bedCharges: 2500
-            },
-            {
-                name: "Dental Surgery",
-                operationCharges: 5000,
-                bedCharges: 800
-            },
-            {
-                name: "Orthopedic Surgery",
-                operationCharges: 12000,
-                bedCharges: 1500
-            },
-            {
-                name: "Plastic Surgery",
-                operationCharges: 18000,
-                bedCharges: 2200
-            },
-            {
-                name: "Oncological Surgery",
-                operationCharges: 25000,
-                bedCharges: 3000
-            },
-            {
-                name: "Transplant Surgery",
-                operationCharges: 50000,
-                bedCharges: 4000
-            },
-            {
-                name: "Neurosurgery",
-                operationCharges: 20000,
-                bedCharges: 2500
-            },
-            {
-                name: "Dental Surgery",
-                operationCharges: 5000,
-                bedCharges: 800
-            },
-            {
-                name: "Orthopedic Surgery",
-                operationCharges: 12000,
-                bedCharges: 1500
-            },
-            {
-                name: "Plastic Surgery",
-                operationCharges: 18000,
-                bedCharges: 2200
             }
         ],
         about: "Fortis Healthcare is a leading provider of health services in India, offering a wide range of specialty care. The hospital is renowned for its compassionate care, highly skilled doctors, and cutting-edge technology in the medical field."
     },
     {
         name: "Medanta The Medicity",
-        location: "Sector 38, Gurugram, Haryana",
-        city: "bangalore",
-
+        city: "Gurugram",
+        state: "Haryana",
+        PIN: "122001",
         contact: {
             emergency: "+91- 124 414 1414",
             appointments: "+91- 124 414 1415"
         },
         reviews: "4.8k reviews",
         admissionCharges: 2800,
+        rating: 4.7,  // Added rating
+        image: "/images/medanta_hospital.jpg",  // Added image
         wards: [
             {
                 name: "General Ward",
@@ -300,15 +259,17 @@ export const hospitals: hospitalInterface[] = [
     },
     {
         name: "Columbia Asia Hospital",
-        location: "Palam Vihar, Gurgaon",
-        city: "gurugram",
-
+        city: "Gurugram",
+        state: "Haryana",
+        PIN: "122017",
         contact: {
             emergency: "+91- 124 433 4444",
             appointments: "+91- 124 433 4445"
         },
         reviews: "3.5k reviews",
         admissionCharges: 3200,
+        rating: 4.3,  // Added rating
+        image: "/images/columbia_asia_hospital.jpg",  // Added image
         wards: [
             {
                 name: "General Ward",

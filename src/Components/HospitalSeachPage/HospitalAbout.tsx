@@ -26,9 +26,12 @@ export interface WardList {
 }
 
 export interface hospitalInterface {
-    name: string;
-    location: string;
+    name: string,
     city: string,
+    state: string,
+    PIN: string,
+    image: string,
+    rating: number,
     reviews: string;
     admissionCharges: number;
     contact: {
@@ -151,7 +154,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                         <div className="image w-1/4">
                             <Image src={Aretemis} alt="hospital image" />
                         </div>
-                        <div className="About flex flex-col justify-start gap-4 w-3/4 px-2 pt-2">
+                        <div className="About flex flex-col justify-start gap-0 w-3/4 px-2 pt-2">
                             <h1 className="text-4xl text-teal-500 font-semibold flex justify-start items-center gap-5">
                                 {data.name}
                                 {
@@ -160,7 +163,8 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                     </button> : null
                                 }
                             </h1>
-                            <p>{data.about}</p>
+                            <p className='mt-0'>{data.rating} ratings</p>
+                            <p className='mt-2'>{data.about}</p>
                             <h1 className="mt-auto">
                                 <p>Emergency Contact no. - {data.contact.emergency}</p>
                                 <p>For Appointments - {data.contact.appointments}</p>
@@ -491,10 +495,10 @@ function ListCard({ data, setPopup }: { data: hospitalInterface, setPopup: Dispa
                         {data.name.slice(0, 15)}..
                     </h1> */}
                     <h1 onClick={() => setPopup(true)} className='text-xl font-bold cursor-pointer hover:text-teal-500 focus:underline'>{data.name}</h1>
-                    <h1>{data.reviews}</h1>
+                    <h1>{data.rating} ratings</h1>
                 </span>
                 <h1 className="text-sm text-slate-600 mt-2">
-                    <p>{data.location}</p>
+                    <p>{data.city}, {data.state}, {data.PIN}</p>
                     <p>Emergency : {data.contact.emergency}</p>
                     <p>Appointment : {data.contact.appointments}</p>
                 </h1>

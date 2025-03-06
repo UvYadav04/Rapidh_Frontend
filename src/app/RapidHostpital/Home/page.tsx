@@ -37,14 +37,14 @@ function Page() {
             <Suspense fallback={<LoginLoader />}>
                 <HospitalsColumn />
             </Suspense>
-            {/* <Disease />
+            <Disease />
             <Banner1 />
             <Services />
             <Suspense fallback={<LoginLoader />}>
                 <Review />
             </Suspense>
             <SlideShow />
-            <Footer /> */}
+            <Footer />
 
         </div>
     )

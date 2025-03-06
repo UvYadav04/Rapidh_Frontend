@@ -7,21 +7,27 @@ function HospitalCard({ data }: { data: hospitalInterface }) {
     // console.log(data)
     const router = useRouter()
     return (
-        <div className='flex gap-3 border-2  text-black px-4 py-3 min-w-fit'>
+        <div className='flex lg:flex-col flex-row gap-3 border-2  text-black xl:px-4 md:px-2 px-1  lg:py-3 md:py-2 py-1 min-w-fit'>
             <div className="image flex w-fit">
-                <Image src={hospital} width={250} alt='hospital' />
+                <Image src={hospital} className='xl:w-full xl:h-56 lg:w-full lg:h-44 md:w-36 md:h-32 w-28 h-24' alt='hospital' />
             </div>
-            <div className="right flex flex-col place-content-start">
-                <h1 className='text-2xl font-bold  text-teal-400' >{data.name}</h1>
-                <h2 className='text-slate-600'>{data.reviews}</h2>
-                <h1 className='text-sm text-slate-600 mt-2'>
-                    <p>{data.location}</p>
-                    <p>Emergency : {data.contact.emergency}</p>
-                    <p>Appointment : {data.contact.appointments}</p>
-                </h1>
-                <button onClick={() => {
+            <div className="right flex flex-col place-content-start px-2">
+                <h1 className='xl:text-2xl lg:text-xl md:text-lg font-bold flex flex-col  text-teal-400' onClick={() => {
                     router.push(`/RapidHostpital/Hospitals?search=${data.name}`)
-                }} className='bg-teal-500 text-white text-lg w-full rounded-md mt-auto'>Book Now</button>
+                }} >{
+                        data.name.length > 20 ? <>{data.name.slice(0, 20)}...</> : data.name
+                    }
+                    <h2 className='text-slate-600 text-sm'>{data.rating} ratings</h2>
+                </h1>
+                <h1 className='text-sm text-slate-600 '>
+                    <p className='text-slate-600'>{data.city}, {data.state}, {data.PIN}</p>
+                    <p className='md:block hidden  mt-2 text-slate-400'>Emergency : {data.contact.emergency}</p>
+                    <p className='md:block hidden  text-slate-400'>Appointment : {data.contact.appointments}</p>
+                    <p className='md:hidden sm:text-md text-[10px] mt-1 text-slate-400'>{data.contact.emergency} | {data.contact.appointments}</p>
+                </h1>
+                {/* <button onClick={() => {
+                    router.push(`/RapidHostpital/Hospitals?search=${data.name}`)
+                }} className='bg-teal-500 text-white lg:text-lg md:text-md w-full xl:px-5 lg:px-3 px-10 ms-auto rounded-md mt-auto'>Book Now</button> */}
             </div>
         </div>
     )
