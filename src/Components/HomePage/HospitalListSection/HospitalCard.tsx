@@ -12,7 +12,7 @@ function HospitalCard({ data }: { data: hospitalInterface }) {
                 <Image src={hospital} className='xl:w-full xl:h-56 lg:w-full lg:h-44 md:w-36 md:h-32 w-28 h-24' alt='hospital' />
             </div>
             <div className="right flex flex-col place-content-start px-2">
-                <h1 className='xl:text-2xl lg:text-xl md:text-lg font-bold flex flex-col  text-teal-400' onClick={() => {
+                <h1 className=' cursor-pointer xl:text-2xl lg:text-xl md:text-lg font-bold flex flex-col  text-teal-400' onClick={() => {
                     router.push(`/RapidHostpital/Hospitals?search=${data.name}`)
                 }} >{
                         data.name.length > 20 ? <>{data.name.slice(0, 20)}...</> : data.name

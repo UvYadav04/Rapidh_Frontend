@@ -19,8 +19,10 @@ function LandingPage() {
     const handleblurr = () => {
         if (blurr)
             return
-        setblurr(true)
-        setfocused(false)
+        setTimeout(() => {
+            setblurr(true)
+            setfocused(false)
+        }, 1000);
     }
 
     return (

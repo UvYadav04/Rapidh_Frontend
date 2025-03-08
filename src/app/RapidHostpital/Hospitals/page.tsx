@@ -7,6 +7,7 @@ import { hospitalInterface } from '@/Components/HospitalSeachPage/HospitalAbout'
 import { hospitals } from '../../../data/hospitaldata'
 import { useSearchParams } from 'next/navigation'
 import Authentication from '@/Components/Authentication/Authentication'
+import BookingWindow from '@/Components/BookingWindow/BookingWindow'
 function page() {
     // console.log(hospitals)    import { useSearchParams } from 'next/navigation'
     const [searchinput, setsearchinput] = useState<string>("")
@@ -46,37 +47,40 @@ function page() {
         <div className='hospitals page w-full flex flex-col justify-start max-w-full place-items-center'>
 
             <Authentication />
-
+            {/* //booking window will appear  only when we have set its status 1 */}
+            <BookingWindow />
             <Header />
-            <div className="hospitalList w-[90%]  mt-10 relative">
-                <div className="filters flex sticky justify-end gap-5 rounded-md top-0 px-20 focus:outline-none py-4 w-full">
-                    <p className='flex-1 text-3xl font-serif'>
-                        {
-                            searchinput !== "" ? (
+            <div className="hospitalList w-[90%]  mt-10 relative ">
+                <div className=" filters flex md:flex-row flex-col sticky justify-end gap-2 rounded-md top-0 xl:px-20 lg:px-16 md:px-12 sm:px-8 px-4 py-2 focus:outline-none  w-full bg-slate-200">
+                    {
+                        searchinput !== "" ? (
+                            <p className='flex-1 xl:text-3xl lg:text-2xl md:text-xl sm:text-lg text-md font-serif '>
                                 <>
                                     Showing result for : {
                                         searchinput.length < 20 ? searchinput : <>{searchinput.slice(0, 20)}...</>
                                     }
                                 </>
-                            ) : null
-                        }
-                    </p>
+                            </p>
+                        ) : null
+                    }
 
-                    <select onChange={(e) => setLocationfilter(e.target.value)} className='rounded-md px-2 py-1 text-lg bg-teal-500 text-white' name="Location" id="">
-                        <option value="">Location</option>
-                        {
-                            cities.map((item, index) => {
-                                return <option key={index} value={item}>{item}</option>
-                            })
-                        }
-                    </select>
-                    <select onChange={(e) => setpricefilter((Number)(e.target.value))} className='rounded-md px-2 py-1 text-lg bg-teal-500 text-white' name="Price" id="">
-                        <option value={0}>Price</option>
-                        <option value={1}>Low to High</option>
-                        <option value={-1}>High to Low</option>
-                    </select>
+                    <div className="filters flex gap-4 justify-start">
+                        <select onChange={(e) => setLocationfilter(e.target.value)} className='rounded-md lg:px-2 md:px-1 px-[5px] md:py-1 py-[3px] lg:text-lg md:text-md text-sm bg-teal-500 text-white' name="Location" id="">
+                            <option value="">Location</option>
+                            {
+                                cities.map((item, index) => {
+                                    return <option key={index} value={item}>{item}</option>
+                                })
+                            }
+                        </select>
+                        <select onChange={(e) => setpricefilter((Number)(e.target.value))} className='rounded-md lg:px-2 md:px-1 px-[5px] md:py-1 py-[3px] lg:text-lg md:text-md text-sm bg-teal-500 text-white' name="Price" id="">
+                            <option value={0}>Price</option>
+                            <option value={1}>Low to High</option>
+                            <option value={-1}>High to Low</option>
+                        </select>
+                    </div>
                 </div>
-                <div className="list flex flex-col gap-5 justify-evenly mt-5 ">
+                <div className="list flex flex-col gap-5 justify-evenly my-5 ">
                     {
                         filteredHospitalData.map((item: hospitalInterface, index: number) => {
                             return (Locationfilter === "" || item.city === Locationfilter) && (
@@ -93,7 +97,7 @@ function page() {
                     }
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

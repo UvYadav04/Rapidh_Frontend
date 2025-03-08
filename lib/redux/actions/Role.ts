@@ -5,7 +5,7 @@ export const fetchrole = createAsyncThunk(
 
         try {
             // console.log("in the fetching")
-            const response = await fetch('http://localhost:3000/server/getrole', {
+            const response = await fetch('http://192.168.137.1:3000/server/getrole', {
                 method: "GET"
             })
             // console.log(response)

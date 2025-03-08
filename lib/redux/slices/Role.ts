@@ -22,15 +22,19 @@ const RoleSlice = createSlice({
                 state.loading = true
             })
             .addCase(fetchrole.fulfilled, (state: role, action) => {
+                alert("role fullfilled")
+                console.log(action)
                 state.loading = false
                 state.role = action.payload.message
             })
             .addCase(fetchrole.rejected, (state: role, action) => {
+                alert("role rejected")
                 state.loading = false
                 state.error =
                 {
                     message: action.payload
                 }
+                console.log(action)
                 // state.error = action.payload
             })
     },

@@ -64,7 +64,8 @@ export default {
 			lg: '1024px',
 			xl: '1280px',
 			nokia: '500px',
-			review: '650px'
+			review: '650px',
+			tab: '550px'
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

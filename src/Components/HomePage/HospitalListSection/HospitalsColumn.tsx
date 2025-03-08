@@ -17,14 +17,14 @@ function HospitalsColumn() {
         dispatch(getHospitalList())
     }, [])
 
-    useEffect(() => {
-        if (!loading) {
-            if (!role)
-                dispatch(fetchrole())
-            else if (Object.keys(error).length > 0)
-                redirect('/RapidHostpital/ErrorOccured')
-        }
-    }, [role, loading, error, dispatch])
+    // useEffect(() => {
+    //     if (!loading) {
+    //         if (Object.keys(error).length > 0)
+    //             redirect('/RapidHostpital/ErrorOccured')
+    //         else if (!role)
+    //             dispatch(fetchrole())
+    //     }
+    // }, [role, loading, error, dispatch])
 
     return (
         <div className="hospitalsList mt-10 w-[90%] ">

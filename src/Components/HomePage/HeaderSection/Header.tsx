@@ -6,7 +6,7 @@ import logo from '../../../Images/logos/Logo.jpg'
 
 function Header() {
     return (
-        <div className="header flex flex-row gap-0 justify-start md:place-items-center place-items-start w-full place-content-center sticky top-0 left-0 bg-[#EDF6F9] z-50">
+        <div className="header flex flex-row gap-0 justify-start md:place-items-center place-items-start w-full place-content-center sticky top-0 left-0 bg-[#EDF6F9] z-40">
             <div className="logo lg:w-24 md:w-20 md:mt-0 mt-2 w-16 h-full px-2 place-content-center">
                 <Image src={logo} alt='logo' className='rounded-sm' />
             </div>

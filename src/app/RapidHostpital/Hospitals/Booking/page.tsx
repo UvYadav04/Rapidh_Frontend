@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { redirect, useSearchParams } from 'next/navigation'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../../../lib/Store'
@@ -8,34 +8,60 @@ import Navbar from '@/Components/HomePage/HeaderSection/Navbar'
 
 function page() {
     const params = useSearchParams()
-    const userid = params.get("user")
     const encodedPatientData = params.get("patient")
     const userData = encodedPatientData ? JSON.parse(atob(encodedPatientData)) : null;
+    console.log(userData)
     const encodedHospitalData = params.get("hospital")
     const HospitalData = encodedHospitalData ? JSON.parse(atob(encodedHospitalData)) : null;
     // console.log(HospitalData)
     const { profile } = useSelector((state: RootState) => state.user)
+    const [patientName, setpatientName] = useState<string>("")
+    const [date, setdate] = useState<string>()
+    const [errorIndex, setindex] = useState<number>(-1)
 
     const totalOperationCharges = () => HospitalData.admissionCharges + userData.operationdata.operationCharges + userData.operationdata.bedCharges;
     const totalAdmitCharges = () => HospitalData.admissionCharges + HospitalData.wards[userData.Ward].charge;
 
     useEffect(() => {
-        if (!userid || profile.id === "" || parseInt(profile.id) !== parseInt(userid)) {
-            redirect('/RapidHostpital/Unauthorized')
-        }
         if (!HospitalData)
             redirect('/RapidHostpital/ErrorOccured')
-    }, [])
+    }, [params])
+    console.log(date)
 
+    const enableError = (t: number) => {
+        setTimeout(() => {
+            setindex(-1)
+        }, 3000);
+        setindex(t)
+    }
+
+    const handleproceed = () => {
+        if (patientName === "")
+            return enableError(1)
+        if (date === undefined)
+            return enableError(2)
+        const hashed = btoa(JSON.stringify(patientName))
+        sessionStorage.setItem("key", hashed)
+        const finaldata = { ...userData, name: patientName, date: date }
+        const encodedfinalData = btoa(JSON.stringify(finaldata))
+        redirect(`Booking/Confirm?patient=${encodedfinalData}&hospital=${encodedHospitalData}`)
+    }
 
     return (
         <div className='w-full text-black flex flex-col place-items-center place-content-center gap-20'>
             <Navbar />
-            <table className='w-1/2 bill text-lg'>
+            <table className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 bill text-lg'>
                 <tbody >
                     <tr >
                         <td>Patient Name</td>
-                        <td>Rose Lizzo</td>
+                        <td className=' p-0'><input type="text" name='patientName' className='bg-transparent focus:outline-none w-full m-0' placeholder='enter patient name' value={patientName} onChange={(e) => {
+                            setpatientName(e.target.value)
+                        }} /></td>
+
+                    </tr>
+                    <tr>
+                        <td>Date:</td>
+                        <td className='p-0'><input type="date" name='patientName' className='bg-transparent focus:outline-none w-full m-0' placeholder='enter patient name' value={date} onChange={(e) => setdate(e.target.value)} /></td>
                     </tr>
                     <tr>
                         <td>Patient Age</td>
@@ -110,11 +136,9 @@ function page() {
             </table>
 
             <button onClick={() => {
-                const hashed = btoa(JSON.stringify(profile.email))
-                sessionStorage.setItem("key", hashed)
-                redirect(`Booking/Confirm?user=${profile.id}&patient=${encodedPatientData}&hospital=${encodedHospitalData}`)
+                handleproceed()
             }} className='bg-green-500 text-white px-4 py-2 text-xl rounded-md'>Proceed</button>
-        </div>
+        </div >
     )
 }
 

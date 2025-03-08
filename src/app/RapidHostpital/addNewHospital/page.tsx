@@ -70,17 +70,17 @@ function page() {
     const params = useSearchParams()
 
     // console.log(role)
-    useEffect(() => {
-        console.log(role, loading, error)
-        if (!loading) {
-            if (Object.keys(error).length > 0)
-                redirect('/RapidHostpital/ErrorOccured')
-            else if (role !== "admin")
-                redirect('/RapidHostpital/Unauthorized')
-            else if (!role)
-                dispatch(fetchrole())
-        }
-    }, [role, loading, error, dispatch])
+    // useEffect(() => {
+    //     console.log(role, loading, error)
+    //     if (!loading) {
+    //         if (Object.keys(error).length > 0)
+    //             redirect('/RapidHostpital/ErrorOccured')
+    //         else if (role !== "admin")
+    //             redirect('/RapidHostpital/Unauthorized')
+    //         else if (!role)
+    //             dispatch(fetchrole())
+    //     }
+    // }, [role, loading, error, dispatch])
 
     useEffect(() => {
         const encodedHospitalData = params.get("hospital")

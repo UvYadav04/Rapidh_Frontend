@@ -33,8 +33,10 @@ function SearchBar() {
     const handleblurr = () => {
         if (blurr)
             return
-        setblurr(true)
-        setfocused(false)
+        setTimeout(() => {
+            setblurr(true)
+            setfocused(false)
+        }, 1000);
     }
 
 
@@ -53,7 +55,7 @@ function SearchBar() {
     }
     return (
         <div className='w-full h-fit flex justify-end place-items-center md:py-2 sm:py-1 py-0 '   >
-            <div className={`searchbar w-full flex gap-3  ${focused && width && width <= 500 ? "absolute top-1 left-0 w-full h-fit z-50" : ""}   sm:justify-center md:pe-10 pe-0 justify-end  `}>
+            <div className={`searchbar w-full flex gap-3  ${focused && width && width <= 500 ? "absolute top-1 left-0 w-full h-fit z-40" : ""}   sm:justify-center md:pe-10 pe-0 justify-end  `}>
                 <div onFocus={() => handlefocus()} onBlur={() => handleblurr()} className="search md:w-[70%] sm:w-[80%] w-[90%] max-nokia:w-full flex justify-end  place-items-center relative bg-white rounded-full  border-[2px] border-teal-300  ">
                     <select name="location" className={`flex h-full rounded-full bg-transparent focus:outline-none sm:mx-1 m-0 md:text-base text-sm text-left sm:ps-2 p-0 text-slate-600`} id="" onChange={(e) => setcity(e.target.value)}>
                         <option value="" >All</option>
