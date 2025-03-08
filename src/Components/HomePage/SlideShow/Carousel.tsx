@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 function SlideShow() {
     return (
-        <Carousel className='lg:h-64 md:h-60 sm:h-56 h-52 w-[90%] mb-10 overflow-hidden  py-2' interval={5000} autoPlay={true} infiniteLoop={true} dynamicHeight={true} swipeable={true} showStatus={false} showIndicators={false} showArrows={false}>
+        <Carousel className='lg:h-64 md:h-60 sm:h-56 h-52 w-[90%] mb-10 overflow-hidden  py-2' interval={5000} autoPlay={true} infiniteLoop={true} dynamicHeight={true} showThumbs={false} swipeable={true} showStatus={false} showIndicators={false} showArrows={false}>
 
             <Image className='lg:h-60 md:h-56 sm:h-52 h-48' alt='dummy' src={img1} />
             <Image className='lg:h-60 md:h-56 sm:h-52 h-48' alt='dummy' src={img2} />

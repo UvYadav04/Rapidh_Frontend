@@ -1,17 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getHospitalList } from "../actions/hospitals";
+import { hospitalInterface } from "@/Components/HospitalSeachPage/HospitalAbout";
 interface hospitals {
-    loading: boolean,
-    error: string | null,
+    Hospitalloading: boolean,
+    Hospitalerror: object | null,
     success: boolean,
-    hospitals: Array<object> | null
+    hospitals: Array<hospitalInterface>
 }
 
 const initialState = {
-    loading: false,
-    error: null,
+    Hospitalloading: false,
+    Hospitalerror: null,
     success: false,
-    hospitals: null
+    hospitals: []
 }
 
 
@@ -22,12 +23,19 @@ const hospitalSlice = createSlice({
         builder
             .addCase(getHospitalList.pending, (state: hospitals) => {
                 // alert("pending")
+                state.Hospitalloading = true
             })
-            .addCase(getHospitalList.fulfilled, (state: hospitals) => {
-                // alert("fullfilled")
+            .addCase(getHospitalList.fulfilled, (state: hospitals, action) => {
+                alert("fullfilled")
+                state.Hospitalloading = false
+                console.log(action)
+                state.hospitals = action.payload.hospitals
             })
-            .addCase(getHospitalList.rejected, (state: hospitals) => {
-                // alert("rejected")
+            .addCase(getHospitalList.rejected, (state: hospitals, action) => {
+                alert("rejected")
+                state.Hospitalloading = false
+                console.log(action)
+                state.Hospitalerror = action
             })
 
     },

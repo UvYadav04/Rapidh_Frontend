@@ -4,7 +4,7 @@ export const Signup = createAsyncThunk(
     'user/createAccount',
     async ({ name, email, password }: { name: string, email: string, password: string }, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:8080/signup`, {
+            const response = await fetch(`http://localhost:83/api/signup`, {
                 method: "POST",
                 credentials: "include", // Important for cookies
                 headers: {
@@ -17,7 +17,7 @@ export const Signup = createAsyncThunk(
                 return rejectWithValue("Error in creating account")
 
             const data = await response.json()
-            if (!data.success)
+            if (data.status !== "success")
                 return rejectWithValue(data.message)
 
             return data
@@ -31,7 +31,7 @@ export const Login = createAsyncThunk(
     'user/loginaccount',
     async ({ email, password }: { email: string, password: string }, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:8080/login`, {
+            const response = await fetch(`http://localhost:83/api/login`, {
                 method: "POST",
                 credentials: "include", // Important for cookies
                 headers: {
@@ -44,10 +44,11 @@ export const Login = createAsyncThunk(
                 return rejectWithValue("Error in creating account")
 
             const data = await response.json()
-            if (!data.success)
+            if (data.status !== "success")
                 return rejectWithValue(data.message)
             return data
         } catch (error) {
+            console.log(error)
             return rejectWithValue("something went wrong our side. Please try again")
         }
     }
@@ -56,7 +57,7 @@ export const LogOut = createAsyncThunk(
     'user/logoutaccount',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:8080/logout`, {
+            const response = await fetch(`http://localhost:83/api/logout`, {
                 credentials: "include", // Important for cookies
             })
 
@@ -64,7 +65,7 @@ export const LogOut = createAsyncThunk(
                 return rejectWithValue("Error in logging out")
 
             const data = await response.json()
-            if (!data.success)
+            if (data.status !== "success")
                 return rejectWithValue(data.message)
             return data
         } catch (error) {

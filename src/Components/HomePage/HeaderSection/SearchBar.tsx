@@ -1,7 +1,12 @@
 import HospitalList from '@/Components/HospitalsList/HospitalList'
 import React, { createRef, useEffect, useMemo, useRef, useState } from 'react'
-import { hospitals } from '@/data/hospitaldata'
-import { useRouter } from 'next/navigation'
+// import { hospitals } from '@/data/hospitaldata'
+import { redirect, useRouter } from 'next/navigation'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../../../lib/Store'
+import { getHospitalList } from '../../../../lib/redux/actions/hospitals'
+import { hospitalInterface } from '@/Components/HospitalSeachPage/HospitalAbout'
+import LoginLoader from '@/Components/Authentication/LoginLoader'
 function SearchBar() {
     const [input, setinput] = useState<string>("")
     const [city, setcity] = useState<string>("")
@@ -10,6 +15,16 @@ function SearchBar() {
     const [focused, setfocused] = useState<boolean>(false)
     const [blurr, setblurr] = useState<boolean>(false)
     const [width, setwidth] = useState<number>()
+
+    const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
+    const dispatch = useDispatch<AppDispatch>()
+
+    useEffect(() => {
+        if (Hospitalerror)
+            redirect('/RapidHostpital/ErrorOccured')
+        else if (hospitals.length === 0)
+            dispatch(getHospitalList())
+    }, [hospitals])
 
     useEffect(() => {
         const handleResize = () => {
@@ -42,7 +57,7 @@ function SearchBar() {
 
     useEffect(() => {
         const uniqueCities = Array.from(
-            new Set(hospitals.map((item) => item.city.toLowerCase()))
+            new Set(hospitals.map((item: hospitalInterface) => item.city.toLowerCase()))
         );
         setcities(uniqueCities);
     }, []);
@@ -53,6 +68,9 @@ function SearchBar() {
         setinput("")//will set after re-rendering page, so input will be same in next line
         router.push(`/RapidHostpital/Hospitals?search=${input}`)
     }
+
+    if (Hospitalloading)
+        return <LoginLoader />
     return (
         <div className='w-full h-fit flex justify-end place-items-center md:py-2 sm:py-1 py-0 '   >
             <div className={`searchbar w-full flex gap-3  ${focused && width && width <= 500 ? "absolute top-1 left-0 w-full h-fit z-40" : ""}   sm:justify-center md:pe-10 pe-0 justify-end  `}>

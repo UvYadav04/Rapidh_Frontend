@@ -7,15 +7,21 @@ import { useRouter } from 'next/navigation'
 import { AppDispatch, RootState } from '../../../../lib/Store'
 import { useDispatch, UseDispatch, useSelector } from 'react-redux'
 import { getHospitalList } from '../../../../lib/redux/actions/hospitals'
-import { hospitals } from '../../../data/hospitaldata'
+// import { hospitals } from '../../../data/hospitaldata'
 import { fetchrole } from '../../../../lib/redux/actions/Role'
+import LoginLoader from '@/Components/Authentication/LoginLoader'
 function HospitalsColumn() {
     const router = useRouter()
     const { role, loading, error } = useSelector((state: RootState) => state.role)
     const dispatch = useDispatch<AppDispatch>()
+    const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
+
     useEffect(() => {
-        dispatch(getHospitalList())
-    }, [])
+        if (Hospitalerror)
+            redirect('/RapidHostpital/ErrorOccured')
+        else if (hospitals.length === 0)
+            dispatch(getHospitalList())
+    }, [hospitals])
 
     // useEffect(() => {
     //     if (!loading) {
@@ -26,6 +32,9 @@ function HospitalsColumn() {
     //     }
     // }, [role, loading, error, dispatch])
 
+
+    if (Hospitalloading)
+        return <LoginLoader />
     return (
         <div className="hospitalsList mt-10 w-[90%] ">
             <div className="flex buttons flex-row gap-5">

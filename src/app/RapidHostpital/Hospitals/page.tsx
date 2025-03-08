@@ -4,23 +4,35 @@ import Header from '@/Components/HomePage/HeaderSection/Header'
 import HospitalCard2 from '@/Components/HospitalSeachPage/HospitalAbout'
 import React, { useEffect, useMemo, useState } from 'react'
 import { hospitalInterface } from '@/Components/HospitalSeachPage/HospitalAbout'
-import { hospitals } from '../../../data/hospitaldata'
-import { useSearchParams } from 'next/navigation'
+// import { hos pitals } from '../../../data/hospitaldata'
+import { redirect, useSearchParams } from 'next/navigation'
 import Authentication from '@/Components/Authentication/Authentication'
 import BookingWindow from '@/Components/BookingWindow/BookingWindow'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, AppStore, RootState } from '../../../../lib/Store'
+import { getHospitalList } from '../../../../lib/redux/actions/hospitals'
+import LoginLoader from '@/Components/Authentication/LoginLoader'
 function page() {
     // console.log(hospitals)    import { useSearchParams } from 'next/navigation'
+    const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
     const [searchinput, setsearchinput] = useState<string>("")
     const params = useSearchParams()
     const [pricefilter, setpricefilter] = useState<number>(0)
     const [Locationfilter, setLocationfilter] = useState<string>("")
     const [filteredHospitalData, setfilteredHospitalData] = useState<hospitalInterface[]>(hospitals)
     const [cities, setcities] = useState<Array<string>>([])
+    const dispatch = useDispatch<AppDispatch>()
 
+    useEffect(() => {
+        if (Hospitalerror)
+            redirect('/RapidHostpital/ErrorOccured')
+        else if (hospitals.length === 0)
+            dispatch(getHospitalList())
+    }, [hospitals])
 
     useEffect(() => {
         const uniqueCities = Array.from(
-            new Set(hospitals.map((item) => item.city.toLowerCase()))
+            new Set(hospitals.map((item: hospitalInterface) => item.city.toLowerCase()))
         );
         setcities(uniqueCities);
     }, []);
@@ -43,6 +55,10 @@ function page() {
             setsearchinput(hname.toLowerCase())
         }
     }, [params])
+
+    if (Hospitalloading)
+        return <LoginLoader />
+
     return (
         <div className='hospitals page w-full flex flex-col justify-start max-w-full place-items-center'>
 

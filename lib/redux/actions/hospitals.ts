@@ -4,18 +4,19 @@ export const getHospitalList = createAsyncThunk(
     'hospitals/gethospitals',
     async (_, { dispatch, rejectWithValue }) => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/hospitals`, {
+            const response = await fetch(`http://localhost:83/api/fetch/hospitals`, {
                 method: "GET"
             })
-            const data = await response.json()
-            if (!data.success)
-                throw new Error("failed to fetch from server")
-            if (data.success)
-                return data
+            if (!response.ok)
+                return rejectWithValue("Error in fetching hospitals")
 
-            throw new Error("failed to fetch")
+            const data = await response.json()
+            if (data.status !== "success")
+                throw new Error("failed to fetch from server")
+            return data
         }
         catch (error: any) {
+            console.log(error)
             return rejectWithValue(error.message)
         }
     }

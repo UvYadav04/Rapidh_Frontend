@@ -4,7 +4,8 @@ import { resetRole } from './Role'
 
 export interface profileInterface {
     id: string,
-    email: string
+    email: string,
+    name: string
 }
 
 interface errorInterface {
@@ -42,10 +43,14 @@ const userslice = createSlice({
                 state.loading = true
             })
             .addCase(Signup.fulfilled, (state: user, action) => {
-                // alert("signup fullfilled")
-                // console.log(action)
+                alert("signup fullfilled")
+                console.log(action)
                 state.loading = false
-                state.profile = action.payload.data
+                state.profile = {
+                    id: action.payload.user.user_id,
+                    name: action.payload.user.name,
+                    email: action.payload.user.email
+                }
             })
             .addCase(Signup.rejected, (state: user, action) => {
                 // alert("signup rejected")
@@ -63,10 +68,15 @@ const userslice = createSlice({
                 alert("login fullfilled")
                 // console.log(action)
                 state.loading = false
-                state.profile = action.payload.data
+                state.profile = {
+                    id: action.payload.user.user_id,
+                    name: action.payload.user.name,
+                    email: action.payload.user.email
+                }
             })
             .addCase(Login.rejected, (state: user, action) => {
                 alert("login rejected")
+                console.log(action)
                 state.loading = false
                 state.erroruser = {
                     message: action.error.message
@@ -80,7 +90,8 @@ const userslice = createSlice({
                 state.loading = false
                 state.profile = {
                     id: "",
-                    email: ""
+                    email: "",
+                    name: ""
                 }
                 resetRole()
             })
@@ -88,10 +99,6 @@ const userslice = createSlice({
                 alert("logout rejected")
                 state.loading = false
                 console.log(action)
-                state.profile = {
-                    id: "",
-                    email: ""
-                }
                 state.erroruser = {
                     message: action.error.message
                 }

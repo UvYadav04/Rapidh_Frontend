@@ -16,18 +16,20 @@ import { MdCancel } from 'react-icons/md';
 import { useBookingWindow } from '@/ContextProvider/BookingWindow';
 
 export interface OperationList {
+    id: string,
     name: string;
     operationCharges: number;
-    bedCharges: number;
 }
 
 export interface WardList {
+    id: string
     name: string;
     charge: number;
     description: string;
 }
 
 export interface hospitalInterface {
+    id: string,
     name: string,
     city: string,
     state: string,

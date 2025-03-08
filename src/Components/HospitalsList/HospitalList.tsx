@@ -1,14 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { hospitals } from '@/data/hospitaldata'
 import { hospitalInterface } from '../HospitalSeachPage/HospitalAbout'
-import { useRouter } from 'next/navigation'
-
+import { redirect, useRouter } from 'next/navigation'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../../lib/Store'
+import { getHospitalList } from '../../../lib/redux/actions/hospitals'
 function HospitalList({ searchinput, city }: { searchinput: string, city: string }) {
 
+    const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
+    const dispatch = useDispatch<AppDispatch>()
+
+    useEffect(() => {
+        if (Hospitalerror)
+            redirect('/RapidHostpital/ErrorOccured')
+        else if (hospitals.length === 0)
+            dispatch(getHospitalList())
+    }, [hospitals])
     return (
         <div className='w-full flex flex-col bg-slate-200 rounded-md max-h-[200px] overflow-y-scroll' style={{ scrollbarWidth: "none" }}>
             {
-                hospitals.map((item, index) => {
+                hospitals.map((item: hospitalInterface, index) => {
                     if (city !== "" && item.city !== city) return null // Filter city first
 
                     const nameMatch = item.name.toLowerCase().includes(searchinput.toLowerCase())

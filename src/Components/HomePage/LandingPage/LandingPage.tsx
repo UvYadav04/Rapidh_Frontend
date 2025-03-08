@@ -1,15 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import HospitalList from '@/Components/HospitalsList/HospitalList';
 import './landingpage.css'
-import { hospitals } from '@/data/hospitaldata';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../../lib/Store';
+import { getHospitalList } from '../../../../lib/redux/actions/hospitals';
+import LoginLoader from '@/Components/Authentication/LoginLoader';
+import { hospitalInterface } from '@/Components/HospitalSeachPage/HospitalAbout';
 
 function LandingPage() {
     const [input, setinput] = useState<string>("")
     const router = useRouter()
     const [focused, setfocused] = useState<boolean>(false)
     const [blurr, setblurr] = useState<boolean>(false)
+
+
+    const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
+    const dispatch = useDispatch<AppDispatch>()
+
+    useEffect(() => {
+        if (Hospitalerror)
+            redirect('/RapidHostpital/ErrorOccured')
+        else if (hospitals.length === 0)
+            dispatch(getHospitalList())
+    }, [hospitals])
+
     const handlefocus = () => {
         if (focused)
             return
@@ -24,7 +40,8 @@ function LandingPage() {
             setfocused(false)
         }, 1000);
     }
-
+    if (Hospitalloading)
+        return <LoginLoader />
     return (
         <div className='w-full landingpage mt-5  mx-auto flex  flex-col place-content-center place-items-center xl:pt-12 lg:pt-10 gap-2 min-h-fit xl:h-[550px]
         lg:h-[500px] md:h-[450px] sm:h-[400px] h-[350px] relative' >
@@ -45,7 +62,7 @@ function LandingPage() {
             </div >
             <div className="suggestions flex flex-wrap justify-center lg:gap-4 gap-2 xl:mt-3 lg:mt-2 sm:mt-1 mt-0 xl:w-7/12 lg:w-8/12 md:w-9/12 sm:w-10/12 w-11/12">
                 {
-                    hospitals.slice(0, 5).map((item, index) => {
+                    hospitals.slice(0, 5).map((item: hospitalInterface, index) => {
                         return <button className='bg-teal-500 xl:px-2 lg:px-1 px-2 lg:text-md md:text-[14px] sm:text-base text-[12px] lg:py-1 py-1 rounded-md' onClick={() => setinput(item.operations[0].name)} key={index}>{item.operations[0].name}</button>
                     })
                 }
