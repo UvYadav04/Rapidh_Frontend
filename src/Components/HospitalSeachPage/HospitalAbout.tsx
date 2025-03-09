@@ -49,7 +49,7 @@ export interface hospitalInterface {
 
 export interface patientInterface {
     Admit: boolean;
-    Ward: number;
+    Ward: WardList;
     Days: number | undefined;
     Age: number | undefined;
     Requirements: string;
@@ -57,6 +57,7 @@ export interface patientInterface {
 
 export interface OperationInterface {
     Operation: boolean;
+    Ward: WardList;
     operationdata: OperationList | null;
     Age: number | undefined;
     Requirements: string;
@@ -66,13 +67,14 @@ export interface OperationInterface {
 }
 
 function HospitalCard2({ data }: { data: hospitalInterface }) {
+    console.log(data)
 
     const [popup, setPopup] = useState<boolean>(false);
     const [selected, setSelected] = useState<number>(1);
     const [operationInput, setOperationInput] = useState<string>('');
     const [patient, setPatient] = useState<patientInterface>({
         Admit: true,
-        Ward: 0,
+        Ward: data.wards[0],
         Days: undefined,
         Age: undefined,
         Requirements: '',
@@ -83,6 +85,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
         Age: undefined,
         Requirements: '',
         diabetes: 0,
+        Ward: data.wards[0],
         treatment: 0,
         Allergy: '',
     });
@@ -97,9 +100,9 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
     const dispatch = useDispatch<AppDispatch>();
 
     const handleOperation = () => {
-        if (profile.id === '') {
-            return setbooking(1);
-        }
+        // if (profile.id === '') {
+        //     return setbooking(1);
+        // }
 
         if (operation.operationdata === null) return setErrorIndex(2);
         if (operation.Age === undefined) return setErrorIndex(3);
@@ -112,8 +115,8 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
     const handlePatient = () => {
         if (patient.Age === undefined) return setErrorIndex(4);
 
-        if (profile.id === '')
-            return setbooking(1);
+        // if (profile.id === '')
+        //     return setbooking(1);
         const userdata = btoa(JSON.stringify(profile))
         const patientData = btoa(JSON.stringify(patient));
         const hospitalData = btoa(JSON.stringify(data));
@@ -202,20 +205,25 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
 
                         {selected === 1 ? (
                             <div className="admit w-full mt-0 flex flex-col items-center bg-slate-200">
-                                <ul className="blocks w-full flex p-0 justify-start xl:gap-5 lg:gap-4 md:gap-3 gap-2 flex-nowrap overflow-x-scroll" style={{ scrollbarWidth: 'none' }}>
-                                    {data.wards.map((item: WardList, i) => (
-                                        <WardCard
-                                            item={item}
-                                            key={i}
-                                            keyvalue={i}
-                                            index={i}
-                                            ward={patient.Ward}
-                                            setpatient={setPatient}
-                                        />
-                                    ))}
-                                </ul>
+                                <div className="wards flex flex-col my-5 w-[100%] ps-5 ">
+                                    <label className='w-full float-start text-slate-700' htmlFor="">Select a ward:</label>
+
+                                    <ul className="blocks w-full flex p-0 justify-start xl:gap-5 lg:gap-4 md:gap-3 gap-2 flex-nowrap overflow-x-scroll" style={{ scrollbarWidth: 'none' }}>
+                                        {data.wards.map((item: WardList, i) => (
+                                            <WardCard
+                                                item={item}
+                                                key={i}
+                                                keyvalue={i}
+                                                ward={patient.Ward}
+                                                setpatient={setPatient}
+                                                setoperation={setOperation}
+                                                type='admit'
+                                            />
+                                        ))}
+                                    </ul>
+                                </div>
                                 <div className="questions px-6 flex flex-wrap gap-2 w-full md:mt-0 mt-3">
-                                    <div className="relative mb-1 lg:w-2/5 md:w-3/5 sm:w-4/5 w-full">
+                                    <div className="relative mb-1 lg:w-2/5 md:w-2/5 sm:w-2/5 w-full">
                                         <input
                                             type="number"
                                             id="days"
@@ -231,11 +239,11 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                             htmlFor="days"
                                             className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 z-0"
                                         >
-                                            How many days you need to admit - leave empty if not sure
+                                            Days to admit - leave empty if not sure
                                         </label>
                                     </div>
 
-                                    <div className="relative mb-1 md:w-3/5 sm:w-4/5 w-full">
+                                    <div className="relative mb-1 md:w-2/5 sm:w-2/5 w-full">
                                         <input
                                             type="number"
                                             id="age"
@@ -288,14 +296,14 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                         Total : ₹1277/-
                                         <ul className="min-w-fit billpop bg-white z-10 border-2 text-md w-[300px] absolute rounded-md px-2 py-1 text-sm text-left font-light">
                                             <li className="w-full text-black">
-                                                Ward : <span className="float-right text-teal-600">{data.wards[patient.Ward].name}</span>
+                                                Ward : <span className="float-right text-teal-600">{patient.Ward.name}</span>
                                             </li>
                                             <li className="w-full text-black">
                                                 Admission charges : <span className="float-right text-teal-600">₹{data.admissionCharges}</span>
                                             </li>
                                             <li className="w-full text-black">
                                                 Ward charge(per day) :{' '}
-                                                <span className="float-right text-teal-600">₹{data.wards[patient.Ward].charge}</span>
+                                                <span className="float-right text-teal-600">₹{patient.Ward.charge}</span>
                                             </li>
                                         </ul>
                                     </button>
@@ -349,6 +357,24 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                     </div>
                                 </div>
 
+                                <div className="wards ">
+                                    <label className='text-slate-700' htmlFor="">Select a ward:</label>
+                                    <ul className="blocks w-full flex p-0 justify-start xl:gap-5 lg:gap-4 md:gap-3 gap-2 flex-nowrap overflow-x-scroll" style={{ scrollbarWidth: 'none' }}>
+
+                                        {data.wards.map((item: WardList, i) => (
+                                            <WardCard
+                                                item={item}
+                                                key={i}
+                                                keyvalue={i}
+                                                ward={operation.Ward}
+                                                setpatient={setPatient}
+                                                setoperation={setOperation}
+                                                type='operation'
+                                            />
+                                        ))}
+                                    </ul>
+
+                                </div>
                                 <div className="questions w-full flex flex-col gap-2 mt-3">
                                     <p className="flex sm:flex-row flex-col sm:gap-3 gap-1 text-slate-700">
                                         <label>Do the Patient have diabetes ?</label>

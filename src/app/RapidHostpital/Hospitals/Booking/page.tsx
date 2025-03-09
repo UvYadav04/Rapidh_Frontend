@@ -10,17 +10,17 @@ function page() {
     const params = useSearchParams()
     const encodedPatientData = params.get("patient")
     const userData = encodedPatientData ? JSON.parse(atob(encodedPatientData)) : null;
-    console.log(userData)
+    // console.log(userData)
     const encodedHospitalData = params.get("hospital")
     const HospitalData = encodedHospitalData ? JSON.parse(atob(encodedHospitalData)) : null;
-    // console.log(HospitalData)
+    console.log(HospitalData)
     const { profile } = useSelector((state: RootState) => state.user)
     const [patientName, setpatientName] = useState<string>("")
     const [date, setdate] = useState<string>()
     const [errorIndex, setindex] = useState<number>(-1)
 
-    const totalOperationCharges = () => HospitalData.admissionCharges + userData.operationdata.operationCharges + userData.operationdata.bedCharges;
-    const totalAdmitCharges = () => HospitalData.admissionCharges + HospitalData.wards[userData.Ward].charge;
+    const totalOperationCharges = () => HospitalData.admissionCharges + userData.operationdata.operationCharges + userData.Ward.charge;
+    const totalAdmitCharges = () => (Number)(HospitalData.admissionCharges) + (Number)(userData.Ward.charge);
 
     useEffect(() => {
         if (!HospitalData)
@@ -42,9 +42,10 @@ function page() {
             return enableError(2)
         const hashed = btoa(JSON.stringify(patientName))
         sessionStorage.setItem("key", hashed)
-        const finaldata = { ...userData, name: patientName, date: date }
+        const finaldata = { ...userData, hospitalId: HospitalData.id, Ward: userData.Ward.id, name: patientName, date: date, price: userData.Admit ? totalAdmitCharges() : totalOperationCharges() }
+        console.log(finaldata)
         const encodedfinalData = btoa(JSON.stringify(finaldata))
-        redirect(`Booking/Confirm?patient=${encodedfinalData}&hospital=${encodedHospitalData}`)
+        // redirect(`Booking/Confirm?patient=${encodedfinalData}&hospital=${encodedHospitalData}`)
     }
 
     return (
@@ -59,9 +60,15 @@ function page() {
                         }} /></td>
 
                     </tr>
+
                     <tr>
                         <td>Date:</td>
                         <td className='p-0'><input type="date" name='patientName' className='bg-transparent focus:outline-none w-full m-0' placeholder='enter patient name' value={date} onChange={(e) => setdate(e.target.value)} /></td>
+                    </tr>
+                    <tr >
+                        <td>Hospital</td>
+                        <td className=' p-0'>{HospitalData.name}</td>
+
                     </tr>
                     <tr>
                         <td>Patient Age</td>
@@ -73,11 +80,11 @@ function page() {
                             <>
                                 <tr>
                                     <td>Ward : </td>
-                                    <td>{HospitalData.wards[userData.Ward].name}</td>
+                                    <td>{userData.Ward.name}</td>
                                 </tr>
                                 <tr>
                                     <td>Days : </td>
-                                    <td>{userData.Days === 0 ? "Not Sure" : userData.Days}</td>
+                                    <td>{userData.Days ? userData.Days : "Not Sure"}</td>
                                 </tr>
                                 <tr>
                                     <td>Requirements : </td>
@@ -89,7 +96,7 @@ function page() {
                                 </tr>
                                 <tr>
                                     <td>Ward Bed Charges : </td>
-                                    <td>{HospitalData.wards[userData.Ward].charge}</td>
+                                    <td>{userData.Ward.charge}</td>
                                 </tr>
                                 <tr className='bg-slate-300'>
                                     <td>Total : </td>
@@ -115,13 +122,14 @@ function page() {
                                     <td>{userData.Requirements === "" ? "NA" : userData.Requirements}</td>
                                 </tr>
                                 <tr>
+                                    <td>Ward Bed Charges : </td>
+                                    <td>{userData.Ward.charge}</td>
+                                </tr>
+                                <tr>
                                     <td>Admission Charges : </td>
                                     <td>{HospitalData.admissionCharges}</td>
                                 </tr>
-                                <tr>
-                                    <td>Bed Charges : </td>
-                                    <td>{userData.operationdata.bedCharges}</td>
-                                </tr>
+
                                 <tr>
                                     <td>Operation Charges : </td>
                                     <td>{userData.operationdata.operationCharges}</td>

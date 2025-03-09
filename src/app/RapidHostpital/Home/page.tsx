@@ -22,7 +22,6 @@ const Review = lazy(() => import('@/Components/HomePage/ReviewSection/Review'))
 
 function Page() {
     const dispatch = useDispatch<AppDispatch>()
-
     // useEffect(() => {
     //     dispatch(fetchrole())
     // }, [dispatch])

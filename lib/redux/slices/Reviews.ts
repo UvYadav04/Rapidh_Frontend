@@ -1,21 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getReviews } from "../actions/reviews";
 import reviewsdata from '../../../src/data/reviews'
+import reviews from "../../../src/data/reviews";
 const data = [...reviewsdata]
 // console.log(typeof (data))
-// 
+//
+
+interface reviewInterface {
+    id: string,
+    review: string,
+    ratings: number,
+    user_id: string,
+    created: string
+}
 interface reviews {
     loading: boolean,
     error: string | null,
-    success: boolean,
-    reviews: Array<any> | null
+    checked: boolean,
+    reviews: Array<reviewInterface> | null
 }
 
 const initialState = {
     loading: false,
-    success: false,
+    checked: false,
     error: null,
-    reviews: data
+    reviews: []
 }
 
 
@@ -25,13 +34,20 @@ const reviewSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getReviews.pending, (state: reviews) => {
-                alert("reviews pending")
+                // alert("reviews pending")
+                state.loading = true
             })
-            .addCase(getReviews.fulfilled, (state: reviews) => {
-                alert("reviews fulfilled")
+            .addCase(getReviews.fulfilled, (state: reviews, action) => {
+                // alert("reviews fulfilled")
+                // console.log(action)
+                state.loading = false
+                state.checked = true
+                state.reviews = action.payload.reviews
             })
-            .addCase(getReviews.rejected, (state: reviews) => {
-                alert("reviews rejected")
+            .addCase(getReviews.rejected, (state: reviews, action: any) => {
+                // alert("reviews rejected")
+                state.loading = false
+                state.error = action.payload.message
             })
     },
     reducers: {}
