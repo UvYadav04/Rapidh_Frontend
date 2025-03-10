@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     storage: storage,  // Using localStorage
-    whitelist: ['user', 'reviews', 'hospitals', 'mybooking']
+    whitelist: ['user', 'reviews', 'hospitals', 'mybookings']
 };
 
 

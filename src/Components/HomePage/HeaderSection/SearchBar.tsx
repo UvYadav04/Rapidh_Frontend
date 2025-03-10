@@ -22,7 +22,7 @@ function SearchBar() {
     useEffect(() => {
         if (Hospitalerror)
             redirect('/RapidHostpital/ErrorOccured')
-        else if (hospitals.length === 0)
+        else if (hospitals && hospitals?.length === 0)
             dispatch(getHospitalList())
     }, [hospitals])
 
@@ -57,7 +57,7 @@ function SearchBar() {
 
     useEffect(() => {
         const uniqueCities = Array.from(
-            new Set(hospitals.map((item: hospitalInterface) => item.city.toLowerCase()))
+            new Set(hospitals?.map((item: hospitalInterface) => item.city.toLowerCase()))
         );
         setcities(uniqueCities);
     }, []);

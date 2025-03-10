@@ -1,32 +1,58 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import { redirect, useSearchParams } from 'next/navigation'
+import React, { useEffect, useRef, useState } from 'react'
+import { redirect, useRouter, useSearchParams } from 'next/navigation'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../../../lib/Store'
 import './page.css'
 import Navbar from '@/Components/HomePage/HeaderSection/Navbar'
 
+interface personalInfo {
+    name: string,
+    date: string | undefined,
+    reason: string
+}
+
 function page() {
+    const router = useRouter()
     const params = useSearchParams()
+    const userId = params.get("user")
     const encodedPatientData = params.get("patient")
-    const userData = encodedPatientData ? JSON.parse(atob(encodedPatientData)) : null;
-    // console.log(userData)
+    const patientData = encodedPatientData ? JSON.parse(atob(encodedPatientData)) : null;
     const encodedHospitalData = params.get("hospital")
     const HospitalData = encodedHospitalData ? JSON.parse(atob(encodedHospitalData)) : null;
-    console.log(HospitalData)
     const { profile } = useSelector((state: RootState) => state.user)
-    const [patientName, setpatientName] = useState<string>("")
-    const [date, setdate] = useState<string>()
+    const [patient, setPatient] = useState<personalInfo>({ name: "", date: undefined, reason: "" })
     const [errorIndex, setindex] = useState<number>(-1)
+    const hasRunOnce = useRef(false); // Ref to track if the effect has run
+    const [loading, setloading] = useState<boolean>(false)
 
-    const totalOperationCharges = () => HospitalData.admissionCharges + userData.operationdata.operationCharges + userData.Ward.charge;
-    const totalAdmitCharges = () => (Number)(HospitalData.admissionCharges) + (Number)(userData.Ward.charge);
+
+    const totalOperationCharges = () => HospitalData?.admissionCharges + patientData?.operationdata.operationCharges + patientData?.Ward.charge;
+    const totalAdmitCharges = () => (Number)(HospitalData?.admissionCharges) + (Number)(patientData?.Ward.charge);
 
     useEffect(() => {
-        if (!HospitalData)
-            redirect('/RapidHostpital/ErrorOccured')
-    }, [params])
-    console.log(date)
+        if (!HospitalData || !patientData || !userId)
+            return redirect('/RapidHostpital/ErrorOccured')
+
+
+        if (profile.id === "" || !userId || profile.id !== userId)
+            return router.replace('/RapidHostpital/Unauthorized')
+
+
+    }, [params, profile, patientData, HospitalData])
+    console.log(patientData)
+
+
+    useEffect(() => {
+        if (hasRunOnce.current) return; // Skip the effect if it has already run
+        const sessionKey = sessionStorage.getItem("sessionKey")
+        if (!sessionKey)
+            redirect('/RapidHostpital/ErrorOccured?message=pagerefreshed')
+        sessionStorage.removeItem("sessionKey")
+
+        hasRunOnce.current = true;
+    }, []);
+
 
     const enableError = (t: number) => {
         setTimeout(() => {
@@ -35,68 +61,113 @@ function page() {
         setindex(t)
     }
 
-    const handleproceed = () => {
-        if (patientName === "")
-            return enableError(1)
-        if (date === undefined)
-            return enableError(2)
-        const hashed = btoa(JSON.stringify(patientName))
-        sessionStorage.setItem("key", hashed)
-        const finaldata = { ...userData, hospitalId: HospitalData.id, Ward: userData.Ward.id, name: patientName, date: date, price: userData.Admit ? totalAdmitCharges() : totalOperationCharges() }
-        console.log(finaldata)
-        const encodedfinalData = btoa(JSON.stringify(finaldata))
-        // redirect(`Booking/Confirm?patient=${encodedfinalData}&hospital=${encodedHospitalData}`)
+    const handleproceed = async () => {
+        try {
+            if (patient.name === "")
+                return enableError(1)
+            if (patient.date === undefined)
+                return enableError(2)
+            if (patientData.Admit && patient.reason.length < 20)
+                return enableError(3)
+
+            let finaldata = { ...patientData, userId, hospitalId: HospitalData.id, Ward: patientData.Ward.id, name: patient.name, date: patient.date, price: patientData.Admit ? totalAdmitCharges() : totalOperationCharges() }
+            if (patientData.Admit)
+                finaldata = { ...finaldata, reason: patient.reason, days: patientData.Days ? patientData.Days : "not sure" }
+            if (patientData.Operation)
+                finaldata = { ...finaldata, operationdata: patientData.operationdata?.id }
+            console.log(finaldata)
+            setloading(true)
+            const response = await fetch("http://localhost:83/api/patient/newBooking", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({ ...finaldata })
+            })
+            setloading(false)
+
+            if (!response.ok)
+                return router.replace('/RapidHostpital/ErrorOccured');
+
+            const data = await response.json()
+            console.log(data)
+            if (data.status === "error") {
+                console.log("error maalikg")
+                return router.replace('/RapidHostpital/ErrorOccured');
+            }
+            alert("hurray booking successfull")
+            return router.replace('/')
+
+
+        } catch (error) {
+            console.log(error)
+            return router.replace('/RapidHostpital/ErrorOccured');
+        }
     }
 
+    const handlePatient = ((e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target
+
+        setPatient((prev) => {
+            return { ...prev, [name]: value }
+        })
+    })
+
     return (
-        <div className='w-full text-black flex flex-col place-items-center place-content-center gap-20'>
+        <div className='w-full text-black flex flex-col place-items-center place-content-center gap-0'>
             <Navbar />
-            <table className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 bill text-lg'>
+            <table className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 bill text-lg mt-20'>
                 <tbody >
                     <tr >
                         <td>Patient Name</td>
-                        <td className=' p-0'><input type="text" name='patientName' className='bg-transparent focus:outline-none w-full m-0' placeholder='enter patient name' value={patientName} onChange={(e) => {
-                            setpatientName(e.target.value)
-                        }} /></td>
+                        <td className=' p-0'><input type="text" name='name' className='bg-transparent focus:outline-none w-full m-0' placeholder='enter patient name' value={patient.name} onChange={(e) => handlePatient(e)} /></td>
 
                     </tr>
+
 
                     <tr>
                         <td>Date:</td>
-                        <td className='p-0'><input type="date" name='patientName' className='bg-transparent focus:outline-none w-full m-0' placeholder='enter patient name' value={date} onChange={(e) => setdate(e.target.value)} /></td>
+                        <td className='p-0'><input type="date" name='date' className='bg-transparent focus:outline-none w-full m-0' value={patient.date} min={new Date().toISOString().split('T')[0]} onChange={(e) => handlePatient(e)} /></td>
                     </tr>
                     <tr >
                         <td>Hospital</td>
-                        <td className=' p-0'>{HospitalData.name}</td>
+                        <td className=' p-0'>{HospitalData?.name}</td>
 
                     </tr>
                     <tr>
                         <td>Patient Age</td>
-                        <td>{userData.Age}</td>
+                        <td>{patientData?.Age}</td>
                     </tr>
                     {
-                        userData.Admit
+                        patientData?.Admit
                             ?
                             <>
+
                                 <tr>
                                     <td>Ward : </td>
-                                    <td>{userData.Ward.name}</td>
+                                    <td>{patientData?.Ward.name}</td>
                                 </tr>
                                 <tr>
                                     <td>Days : </td>
-                                    <td>{userData.Days ? userData.Days : "Not Sure"}</td>
+                                    <td>{patientData.Days ? patientData?.Days : "Not Sure"}</td>
                                 </tr>
                                 <tr>
                                     <td>Requirements : </td>
-                                    <td>{userData.Requirements === "" ? "NA" : userData.Requirements}</td>
+                                    <td>{patientData.Requirements === "" ? "NA" : patientData?.Requirements}</td>
                                 </tr>
                                 <tr>
                                     <td>Admission Charges : </td>
-                                    <td>{HospitalData.admissionCharges}</td>
+                                    <td>{HospitalData?.admissionCharges}</td>
                                 </tr>
                                 <tr>
                                     <td>Ward Bed Charges : </td>
-                                    <td>{userData.Ward.charge}</td>
+                                    <td>{patientData?.Ward?.charge}</td>
+                                </tr>
+                                <tr >
+                                    <td>Reason to admit</td>
+                                    <td className=' p-0'><input type="text" name='reason' className='bg-transparent focus:outline-none w-full m-0' placeholder='enter reason to admit' value={patient.reason} onChange={(e) => handlePatient(e)} /></td>
+
                                 </tr>
                                 <tr className='bg-slate-300'>
                                     <td>Total : </td>
@@ -107,32 +178,32 @@ function page() {
                             <>
                                 <tr>
                                     <td>Operation Name : </td>
-                                    <td>{userData.operationdata.name}</td>
+                                    <td>{patientData?.operationdata?.name}</td>
                                 </tr>
                                 <tr>
                                     <td>Diabetes : </td>
-                                    <td>{userData.diabetes === 1 ? "Yes" : "No"}</td>
+                                    <td>{patientData?.diabetes === 1 ? "Yes" : "No"}</td>
                                 </tr>
                                 <tr>
                                     <td>Allergy : </td>
-                                    <td>{userData.Allergy === "" ? "NA" : userData.Allergy}</td>
+                                    <td>{patientData?.Allergy === "" ? "NA" : patientData?.Allergy}</td>
                                 </tr>
                                 <tr>
                                     <td>Other Requirements : </td>
-                                    <td>{userData.Requirements === "" ? "NA" : userData.Requirements}</td>
+                                    <td>{patientData?.Requirements === "" ? "NA" : patientData?.Requirements}</td>
                                 </tr>
                                 <tr>
                                     <td>Ward Bed Charges : </td>
-                                    <td>{userData.Ward.charge}</td>
+                                    <td>{patientData?.Ward?.charge}</td>
                                 </tr>
                                 <tr>
                                     <td>Admission Charges : </td>
-                                    <td>{HospitalData.admissionCharges}</td>
+                                    <td>{HospitalData?.admissionCharges}</td>
                                 </tr>
 
                                 <tr>
                                     <td>Operation Charges : </td>
-                                    <td>{userData.operationdata.operationCharges}</td>
+                                    <td>{patientData?.operationdata?.operationCharges}</td>
                                 </tr>
                                 <tr>
                                     <td className='bg-slate-300'>Total : </td>
@@ -142,10 +213,13 @@ function page() {
                     }
                 </tbody>
             </table>
+            {errorIndex == 1 ? <p className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 text-start text-red-500'>Enter the name of the patient.</p> : null}
+            {errorIndex == 2 ? <p className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 text-start text-red-500'>Select a date please.</p> : null}
+            {errorIndex == 3 ? <p className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 text-start text-red-500'>Reason must be atleast 20 characters long.</p> : null}
 
             <button onClick={() => {
                 handleproceed()
-            }} className='bg-green-500 text-white px-4 py-2 text-xl rounded-md'>Proceed</button>
+            }} className='bg-green-500 text-white px-4 py-2 text-xl rounded-md mt-16'>Proceed</button>
         </div >
     )
 }

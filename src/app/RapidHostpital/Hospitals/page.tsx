@@ -64,7 +64,7 @@ function page() {
 
             <Authentication />
             {/* //booking window will appear  only when we have set its status 1 */}
-            <BookingWindow />
+            {/* <BookingWindow /> */}
             <Header />
             <div className="hospitalList w-[90%]  mt-10 relative ">
                 <div className=" filters flex md:flex-row flex-col sticky justify-end gap-2 rounded-md top-0 xl:px-20 lg:px-16 md:px-12 sm:px-8 px-4 py-2 focus:outline-none  w-full bg-slate-200">

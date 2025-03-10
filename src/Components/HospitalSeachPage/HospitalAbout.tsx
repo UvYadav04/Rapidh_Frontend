@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import Aretemis from '../../Images/Hospitals/hospital.jpg';
 import WardCard from '../HomePage/ServicesSection/WardCard';
 import OperationCard from './OperationCard';
@@ -14,6 +14,7 @@ import LoginLoader from '../Authentication/LoginLoader';
 import { fetchrole } from '../../../lib/redux/actions/Role';
 import { MdCancel } from 'react-icons/md';
 import { useBookingWindow } from '@/ContextProvider/BookingWindow';
+import BookingWindow from '../BookingWindow/BookingWindow';
 
 export interface OperationList {
     id: string,
@@ -72,6 +73,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
     const [popup, setPopup] = useState<boolean>(false);
     const [selected, setSelected] = useState<number>(1);
     const [operationInput, setOperationInput] = useState<string>('');
+    const [pendingBooking, setpendingBooking] = useState<number>(-1)
     const [patient, setPatient] = useState<patientInterface>({
         Admit: true,
         Ward: data.wards[0],
@@ -95,32 +97,38 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
     const { profile } = useSelector((state: RootState) => state.user);
     const { loginStatus, setLoginStatus } = useAuth();
     const { error, role, loading } = useSelector((state: RootState) => state.role);
-    const { booking, setbooking } = useBookingWindow()
+    const [window, setwindow] = useState<boolean>(false)
 
     const dispatch = useDispatch<AppDispatch>();
 
     const handleOperation = () => {
-        // if (profile.id === '') {
-        //     return setbooking(1);
-        // }
-
         if (operation.operationdata === null) return setErrorIndex(2);
         if (operation.Age === undefined) return setErrorIndex(3);
+        if (operation.Age <= 0 || operation.Age > 100) return setErrorIndex(6);
+
+        if (profile.id === '') {
+            setpendingBooking(1)
+            return setwindow(true);
+        }
 
         const operationData = btoa(JSON.stringify(operation));
         const hospitalData = btoa(JSON.stringify(data));
-        router.push(`Hospitals/Booking?patient=${operationData}&hospital=${hospitalData}`);
+        sessionStorage.setItem("sessionKey", btoa(JSON.stringify(profile.id)))
+        router.push(`Hospitals/Booking?user=${profile.id}&patient=${operationData}&hospital=${hospitalData}`);
     };
 
     const handlePatient = () => {
         if (patient.Age === undefined) return setErrorIndex(4);
+        if (patient.Age <= 0 || patient.Age > 100) return setErrorIndex(5)
 
-        // if (profile.id === '')
-        //     return setbooking(1);
-        const userdata = btoa(JSON.stringify(profile))
+        if (profile.id === '') {
+            setpendingBooking(2)
+            return setwindow(true);
+        }
         const patientData = btoa(JSON.stringify(patient));
         const hospitalData = btoa(JSON.stringify(data));
-        router.push(`Hospitals/Booking?user=${userdata}&patient=${patientData}&hospital=${hospitalData}`);
+        sessionStorage.setItem("sessionKey", btoa(JSON.stringify(profile.id)))
+        router.push(`Hospitals/Booking?user=${profile.id}&patient=${patientData}&hospital=${hospitalData}`);
     };
 
     const editHospital = (hospitalDataObj: any) => {
@@ -128,17 +136,25 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
         router.replace(`/RapidHostpital/addNewHospital?hospital=${hospitalData}`);
     };
 
-    // useEffect(() => {
-    //     if (!loading) {
-    //         if (Object.keys(error).length > 0) {
-    //             alert("role error")
-    //             redirect('/RapidHostpital/ErrorOccured');
-    //         }
-    //         else if (!role) {
-    //             dispatch(fetchrole());
-    //         }
-    //     }
-    // }, [role, loading, error, dispatch]);
+    useEffect(() => {
+        if (profile.id !== "" && pendingBooking != -1) {
+            alert("maalik pending")
+            if (pendingBooking == 1)
+                handleOperation()
+
+            if (pendingBooking == 2)
+                handlePatient()
+
+            setpendingBooking(-1)
+        }
+    }, [profile])
+
+    useEffect(() => {
+        if (popup === false) {
+            setwindow(false)
+            setpendingBooking(-1)
+        }
+    }, [popup])
 
     if (loading) return <LoginLoader />;
 
@@ -146,6 +162,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
         <div className="Card2 w-[100%] flex flex-row bg-white">
 
             <ListCard data={data} setPopup={setPopup} popup={popup} />
+            {window ? <BookingWindow setwindow={setwindow} /> : null}
 
             {popup ? (
                 <div
@@ -261,11 +278,13 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                             htmlFor="age"
                                             className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 z-0"
                                         >
-                                            {errorIndex === 4 ? (
-                                                <p className="text-red-500">required</p>
-                                            ) : (
-                                                <p>Age of the patient</p>
-                                            )}
+                                            {
+                                                errorIndex === 4 ? (
+                                                    <p className="text-red-500">required</p>
+                                                ) : (
+                                                    errorIndex === 5 ? <p className="text-red-500">invalid</p> : <p>Age of the patient</p>
+                                                )
+                                            }
                                         </label>
                                     </div>
 
@@ -439,8 +458,9 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                             {errorIndex === 3 ? (
                                                 <p className="text-red-500">required</p>
                                             ) : (
-                                                <p>Age of the patient</p>
-                                            )}
+                                                errorIndex === 6 ? <p className="text-red-500">invalid</p> : <p>Age of the patient</p>
+                                            )
+                                            }
                                         </label>
                                     </div>
 
