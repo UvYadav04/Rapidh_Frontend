@@ -1,12 +1,16 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppStore, RootState } from '../../../../lib/Store'
-import { redirect, useSearchParams } from 'next/navigation'
+import { redirect, useRouter, useSearchParams } from 'next/navigation'
 import { getMyBookings } from '../../../../lib/redux/actions/bookings'
 import LoginLoader from '@/Components/Authentication/LoginLoader'
 import Navbar from '@/Components/HomePage/HeaderSection/Navbar'
 import { Booking } from '../../../../lib/redux/slices/Mybookings'
+import './page.css'
+import { MdCancel } from 'react-icons/md'
+import BookingList from './BookingList'
+import { Router } from 'lucide-react'
 
 function page() {
     const dispatch = useDispatch<AppDispatch>()
@@ -14,13 +18,9 @@ function page() {
     const userid = params.get("userid")
     const { profile } = useSelector((state: RootState) => state.user)
     const { bookings, loading, bookingerror } = useSelector((state: RootState) => state.mybookings)
+    const router = useRouter()
 
     console.log(bookings)
-
-    // useEffect(() => {
-    //     if (!userid || profile.id === "" || parseInt(userid) !== parseInt(profile.id))
-    //         redirect('/RapidHostpital/Unauthorized')
-    // }, [])
 
     useEffect(() => {
         if (!bookings) {
@@ -28,13 +28,17 @@ function page() {
         }
     }, [])
 
-    // console.log(bookingerror)
+    useEffect(() => {
+        if (profile.id === "" || profile.id !== userid)
+            return router.replace('Unauthorized')
+    },[profile])
 
-    // if (bookingerror)
-    //     return redirect("/RapidHostpital/ErrorOccured")
 
-    // if (loading)
-    //     return <LoginLoader />
+    if (bookingerror)
+        return router.replace("ErrorOccured")
+
+    if (loading)
+        return <LoginLoader />
 
     return (
         <div className='mybookigns flex flex-col w-full h-fit place-items-center place-content-center gap-10 '>
@@ -46,7 +50,7 @@ function page() {
             <div className="list flex flex-col w-[80%] mt-18 gap-4">
                 {
                     bookings ? bookings.map((item) => {
-                        return <List item={item} />
+                        return <BookingList item={item}/>
                     }) : null
                 }
             </div>
@@ -58,24 +62,9 @@ export default page
 
 
 
-function List({ item }: { item: Booking }) {
-    const [popup, setpopup] = useState<boolean>(false)
-    return (
-        <div className='w-full bg-slate-300 flex flex-col px-2 py-1 rounded-sm' onClick={() => setpopup(true)}>
-            <h1 className='text-3xl text-teal-500 font-bold'>{item.HospitalName.toLocaleUpperCase()}</h1>
-            <h6 className='text-slate-800'>{item.AdmissionDate}</h6>
-            {popup ? <Pop data={item} /> : null}
-        </div>
-    )
-}
 
-
-function Pop({ data }: { data: Booking }) {
-    return (
-        <div className='w-full min-h-fit h-full absolute top-0 left-0 bg-transparent flex place-content-center place-items-center'>
-            <div className="table w-6/12">
-                <h1>name :{data.name}</h1>
-            </div>
-        </div>
-    )
-}
+// function Pop({ item, setpopup }: { item: Booking, setpopup: Dispatch<SetStateAction<boolean>> }) {
+//     return (
+        
+//     )
+// }

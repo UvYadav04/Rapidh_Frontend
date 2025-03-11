@@ -205,8 +205,8 @@ function page() {
                                     <td>Operation Charges : </td>
                                     <td>{patientData?.operationdata?.operationCharges}</td>
                                 </tr>
-                                <tr>
-                                    <td className='bg-slate-300'>Total : </td>
+                                <tr className='bg-slate-300'>
+                                    <td >Total : </td>
                                     <td>{totalOperationCharges()}</td>
                                 </tr>
                             </>

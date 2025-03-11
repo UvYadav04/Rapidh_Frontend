@@ -17,9 +17,9 @@ function Navbar() {
     // console.log(profile)
 
     return (
-        <div className=" flex justify-center md:w-full w-fit bg-[#EDF6F9] items-center lg:mt-2 mt-0  sticky top-0 left-0">
+        <div className=" flex justify-center lg:w-full w-fit bg-[#EDF6F9] items-center lg:mt-2 mt-0  sticky top-0 left-0">
             <Sidebar />
-            <ul className=" gap-10 md:flex hidden text-teal-500 font-semibold text-lg ms-8 flex-1 justify-center">
+            <ul className=" gap-10 lg:flex hidden text-teal-500 font-semibold text-lg ms-8 flex-1 justify-center">
                 <MenuItem title="Home" onClick={() => router.push('/')} />
                 <MenuItem title="Hospitals" />
                 <MenuItem title="Consult" />
@@ -37,7 +37,7 @@ function Navbar() {
             </ul>
 
             <button
-                className="text-md md:flex hidden text-black rounded-s-full w-fit  bg-teal-500 ps-3 text-2xl py-2  items-center gap-2 pe-14"
+                className="text-md lg:flex hidden text-black rounded-s-full w-fit  bg-teal-500 ps-3 text-2xl py-2  items-center gap-2 pe-14"
                 onClick={() => {
                     if (profile?.id !== "") {
                         alert('Profile clicked');

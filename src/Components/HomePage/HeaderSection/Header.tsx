@@ -10,7 +10,7 @@ function Header() {
             <div className="logo lg:w-24 md:w-20 md:mt-0 mt-2 w-16 h-full px-2 place-content-center">
                 <Image src={logo} alt='logo' className='rounded-sm' />
             </div>
-            <div className="head flex md:flex-col flex-row flex-1 place-items-center place-content-center">
+            <div className="head flex lg:flex-col flex-row flex-1 place-items-center place-content-center">
                 <SearchBar />
                 <Navbar />
             </div>

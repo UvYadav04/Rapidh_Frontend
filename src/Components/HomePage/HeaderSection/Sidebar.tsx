@@ -51,7 +51,7 @@ export default function Sidebar() {
     );
 
     return (
-        <div className='md:hidden p-0 m-0'>
+        <div className='lg:hidden p-0 m-0 '>
             <Button className='w-fit p-0 m-0' onClick={toggleDrawer(true)}><GiHamburgerMenu size={25} color='teal' /></Button>
             <Drawer open={open} onClose={toggleDrawer(false)}>
                 {DrawerList}
