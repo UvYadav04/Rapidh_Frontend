@@ -47,7 +47,7 @@ function page() {
         if (hasRunOnce.current) return; // Skip the effect if it has already run
         const sessionKey = sessionStorage.getItem("sessionKey")
         if (!sessionKey)
-            redirect('/RapidHostpital/ErrorOccured?message=pagerefreshed')
+            return router.back()
         sessionStorage.removeItem("sessionKey")
 
         hasRunOnce.current = true;
@@ -117,6 +117,7 @@ function page() {
     return (
         <div className='w-full text-black flex flex-col place-items-center place-content-center gap-0'>
             <Navbar />
+            <p className='text-red-500 text-sm w-full text-start'>*Please do not refresh the page.</p>
             <table className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 bill text-lg mt-20'>
                 <tbody >
                     <tr >
