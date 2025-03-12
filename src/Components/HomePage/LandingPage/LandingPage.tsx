@@ -8,6 +8,7 @@ import { AppDispatch, RootState } from '../../../../lib/Store';
 import { getHospitalList } from '../../../../lib/redux/actions/hospitals';
 import LoginLoader from '@/Components/Authentication/LoginLoader';
 import { hospitalInterface } from '@/Components/HospitalSeachPage/HospitalAbout';
+import { resetHospitalError } from '../../../../lib/redux/slices/Hospitals';
 
 function LandingPage() {
     const [input, setinput] = useState<string>("")
@@ -20,8 +21,10 @@ function LandingPage() {
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
-        if (Hospitalerror)
+        if (Hospitalerror) {
+            dispatch(resetHospitalError())
             redirect('/RapidHostpital/ErrorOccured')
+        }
         else if (hospitals.length === 0)
             dispatch(getHospitalList())
     }, [hospitals])

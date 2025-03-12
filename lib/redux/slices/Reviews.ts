@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getReviews } from "../actions/reviews";
 import reviewsdata from '../../../src/data/reviews'
 import reviews from "../../../src/data/reviews";
+import { resetError } from "./User";
 const data = [...reviewsdata]
 // console.log(typeof (data))
 //
@@ -50,8 +51,12 @@ const reviewSlice = createSlice({
                 state.error = action.payload.message
             })
     },
-    reducers: {}
+    reducers: {
+        resetReviewError: (state) => {
+            state.error = null;
+        }
+    }
 })
 
-
+export const { resetReviewError } = reviewSlice.actions
 export default reviewSlice.reducer

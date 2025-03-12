@@ -5,14 +5,17 @@ import { redirect, useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../../lib/Store'
 import { getHospitalList } from '../../../lib/redux/actions/hospitals'
+import { resetHospitalError } from '../../../lib/redux/slices/Hospitals'
 function HospitalList({ searchinput, city }: { searchinput: string, city: string }) {
 
     const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
-        if (Hospitalerror)
+        if (Hospitalerror) {
+            dispatch(resetHospitalError())
             redirect('/RapidHostpital/ErrorOccured')
+        }
         else if (hospitals.length === 0)
             dispatch(getHospitalList())
     }, [hospitals])

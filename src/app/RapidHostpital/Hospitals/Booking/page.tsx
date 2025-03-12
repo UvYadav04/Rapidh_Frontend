@@ -40,7 +40,7 @@ function page() {
 
 
     }, [params, profile, patientData, HospitalData])
-    console.log(patientData)
+    // console.log(patientData)
 
 
     useEffect(() => {

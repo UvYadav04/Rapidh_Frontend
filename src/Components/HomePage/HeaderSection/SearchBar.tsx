@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from '../../../../lib/Store'
 import { getHospitalList } from '../../../../lib/redux/actions/hospitals'
 import { hospitalInterface } from '@/Components/HospitalSeachPage/HospitalAbout'
 import LoginLoader from '@/Components/Authentication/LoginLoader'
+import { resetHospitalError } from '../../../../lib/redux/slices/Hospitals'
 function SearchBar() {
     const [input, setinput] = useState<string>("")
     const [city, setcity] = useState<string>("")
@@ -20,8 +21,11 @@ function SearchBar() {
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
-        if (Hospitalerror)
-            redirect('/RapidHostpital/ErrorOccured')
+        if (Hospitalerror) {
+            console.log(Hospitalerror)
+            dispatch(resetHospitalError())
+            redirect('/RapidHostpital/ErrorOccured?message="hospitalError')
+        }
         else if (hospitals && hospitals?.length === 0)
             dispatch(getHospitalList())
     }, [hospitals])

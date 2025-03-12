@@ -3,13 +3,13 @@ import { fetchrole } from "../actions/Role"
 
 interface role {
     loading: boolean,
-    error: Object,
+    error: string | null,
     role: string | null
 }
 
 const initialState = {
     loading: false,
-    error: {},
+    error: null,
     role: null
 }
 
@@ -22,18 +22,15 @@ const RoleSlice = createSlice({
                 state.loading = true
             })
             .addCase(fetchrole.fulfilled, (state: role, action) => {
-                alert("role fullfilled")
+                // alert("role fullfilled")
                 console.log(action)
                 state.loading = false
                 state.role = action.payload.message
             })
-            .addCase(fetchrole.rejected, (state: role, action) => {
-                alert("role rejected")
+            .addCase(fetchrole.rejected, (state: role, action: any) => {
+                // alert("role rejected")
                 state.loading = false
-                state.error =
-                {
-                    message: action.payload
-                }
+                state.error = action.payload.message
                 console.log(action)
                 // state.error = action.payload
             })
@@ -41,10 +38,13 @@ const RoleSlice = createSlice({
     reducers: {
         resetRole: (state: role) => {
             state.role = null
-            state.error = {}
+            state.error = null
+        },
+        resetRoleError: (state: role) => {
+            state.error = null
         }
     }
 })
 
-export const { resetRole } = RoleSlice.actions
+export const { resetRole, resetRoleError } = RoleSlice.actions
 export default RoleSlice.reducer

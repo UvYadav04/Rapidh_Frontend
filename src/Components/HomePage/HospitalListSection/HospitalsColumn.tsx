@@ -10,6 +10,7 @@ import { getHospitalList } from '../../../../lib/redux/actions/hospitals'
 // import { hospitals } from '../../../data/hospitaldata'
 import { fetchrole } from '../../../../lib/redux/actions/Role'
 import LoginLoader from '@/Components/Authentication/LoginLoader'
+import { resetHospitalError } from '../../../../lib/redux/slices/Hospitals'
 function HospitalsColumn() {
     const router = useRouter()
     const { role, loading, error } = useSelector((state: RootState) => state.role)
@@ -17,8 +18,10 @@ function HospitalsColumn() {
     const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
 
     useEffect(() => {
-        if (Hospitalerror)
+        if (Hospitalerror) {
+            dispatch(resetHospitalError())
             redirect('/RapidHostpital/ErrorOccured')
+        }
         else if (hospitals.length === 0)
             dispatch(getHospitalList())
     }, [hospitals])

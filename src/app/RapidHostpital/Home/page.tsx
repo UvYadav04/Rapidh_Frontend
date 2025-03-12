@@ -22,9 +22,9 @@ const Review = lazy(() => import('@/Components/HomePage/ReviewSection/Review'))
 
 function Page() {
     const dispatch = useDispatch<AppDispatch>()
-    // useEffect(() => {
-    //     dispatch(fetchrole())
-    // }, [dispatch])
+    useEffect(() => {
+        dispatch(fetchrole())
+    }, [dispatch])
 
     return (
         <div className='Homepage h-fit border-2 border-white flex flex-col justify-start place-items-center'>

@@ -62,7 +62,7 @@ function Authentication() {
 
     useEffect(() => {
         if (!loading) {
-            if (profile && Object.keys(profile).length > 0) {
+            if (profile.id !== "") {
                 setLoginStatus(0);
             } else if (erroruser.message !== "") {
                 if (erroruser?.message === "This Email has been used before") enablerror(7);

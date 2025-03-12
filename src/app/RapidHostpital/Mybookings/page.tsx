@@ -6,7 +6,7 @@ import { redirect, useRouter, useSearchParams } from 'next/navigation'
 import { getMyBookings } from '../../../../lib/redux/actions/bookings'
 import LoginLoader from '@/Components/Authentication/LoginLoader'
 import Navbar from '@/Components/HomePage/HeaderSection/Navbar'
-import { Booking } from '../../../../lib/redux/slices/Mybookings'
+import { Booking, resetBookingError } from '../../../../lib/redux/slices/Mybookings'
 import './page.css'
 import { MdCancel } from 'react-icons/md'
 import BookingList from './BookingList'
@@ -35,7 +35,10 @@ function page() {
 
 
     if (bookingerror)
+    {
+        dispatch(resetBookingError())
         return router.replace("ErrorOccured")
+    }
 
     if (loading)
         return <LoginLoader />

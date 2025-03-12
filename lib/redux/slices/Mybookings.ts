@@ -41,7 +41,6 @@ const initialState: BookingsState = {
 const bookingSlice = createSlice({
     name: "bookings",
     initialState,
-    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(getMyBookings.pending, (state) => {
@@ -63,6 +62,11 @@ const bookingSlice = createSlice({
                 state.bookings = null;
             });
     },
+    reducers: {
+        resetBookingError: (state) => {
+            state.bookingerror = null
+        }
+    }
 });
-
+export const { resetBookingError } = bookingSlice.actions
 export default bookingSlice.reducer;
