@@ -46,8 +46,8 @@ function HospitalsColumn() {
             </div>
             <div className="hostpitals w-[100%] flex overflow-x-scroll max-w-[100vw] gap-5" style={{ scrollbarWidth: "none" }} >
                 {
-                    hospitals && hospitals.map((item) => {
-                        return <HospitalCard data={item} />
+                    hospitals && hospitals.map((item, index) => {
+                        return <HospitalCard key={index} data={item} />
                     })
                 }
                 <div className="seemore text-teal-500 min-w-fit my-auto px-3 py-2 text-lg">

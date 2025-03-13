@@ -68,7 +68,7 @@ export interface OperationInterface {
 }
 
 function HospitalCard2({ data }: { data: hospitalInterface }) {
-    console.log(data)
+    // console.log(data)
 
     const [popup, setPopup] = useState<boolean>(false);
     const [selected, setSelected] = useState<number>(1);

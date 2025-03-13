@@ -8,6 +8,8 @@ import { getHospitalList } from '../../../../lib/redux/actions/hospitals'
 import { hospitalInterface } from '@/Components/HospitalSeachPage/HospitalAbout'
 import LoginLoader from '@/Components/Authentication/LoginLoader'
 import { resetHospitalError } from '../../../../lib/redux/slices/Hospitals'
+import { FaSearch } from "react-icons/fa";
+
 function SearchBar() {
     const [input, setinput] = useState<string>("")
     const [city, setcity] = useState<string>("")
@@ -88,7 +90,7 @@ function SearchBar() {
                         }
                     </select>
                     <input type="text" className='sm:flex-1 w-[inherit]  fs-lg md:py-1 md:px-2 px-1 py-0 md:text-base text-sm rounded-full bg-white focus:outline-none text-black ' placeholder='search for disease or hospitals' onChange={(e) => setinput(e.target.value)} value={input} />
-                    <button className='border-2 py-[1.5px] rounded-full text-white bg-teal-300  font-bold md:text-lg text-sm px-4' onClick={() => handlesearch()} >Search</button>
+                    <button className='border-2 py-[1.5px] rounded-full text-white bg-teal-500 h-full font-bold md:text-lg text-sm px-4' onClick={() => handlesearch()} ><FaSearch color='white' size={20} /></button>
                     {
                         focused ? (
                             <div className="hospitallist absolute top-[100%] z-40 left-0 w-full">

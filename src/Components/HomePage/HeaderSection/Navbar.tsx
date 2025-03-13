@@ -53,7 +53,7 @@ function Navbar() {
                     setLoginStatus(loginStatus === 0 ? 1 : 0);
                 }}
             >
-                <FaUserCircle color="white" />
+                <FaUserCircle color="white" className='h-full' />
                 <h6 className="text-sm text-white cursor-pointer relative">
                     {
                         profile?.id !== ""

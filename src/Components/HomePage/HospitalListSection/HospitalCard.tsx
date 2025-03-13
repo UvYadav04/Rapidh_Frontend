@@ -17,7 +17,7 @@ function HospitalCard({ data }: { data: hospitalInterface }) {
                 }} >{
                         data.name.length > 20 ? <>{data.name.slice(0, 20)}...</> : data.name
                     }
-                    <h2 className='text-slate-600 text-sm'>{data.rating} ratings</h2>
+                    <p className='text-slate-600 text-sm'>{data.rating} ratings</p>
                 </h1>
                 <h1 className='text-sm text-slate-600 '>
                     <p className='text-slate-600'>{data.city}, {data.state}, {data.PIN}</p>

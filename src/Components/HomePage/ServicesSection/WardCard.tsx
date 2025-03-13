@@ -25,8 +25,10 @@ function WardCard({ item, keyvalue, ward, setpatient, setoperation, type }: { it
                     <input type="checkbox" checked={item.id == ward.id} onChange={(e) => handlechange()} />
                     <h1 className='w-fit my-[1px] text-sm  text-teal-400 font-bold'> <span className='md:float-end float-start'>₹{item.charge}/day</span></h1>
                 </div>
-                <button className={`min-w-fit  w-32 rounded-sm font-sans ${ward.id == item.id ? "bg-teal-400 text-white " : "text-teal-400 bg-slate-100"} xl:text-lg lg:text-base md:text-md text-sm font-bold `}
-                    onClick={() => handlechange()}>{item.name}</button>
+                <button className={`min-w-fit group  w-32 rounded-sm font-sans relative ${ward.id == item.id ? "bg-teal-400 text-white " : "text-teal-400 bg-slate-100"} xl:text-lg lg:text-base md:text-md text-sm font-bold `}
+                    onClick={() => handlechange()}>{item.name.length < 10 ? item.name : <>{item.name.slice(0, 10)}..</>}
+                    <span className={`w-full group-hover:block hidden absolute top-0 left-0 overflow-visible rounded-sm h-fit ${ward.id == item.id ? "bg-teal-400 text-white " : "text-teal-400 bg-slate-100"}`}>{item.name}</span>
+                </button>
             </div>
         </li>
     )

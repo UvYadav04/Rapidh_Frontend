@@ -39,14 +39,17 @@ function page() {
 
     useMemo(() => {
         if (pricefilter == 0) {
-            return filteredHospitalData.sort((a, b) => a.name.localeCompare(b.name));
+            filteredHospitalData.sort((a, b) => a.name.localeCompare(b.name));
         }
         if (pricefilter == 1) {
-            return filteredHospitalData?.sort((a, b) => a.admissionCharges - b.admissionCharges)
+            filteredHospitalData?.sort((a, b) => a.admissionCharges - b.admissionCharges)
         }
         if (pricefilter == -1) {
-            return filteredHospitalData?.sort((a, b) => b.admissionCharges - a.admissionCharges)
+            filteredHospitalData?.sort((a, b) => b.admissionCharges - a.admissionCharges)
         }
+
+        setfilteredHospitalData([...filteredHospitalData])
+
     }, [pricefilter])
 
     useEffect(() => {
@@ -55,6 +58,19 @@ function page() {
             setsearchinput(hname.toLowerCase())
         }
     }, [params])
+
+    useEffect(() => {
+        filteredHospitalData.sort((a, b) => {
+            const aMatches = a.city.toLowerCase().includes(Locationfilter.toLowerCase());
+            const bMatches = b.city.toLowerCase().includes(Locationfilter.toLowerCase());
+            if (aMatches && !bMatches) return -1;
+            if (!aMatches && bMatches) return 1;
+            return a.name.localeCompare(b.name);
+        });
+
+        setfilteredHospitalData([...filteredHospitalData])
+    }, [Locationfilter, hospitals]);
+
 
     if (Hospitalloading)
         return <LoginLoader />
@@ -99,7 +115,7 @@ function page() {
                 <div className="list flex flex-col gap-5 justify-evenly my-5 ">
                     {
                         filteredHospitalData.map((item: hospitalInterface, index: number) => {
-                            return (Locationfilter === "" || item.city === Locationfilter) && (
+                            return (
                                 item.name.toLowerCase().includes(searchinput.toLowerCase()) ? (
                                     <HospitalCard2 data={item} key={`hospital-${index}`} />
                                 ) : (

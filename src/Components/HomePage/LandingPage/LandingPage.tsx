@@ -9,6 +9,7 @@ import { getHospitalList } from '../../../../lib/redux/actions/hospitals';
 import LoginLoader from '@/Components/Authentication/LoginLoader';
 import { hospitalInterface } from '@/Components/HospitalSeachPage/HospitalAbout';
 import { resetHospitalError } from '../../../../lib/redux/slices/Hospitals';
+import { FaSearch } from "react-icons/fa";
 
 function LandingPage() {
     const [input, setinput] = useState<string>("")
@@ -50,11 +51,11 @@ function LandingPage() {
             <div className="search flex flex-col full relative xl:w-7/12 lg:w-8/12 md:w-9/12 sm:w-10/12 w-11/12" >
                 <div className="inputrow flex-1 rounded-full bg-white flex relative" onFocus={() => handlefocus()} onBlur={() => handleblurr()}>
                     <input type="text" value={input} onChange={(e) => setinput(e.target.value)} className='flex-1 focus:outline-none bg-white rounded-full ps-5 pe-1   xl:py-2 md:py-1 py-0 text-slate-600' placeholder='search hospital or disease' />
-                    <button className='w-fit text-center p-0 bg-teal-500 text-white rounded-full  text-md xl:px-8 lg:px-8 sm:px-6 px-4 my-1 mx-1 rounded-e-full' onClick={() => {
+                    <button className='w-fit text-center p-1 bg-teal-500 text-white rounded-full  text-md  sm:px-4 px-4 my-1 mx-1 rounded-e-full' onClick={() => {
                         if (input === "")
                             return
                         router.push(`/RapidHostpital/Hospitals?search=${input}`)
-                    }}>Search</button>
+                    }}><FaSearch color='white' size={20} /></button>
                 </div>
                 <div className="hospitallist absolute top-[100%] z-40 left-0 w-full">
                     {
