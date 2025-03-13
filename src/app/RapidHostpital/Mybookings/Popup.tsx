@@ -6,20 +6,18 @@ import { useRouter } from 'next/navigation'
 function Popup({ item, setpop }: { item: Booking, setpop: Dispatch<SetStateAction<boolean>> }) {
     const router = useRouter()
     return (
-        <div className={`w-full  min-h-fit h-full fixed top-0 left-0 flex place-content-center place-items-center  bg-slate-500/50 z-40`}>
-            <div className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 bill text-lg mt-20 bg-slate-200 py-2 px-3 flex flex-col relative '>
+
+        <div className="absolute w-full h-full top-0 left-0 flex place-content-center place-items-center bg-slate-300/50">
+            <div className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 bill text-lg mt-20 min-h-fit bg-white py-2 px-3 flex flex-col relative  z-30'>
                 <MdCancel size={30} color='red' className="cursor-pointer absolute right-0 top-0" onClick={() => {
                     setpop(false)
                 }} />
                 <table className='w-full'>
-                    <tbody className='' >
+                    <tbody  >
                         <tr >
                             <td>Patient Name</td>
                             <td >{item.Name}</td>
-
                         </tr>
-
-
                         <tr>
                             <td>Date:</td>
                             <td >{item.AdmissionDate}</td>
@@ -109,8 +107,8 @@ function Popup({ item, setpop }: { item: Booking, setpop: Dispatch<SetStateActio
                     </tbody>
                 </table>
             </div>
-
         </div>
+
     )
 }
 

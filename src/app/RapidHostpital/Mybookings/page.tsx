@@ -23,7 +23,7 @@ function page() {
     console.log(bookings)
 
     useEffect(() => {
-        if (!bookings) {
+        if (!bookings || bookings.length === 0) {
             dispatch(getMyBookings())
         }
     }, [])
@@ -36,15 +36,16 @@ function page() {
 
     if (bookingerror)
     {
+        console.log(bookingerror)
         dispatch(resetBookingError())
-        return router.replace("ErrorOccured")
+        return router.replace("ErrorOccured?bookingerror=true")
     }
 
     if (loading)
         return <LoginLoader />
 
     return (
-        <div className='mybookigns flex flex-col w-full h-fit place-items-center place-content-center gap-10 '>
+        <div className='mybookings flex flex-col w-full h-fit place-items-center place-content-center gap-10 '>
             <Navbar />
             {/* <div className="filter w-full p-2 ">
                     <button className='' >Admissions</button>

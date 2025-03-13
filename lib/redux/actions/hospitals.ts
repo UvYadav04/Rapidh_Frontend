@@ -11,6 +11,7 @@ export const getHospitalList = createAsyncThunk(
                 return rejectWithValue("Error in fetching hospitals")
 
             const data = await response.json()
+            console.log(data)
             if (data.status !== "success")
                 throw new Error("failed to fetch from server")
             return data

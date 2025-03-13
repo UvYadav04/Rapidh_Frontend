@@ -65,8 +65,13 @@ const bookingSlice = createSlice({
     reducers: {
         resetBookingError: (state) => {
             state.bookingerror = null
+        },
+        resetBooking: (state) => {
+            state.bookingerror = null
+            state.bookings = []
+            state.loading = false
         }
     }
 });
-export const { resetBookingError } = bookingSlice.actions
+export const { resetBookingError, resetBooking } = bookingSlice.actions
 export default bookingSlice.reducer;

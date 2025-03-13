@@ -7,12 +7,13 @@ const data = [...reviewsdata]
 // console.log(typeof (data))
 //
 
-interface reviewInterface {
+export interface reviewInterface {
     id: string,
     review: string,
     ratings: number,
     user_id: string,
-    created: string
+    created: string,
+    user_name: string
 }
 interface reviews {
     loading: boolean,

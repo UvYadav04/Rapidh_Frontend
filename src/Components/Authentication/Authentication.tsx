@@ -65,9 +65,8 @@ function Authentication() {
             if (profile.id !== "") {
                 setLoginStatus(0);
             } else if (erroruser.message !== "") {
-                if (erroruser?.message === "This Email has been used before") enablerror(7);
-                else if (erroruser?.message === "Invalid password or email") enablerror(6);
-                else if (erroruser?.message === "This email is not registered.") enablerror(10);
+                console.log(erroruser)
+                if (erroruser.status === 301) enablerror(6)
                 else enablerror(12);
                 dispatch(resetError());
             }

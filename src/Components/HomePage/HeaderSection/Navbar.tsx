@@ -9,6 +9,7 @@ import { useAuth } from '@/ContextProvider/LoginContext';
 import { LogOut } from '../../../../lib/redux/actions/user';
 import Sidebar from './Sidebar';
 import { resetRole } from '../../../../lib/redux/slices/Role';
+import { resetBooking } from '../../../../lib/redux/slices/Mybookings';
 
 function Navbar() {
     const router = useRouter();
@@ -62,6 +63,7 @@ function Navbar() {
                 {profile.id !== "" && <button className='absolute top-[100%] transition duration-1000 ease-in-out group-hover:block hidden right-0 w-full bg-slate-200 rounded-sm text-red-500 text-lg font-semibold' onClick={() => {
                     dispatch(LogOut())
                     dispatch(resetRole())
+                    dispatch(resetBooking())
                 }}>Log Out</button>}
             </div>
         </div>

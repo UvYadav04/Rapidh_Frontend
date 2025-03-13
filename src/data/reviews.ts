@@ -1,9 +1,4 @@
-export interface reviewInterface {
-    name: string,
-    rating: number,
-    message: string,
-    image?: string | null
-}
+
 
 const reviews: reviewInterface[] = [
     {

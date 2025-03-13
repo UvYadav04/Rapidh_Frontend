@@ -10,6 +10,7 @@ export interface profileInterface {
 
 interface errorInterface {
     message?: string,
+    status?: number
 }
 
 interface user {
@@ -22,7 +23,8 @@ interface user {
 const initialState = {
     loading: false,
     erroruser: {
-        message: ""
+        message: "",
+        status: -1
     },
     success: false,
     profile: {
@@ -74,12 +76,13 @@ const userslice = createSlice({
                     email: action.payload.user.email
                 }
             })
-            .addCase(Login.rejected, (state: user, action) => {
+            .addCase(Login.rejected, (state: user, action: any) => {
                 alert("login rejected")
                 console.log(action)
                 state.loading = false
                 state.erroruser = {
-                    message: action.error.message
+                    message: action.payload.message,
+                    status: action.payload.status
                 }
             })
             .addCase(LogOut.pending, (state: user) => {
@@ -100,15 +103,18 @@ const userslice = createSlice({
                 state.loading = false
                 console.log(action)
                 state.erroruser = {
-                    message: action.error.message
+                    message: action.error.message,
+                    // status: action.status
                 }
             })
     },
     reducers: {
         resetError: (state: user) => {
             state.erroruser = {
-                message: ""
+                message: "",
+                status: -1
             }
+            state.loading = false
         }
     }
 })

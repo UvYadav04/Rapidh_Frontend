@@ -79,9 +79,9 @@ function Review() {
                 return alert("something went wrong")
             }
 
-            alert("review created")
+            // alert("review created")
             dispatch(getReviews())
-            console.log(data)
+            // console.log(data)
 
         } catch (error) {
             alert("failed to add review please try again later")

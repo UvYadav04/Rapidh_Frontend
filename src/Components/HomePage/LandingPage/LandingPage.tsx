@@ -16,7 +16,6 @@ function LandingPage() {
     const [focused, setfocused] = useState<boolean>(false)
     const [blurr, setblurr] = useState<boolean>(false)
 
-
     const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
     const dispatch = useDispatch<AppDispatch>()
 
@@ -25,7 +24,7 @@ function LandingPage() {
             dispatch(resetHospitalError())
             redirect('/RapidHostpital/ErrorOccured')
         }
-        else if (hospitals.length === 0)
+        else if (!hospitals || hospitals.length === 0)
             dispatch(getHospitalList())
     }, [hospitals])
 

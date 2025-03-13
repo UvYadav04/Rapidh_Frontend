@@ -22,7 +22,7 @@ function HospitalsColumn() {
             dispatch(resetHospitalError())
             redirect('/RapidHostpital/ErrorOccured')
         }
-        else if (hospitals.length === 0)
+        else if (!hospitals || hospitals.length === 0)
             dispatch(getHospitalList())
     }, [hospitals])
 
@@ -46,7 +46,7 @@ function HospitalsColumn() {
             </div>
             <div className="hostpitals w-[100%] flex overflow-x-scroll max-w-[100vw] gap-5" style={{ scrollbarWidth: "none" }} >
                 {
-                    hospitals.map((item) => {
+                    hospitals && hospitals.map((item) => {
                         return <HospitalCard data={item} />
                     })
                 }

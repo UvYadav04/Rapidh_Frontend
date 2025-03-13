@@ -254,7 +254,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                         />
                                         <label
                                             htmlFor="days"
-                                            className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 z-0"
+                                            className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 "
                                         >
                                             Days to admit - leave empty if not sure
                                         </label>
@@ -276,7 +276,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                         />
                                         <label
                                             htmlFor="age"
-                                            className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 z-0"
+                                            className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 "
                                         >
                                             {
                                                 errorIndex === 4 ? (
@@ -301,7 +301,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                         />
                                         <label
                                             htmlFor="requirements"
-                                            className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 z-0"
+                                            className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 "
                                         >
                                             Any other requirement or any issue
                                         </label>
@@ -341,7 +341,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                         {errorIndex === 2 && (
                                             <label
                                                 htmlFor="operation"
-                                                className="absolute left-2 top-0 text-[10px] text-red-500 z-0"
+                                                className="absolute left-2 top-0 text-[10px] text-red-500 "
                                             >
                                                 this column is required
                                             </label>
@@ -453,7 +453,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                         />
                                         <label
                                             htmlFor="age"
-                                            className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 z-0"
+                                            className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 "
                                         >
                                             {errorIndex === 3 ? (
                                                 <p className="text-red-500">required</p>
@@ -477,7 +477,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                         />
                                         <label
                                             htmlFor="allergy"
-                                            className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 z-0"
+                                            className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 "
                                         >
                                             Any Allergy - if Yes, type name
                                         </label>
@@ -496,7 +496,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                         />
                                         <label
                                             htmlFor="requirements"
-                                            className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 z-0"
+                                            className="absolute left-2 top-[-8px] bg-slate-200 text-[10px] text-teal-600 "
                                         >
                                             Any other requirements
                                         </label>
