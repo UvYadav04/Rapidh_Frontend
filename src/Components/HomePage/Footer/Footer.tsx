@@ -136,14 +136,6 @@ const Footer = () => {
 
                     <li>
                         <a
-                            href="/RapidHostpital/Admin"
-                            className="text-sm text-slate-300 transition-colors duration-300 hover:text-deep-purple-accent-400"
-                        >
-                            Admin Panel
-                        </a>
-                    </li>
-                    <li>
-                        <a
                             href="/"
                             className="text-sm text-slate-300 transition-colors duration-300 hover:text-deep-purple-accent-400"
                         >

@@ -18,7 +18,6 @@ import { AppDispatch, RootState } from '../../../../lib/Store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { LogOut } from '../../../../lib/redux/actions/user';
-import { resetRole } from '../../../../lib/redux/slices/Role';
 import { resetBooking } from '../../../../lib/redux/slices/Mybookings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import StarIcon from '@mui/icons-material/Star';
@@ -36,7 +35,7 @@ export default function Sidebar() {
     const [items, setitems] = useState<sidebaritems[]>(
         [
             { text: 'Home', path: '/', icon: <HomeIcon /> },
-            { text: 'Hospitals', path: '/RapidHostpital/Hospitals', icon: <LocalHospitalIcon /> },
+            { text: 'Hospitals', path: '/Hospitals', icon: <LocalHospitalIcon /> },
             { text: 'Consult', path: '#', icon: <EmailIcon /> },
             { text: 'Privacy Policy', path: '#', icon: <DraftsIcon /> },
         ])
@@ -44,17 +43,6 @@ export default function Sidebar() {
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
     };
-
-    // useEffect(() => {
-    //     if (profile.id !== "") {
-    //         setitems((prev) => {
-    //             return [...prev,
-    //             { text: 'My Bookings', path: '/RapidHostpital/Mybookings', icon: <HomeIcon /> },
-    //             { text: 'Logout', path: '/RapidHostpital/Hospitals', icon: <LocalHospitalIcon /> },
-    //             ]
-    //         })
-    //     }
-    // }, [profile])
 
     const DrawerList = (
         <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
@@ -71,10 +59,9 @@ export default function Sidebar() {
                 ))}
             </List>
             <Divider />
-            <List>
-
+            {profile.id !== "" && <List>
                 <ListItem disablePadding>
-                    <ListItemButton component={Link} href={'/RapidHostpital/Mybookings'} >
+                    <ListItemButton component={Link} href={'/Mybookings'} >
                         <ListItemIcon>
                             <StarIcon />
                         </ListItemIcon>
@@ -85,7 +72,6 @@ export default function Sidebar() {
                     <ListItemButton onClick={() => {
                         () => {
                             dispatch(LogOut())
-                            dispatch(resetRole())
                             dispatch(resetBooking())
                         }
 
@@ -97,7 +83,7 @@ export default function Sidebar() {
                     </ListItemButton>
                 </ListItem>
 
-            </List>
+            </List>}
         </Box>
     );
 

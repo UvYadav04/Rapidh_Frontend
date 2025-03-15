@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaChevronCircleDown } from "react-icons/fa";
 import { FaChevronCircleUp } from "react-icons/fa";
-import { Booking } from '../../../../lib/redux/slices/Mybookings';
+import { Booking } from '../../../lib/redux/slices/Mybookings';
 import Popup from '../Mybookings/Popup';
 function List({ item, index }: { item: any, index: number }) {
     console.log(item)

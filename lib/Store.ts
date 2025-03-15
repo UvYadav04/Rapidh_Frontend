@@ -5,7 +5,6 @@ import { combineReducers } from 'redux';
 import hospitalReducer from './redux/slices/Hospitals'
 import reviewReducer from './redux/slices/Reviews'
 import userReducer from './redux/slices/User'
-import roleReducer from './redux/slices/Role'
 import bookingReducer from './redux/slices/Mybookings'
 
 // Combine reducers
@@ -13,7 +12,6 @@ const rootReducer = combineReducers({
     user: userReducer,
     reviews: reviewReducer,
     hospitals: hospitalReducer,
-    role: roleReducer,
     mybookings: bookingReducer
 });
 

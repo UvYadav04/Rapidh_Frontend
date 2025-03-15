@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
 import doctors from '../../../Images/doctors.png'
-import whywe from '../Images/whywe.png'
 function Banner1() {
     return (
         <div className='w-[90%] flex h-fit  xl:mt-10 lg:mt-8 md:mt-6 mt-0 relative '>

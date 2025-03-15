@@ -4,16 +4,13 @@ import Header from '@/Components/HomePage/HeaderSection/Header'
 import HospitalCard2 from '@/Components/HospitalSeachPage/HospitalAbout'
 import React, { useEffect, useMemo, useState } from 'react'
 import { hospitalInterface } from '@/Components/HospitalSeachPage/HospitalAbout'
-// import { hos pitals } from '../../../data/hospitaldata'
 import { redirect, useSearchParams } from 'next/navigation'
 import Authentication from '@/Components/Authentication/Authentication'
-import BookingWindow from '@/Components/BookingWindow/BookingWindow'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, AppStore, RootState } from '../../../../lib/Store'
-import { getHospitalList } from '../../../../lib/redux/actions/hospitals'
 import LoginLoader from '@/Components/Authentication/LoginLoader'
+import { getHospitalList } from '../../../lib/redux/actions/hospitals'
+import { AppDispatch, RootState } from '../../../lib/Store'
 function page() {
-    // console.log(hospitals)    import { useSearchParams } from 'next/navigation'
     const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
     const [searchinput, setsearchinput] = useState<string>("")
     const params = useSearchParams()
@@ -25,7 +22,7 @@ function page() {
 
     useEffect(() => {
         if (Hospitalerror)
-            redirect('/RapidHostpital/ErrorOccured')
+            redirect('/ErrorOccured')
         else if (hospitals.length === 0)
             dispatch(getHospitalList())
     }, [hospitals])
@@ -79,8 +76,7 @@ function page() {
         <div className='hospitals page w-full flex flex-col justify-start max-w-full place-items-center'>
 
             <Authentication />
-            {/* //booking window will appear  only when we have set its status 1 */}
-            {/* <BookingWindow /> */}
+
             <Header />
             <div className="hospitalList w-[90%]  mt-10 relative ">
                 <div className=" filters flex md:flex-row flex-col sticky justify-end gap-2 rounded-md top-0 xl:px-20 lg:px-16 md:px-12 sm:px-8 px-4 py-2 focus:outline-none  w-full bg-slate-200">
@@ -134,28 +130,3 @@ function page() {
 }
 
 export default page
-
-
-// const getLocation = () => {
-//     if (typeof window !== "undefined" && "geolocation" in navigator) {
-//         alert("Locating...");
-//         navigator.geolocation.getCurrentPosition(
-//             (position) => {
-//                 const latitude = position.coords.latitude;
-//                 const longitude = position.coords.longitude;
-
-//                 // setLocation({ latitude, longitude });
-//                 alert(`Latitude: ${latitude}, Longitude: ${longitude}`);
-//             },
-//             (error) => {
-//                 console.log(error.message);
-//             }
-//         );
-//     } else {
-//         console.log("Geolocation is not supported by this browser.");
-//     }
-// };
-
-// useEffect(() => {
-//     getLocation();
-// }, []);

@@ -5,7 +5,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../lib/Store'
 import LoginLoader from '../Authentication/LoginLoader'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useAuth } from '@/ContextProvider/LoginContext'
 var validator = require("email-validator");
 
@@ -26,15 +26,6 @@ function BookingWindow({ setwindow }: { setwindow: Dispatch<SetStateAction<boole
             setemail("")
         })
     }, [booking])
-
-    // const EmailValidity = () => {
-    //     const validity = validator(email)
-    //     if (validity)
-    //         setvalidemail(true)
-    // }
-
-    // if (booking === 0)
-    //     return null
 
     if (loading || isloading)
         return <LoginLoader />
@@ -58,13 +49,13 @@ function BookingWindow({ setwindow }: { setwindow: Dispatch<SetStateAction<boole
             setloading(false)
 
             if (!response.ok)
-                return router.replace('/RapidHostpital/ErrorOccured');
+                return router.replace('/ErrorOccured');
 
             const data = await response.json()
             console.log(data)
             setchecked(true)
             if (data.status === "error")
-                return router.replace('/RapidHostpital/ErrorOccured');
+                return router.replace('/ErrorOccured');
 
             if (data.exists) {
                 alert("maalik exists")
@@ -74,7 +65,7 @@ function BookingWindow({ setwindow }: { setwindow: Dispatch<SetStateAction<boole
 
         } catch (error) {
             console.log(error)
-            return router.replace('/RapidHostpital/ErrorOccured');
+            return router.replace('/ErrorOccured');
         }
     }
 
@@ -90,7 +81,6 @@ function BookingWindow({ setwindow }: { setwindow: Dispatch<SetStateAction<boole
                 <input type="text" disabled={checked || loading} name='email' placeholder='enter email' value={email} onChange={(e) => setemail(e.target.value)} className='focus:outline-none bg-slate-300 rounded-md px-2 py-1 w-full' />
                 {!checked && <button className={`px-3 py-0 text-lg bg-teal-500 rounded-md`} onClick={(() => {
                     checkEmail()
-                    // EmailValidity()
                 })}>Proceed</button>}
                 {checked && exists && <button className='px-3 py-0 text-sm text-white bg-teal-500 rounded-sm' onClick={() => {
                     setbooking(0)

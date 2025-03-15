@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import { Booking } from '../../../../lib/redux/slices/Mybookings'
+import { Booking } from '../../../lib/redux/slices/Mybookings'
 import { MdCancel } from 'react-icons/md'
 import { useRouter } from 'next/navigation'
 
@@ -9,7 +9,7 @@ function Popup({ item, setpop }: { item: Booking, setpop: Dispatch<SetStateActio
 
         <div className="absolute w-full h-full top-0 left-0 flex place-content-center place-items-center bg-slate-300/50">
             <div className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 bill text-lg mt-20 min-h-fit bg-white py-2 px-3 flex flex-col relative  z-30'>
-                <MdCancel size={30} color='red' className="cursor-pointer absolute right-0 top-0" onClick={() => {
+                <MdCancel size={25} color='black' className="cursor-pointer absolute right-0 top-0 bg-white" onClick={() => {
                     setpop(false)
                 }} />
                 <table className='w-full'>
@@ -49,10 +49,6 @@ function Popup({ item, setpop }: { item: Booking, setpop: Dispatch<SetStateActio
                                         <td>Other Requirements : </td>
                                         <td>{item.Requirements !== "" ? item.Requirements : "No Requirements"}</td>
                                     </tr>
-                                    {/* <tr>
-                                            <td>Admission Charges : </td>
-                                            <td>{item.}</td>
-                                        </tr> */}
                                     <tr>
                                         <td>Ward Bed Charges : </td>
                                         <td>{item.ChargePerDay}</td>
@@ -89,10 +85,6 @@ function Popup({ item, setpop }: { item: Booking, setpop: Dispatch<SetStateActio
                                         <td>Ward Bed Charges : </td>
                                         <td>{item.ChargePerDay}</td>
                                     </tr>
-                                    {/* <tr>
-                                            <td>Admission Charges : </td>
-                                            <td>{Hospitalitem?.admissionCharges}</td>
-                                        </tr> */}
 
                                     <tr>
                                         <td>Operation Charges : </td>

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../lib/Store';
 import { Login, Signup } from '../../../lib/redux/actions/user';

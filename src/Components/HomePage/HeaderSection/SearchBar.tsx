@@ -26,7 +26,7 @@ function SearchBar() {
         if (Hospitalerror) {
             console.log(Hospitalerror)
             dispatch(resetHospitalError())
-            redirect('/RapidHostpital/ErrorOccured?message="hospitalError')
+            redirect('/ErrorOccured?message="hospitalError')
         }
         else if (hospitals && hospitals?.length === 0)
             dispatch(getHospitalList())
@@ -72,7 +72,7 @@ function SearchBar() {
         if (input === "")
             return
         setinput("")//will set after re-rendering page, so input will be same in next line
-        router.push(`/RapidHostpital/Hospitals?search=${input}`)
+        router.push(`/Hospitals?search=${input}`)
     }
 
     if (Hospitalloading)

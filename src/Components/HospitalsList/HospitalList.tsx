@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { hospitals } from '@/data/hospitaldata'
+// import { hospitals } from '@/data/hospitaldata'
 import { hospitalInterface } from '../HospitalSeachPage/HospitalAbout'
 import { redirect, useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,7 +14,7 @@ function HospitalList({ searchinput, city }: { searchinput: string, city: string
     useEffect(() => {
         if (Hospitalerror) {
             dispatch(resetHospitalError())
-            redirect('/RapidHostpital/ErrorOccured')
+            redirect('/ErrorOccured')
         }
         else if (hospitals.length === 0)
             dispatch(getHospitalList())
@@ -45,7 +45,7 @@ function HospitalListCard({ data, operation }: { data: hospitalInterface, operat
     return (
         <div className='listcard flex flex-col bg-white px-2 py-1 m-2 rounded-md'>
             <h1 className='text-lg text-teal-500 m-0 cursor-pointer' onClick={() => {
-                return router.push(`/RapidHostpital/Hospitals?search=${data.name}`)
+                return router.push(`/Hospitals?search=${data.name}`)
             }}>
                 {data.name}
             </h1>

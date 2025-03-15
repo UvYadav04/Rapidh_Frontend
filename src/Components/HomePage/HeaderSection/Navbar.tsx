@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/ContextProvider/LoginContext';
 import { LogOut } from '../../../../lib/redux/actions/user';
 import Sidebar from './Sidebar';
-import { resetRole } from '../../../../lib/redux/slices/Role';
 import { resetBooking } from '../../../../lib/redux/slices/Mybookings';
 
 function Navbar() {
@@ -16,14 +15,6 @@ function Navbar() {
     const { loading, erroruser, profile } = useSelector((state: RootState) => state.user);
     const { loginStatus, setLoginStatus } = useAuth();
     const dispatch = useDispatch<AppDispatch>()
-
-    const { role, error } = useSelector((state: RootState) => state.role)
-    // console.log(profile)
-    // alert(role)
-    // useEffect(() => {
-
-    // }, [])
-
     return (
         <div className=" flex justify-center lg:w-full w-fit bg-[#EDF6F9] items-center lg:mt-2 mt-0  sticky top-0 left-0">
             <Sidebar />
@@ -36,11 +27,11 @@ function Navbar() {
                     <>
                         <MenuItem
                             title="My Bookings"
-                            onClick={() => router.push(`/RapidHostpital/Mybookings?userid=${profile.id}`)}
+                            onClick={() => router.push(`/Mybookings?userid=${profile.id}`)}
                         />
                         <MenuItem
                             title="Admin Panel"
-                            onClick={() => router.push(`/RapidHostpital/Admin`)}
+                            onClick={() => router.push(`/Admin`)}
                         />
                     </>
                 )}
@@ -62,7 +53,6 @@ function Navbar() {
                 </h6>
                 {profile.id !== "" && <button className='absolute top-[100%] transition duration-1000 ease-in-out group-hover:block hidden right-0 w-full bg-slate-200 rounded-sm text-red-500 text-lg font-semibold' onClick={() => {
                     dispatch(LogOut())
-                    dispatch(resetRole())
                     dispatch(resetBooking())
                 }}>Log Out</button>}
             </div>

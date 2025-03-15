@@ -1,6 +1,6 @@
 'use client'
 
-import { Booking } from '../../../../lib/redux/slices/Mybookings'
+import { Booking } from '../../../lib/redux/slices/Mybookings'
 
 
 export interface userList {
@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState, useRef } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../lib/Store";
+import { RootState } from "../../../lib/Store";
 import Header from '@/Components/HomePage/HeaderSection/Header';
 import List from './List';
 import LoginLoader from '@/Components/Authentication/LoginLoader';
@@ -45,7 +45,7 @@ const page = () => {
             })
             setloader(false)
             if (!response.ok) {
-                return router.replace('/RapidHostpital/ErrorOccured?adminresponseError=true')
+                return router.replace('/ErrorOccured?adminresponseError=true')
             }
 
             const data = await response.json();
@@ -53,19 +53,19 @@ const page = () => {
                 router.replace('/ErrorOccured')
 
             if (data.role !== "admin")
-                router.replace('/RapidHostpital/Unauthorized?part=2')
+                router.replace('/Unauthorized?part=2')
 
             setrole(data.role)
 
         } catch (error) {
             console.log(error)
-            router.replace('/RapidHostpital/ErrorOccured?part=3')
+            router.replace('/ErrorOccured?part=3')
         }
     }
 
     useEffect(() => {
         if (!profile || profile.id === "")
-            router.replace('/RapidHostpital/Unauthorized?message=maalikyaahanse')
+            router.replace('/Unauthorized?message=maalikyaahanse')
     }, [profile])
 
     useEffect(() => {

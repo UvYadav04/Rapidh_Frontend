@@ -10,7 +10,7 @@ function DiseaseCard({ image, title }: { image: any, title: string }) {
     }
     return (
         <div className='cursor-pointer lg:pt-5 md:pt-3 pt-1 rounded-sm md:pb-2 pb-1 md:gap-2 gap-1 flex flex-col  discard  place-content-center place-items-center bg-teal-500 flex-1' style={style} onClick={() => {
-            return router.push(`/RapidHostpital/Hospitals?search=${title}`)
+            return router.push(`/Hospitals?search=${title}`)
         }} >
             <Image src={image} alt='image' className='w-1/2' color='teal' />
             <h1 className='text-white font-serif font-semibold xl:text-xl lg:text-lg md:text-md text-[10px] mt-auto'>{title}</h1>

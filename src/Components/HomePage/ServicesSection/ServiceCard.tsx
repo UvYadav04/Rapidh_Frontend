@@ -8,13 +8,10 @@ function ServiceCard({ text, icon }: { text: String, icon: Number }) {
         <div className='lg:w-[25%] sm:w-[30%] xl:h-64 lg:h-60 md:h-52 review:h-48 sm:h-40 h-64 nokia:w-[60%]  w-[80%] sm:mb-0  flex flex-col sm:justify-start justify-center lg:pt-12 md:pt-10 review:pt-7 pt-4 xl:px-10 lg:px-6 md:px-3 sm:px-1 px-5 place-items-center bg-teal-400 text-white'>
             {
                 icon === 1 ? (
-                    // Render component or element for icon === 1
                     <LiaHospitalSolid className={iconclass} color='white' />
                 ) : icon === 2 ? (
-                    // Render component or element for icon === 2
                     <FaUserDoctor className={iconclass} color='white' />
                 ) : (
-                    // Render fallback or default component
                     <GiTakeMyMoney className={iconclass} color='white' />
                 )
             }

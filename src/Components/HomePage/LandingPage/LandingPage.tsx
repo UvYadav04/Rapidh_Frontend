@@ -23,7 +23,7 @@ function LandingPage() {
     useEffect(() => {
         if (Hospitalerror) {
             dispatch(resetHospitalError())
-            redirect('/RapidHostpital/ErrorOccured')
+            redirect('/ErrorOccured')
         }
         else if (!hospitals || hospitals.length === 0)
             dispatch(getHospitalList())
@@ -54,7 +54,7 @@ function LandingPage() {
                     <button className='w-fit text-center p-1 bg-teal-500 text-white rounded-full  text-md  sm:px-4 px-4 my-1 mx-1 rounded-e-full' onClick={() => {
                         if (input === "")
                             return
-                        router.push(`/RapidHostpital/Hospitals?search=${input}`)
+                        router.push(`/Hospitals?search=${input}`)
                     }}><FaSearch color='white' size={20} /></button>
                 </div>
                 <div className="hospitallist absolute top-[100%] z-40 left-0 w-full">

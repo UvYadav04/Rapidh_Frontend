@@ -2,9 +2,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { redirect, useRouter, useSearchParams } from 'next/navigation'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../../../../lib/Store'
 import './page.css'
 import Navbar from '@/Components/HomePage/HeaderSection/Navbar'
+import { RootState } from '../../../../lib/Store'
+import LoginLoader from '@/Components/Authentication/LoginLoader'
 
 interface personalInfo {
     name: string,
@@ -32,11 +33,11 @@ function page() {
 
     useEffect(() => {
         if (!HospitalData || !patientData || !userId)
-            return redirect('/RapidHostpital/ErrorOccured')
+            return redirect('/ErrorOccured')
 
 
         if (profile.id === "" || !userId || profile.id !== userId)
-            return router.replace('/RapidHostpital/Unauthorized')
+            return router.replace('/Unauthorized')
 
 
     }, [params, profile, patientData, HospitalData])
@@ -88,13 +89,13 @@ function page() {
             setloading(false)
 
             if (!response.ok)
-                return router.replace('/RapidHostpital/ErrorOccured');
+                return router.replace('/ErrorOccured');
 
             const data = await response.json()
             console.log(data)
             if (data.status === "error") {
                 console.log("error maalikg")
-                return router.replace('/RapidHostpital/ErrorOccured');
+                return router.replace('/ErrorOccured');
             }
             alert("hurray booking successfull")
             return router.replace('/')
@@ -102,7 +103,7 @@ function page() {
 
         } catch (error) {
             console.log(error)
-            return router.replace('/RapidHostpital/ErrorOccured');
+            return router.replace('/ErrorOccured');
         }
     }
 
@@ -114,22 +115,25 @@ function page() {
         })
     })
 
+    if (loading)
+        return <LoginLoader />
+
     return (
         <div className='w-full text-black flex flex-col place-items-center place-content-center gap-0'>
             <Navbar />
             <p className='text-red-500 text-sm w-full text-start'>*Please do not refresh the page.</p>
-            <table className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 bill text-lg mt-20'>
+            <table className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 bill text-lg mt-20 bg-slate-300'>
                 <tbody >
-                    <tr >
-                        <td>Patient Name</td>
-                        <td className=' p-0'><input type="text" name='name' className='bg-transparent focus:outline-none w-full m-0' placeholder='enter patient name' value={patient.name} onChange={(e) => handlePatient(e)} /></td>
+                    <tr  >
+                        <td >Patient Name</td>
+                        <td className='bg-slate-100 p-0'><input type="text" name='name' className='focus:outline-none bg-transparent  m-0 p-0 w-full' placeholder='Enter patient name' value={patient.name} onChange={(e) => handlePatient(e)} /></td>
 
                     </tr>
 
 
                     <tr>
                         <td>Date:</td>
-                        <td className='p-0'><input type="date" name='date' className='bg-transparent focus:outline-none w-full m-0' value={patient.date} min={new Date().toISOString().split('T')[0]} onChange={(e) => handlePatient(e)} /></td>
+                        <td className='p-0 bg-slate-100'><input type="date" name='date' className='bg-transparent focus:outline-none w-full m-0' value={patient.date} min={new Date().toISOString().split('T')[0]} onChange={(e) => handlePatient(e)} /></td>
                     </tr>
                     <tr >
                         <td>Hospital</td>
@@ -167,10 +171,10 @@ function page() {
                                 </tr>
                                 <tr >
                                     <td>Reason to admit</td>
-                                    <td className=' p-0'><input type="text" name='reason' className='bg-transparent focus:outline-none w-full m-0' placeholder='enter reason to admit' value={patient.reason} onChange={(e) => handlePatient(e)} /></td>
+                                    <td className=' p-0 bg-slate-100'><input type="text" name='reason' className='bg-transparent focus:outline-none w-full m-0' placeholder='enter reason to admit' value={patient.reason} onChange={(e) => handlePatient(e)} /></td>
 
                                 </tr>
-                                <tr className='bg-slate-300'>
+                                <tr className='bg-slate-100'>
                                     <td>Total : </td>
                                     <td>{totalAdmitCharges()}</td>
                                 </tr>
@@ -206,7 +210,7 @@ function page() {
                                     <td>Operation Charges : </td>
                                     <td>{patientData?.operationdata?.operationCharges}</td>
                                 </tr>
-                                <tr className='bg-slate-300'>
+                                <tr className='bg-slate-100'>
                                     <td >Total : </td>
                                     <td>{totalOperationCharges()}</td>
                                 </tr>
@@ -218,9 +222,14 @@ function page() {
             {errorIndex == 2 ? <p className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 text-start text-red-500'>Select a date please.</p> : null}
             {errorIndex == 3 ? <p className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 text-start text-red-500'>Reason must be atleast 20 characters long.</p> : null}
 
-            <button onClick={() => {
-                handleproceed()
-            }} className='bg-green-500 text-white px-4 py-2 text-xl rounded-md mt-16'>Proceed</button>
+            <div className="navigation flex justify-between gap-5 place-items-center">
+                <button onClick={() => {
+                    router.back()
+                }} className='bg-red-500 text-white px-4 py-2 text-xl rounded-md mt-16'>Back</button>
+                <button onClick={() => {
+                    handleproceed()
+                }} className='bg-green-500 text-white px-4 py-2 text-xl rounded-md mt-16'>Proceed</button>
+            </div>
         </div >
     )
 }

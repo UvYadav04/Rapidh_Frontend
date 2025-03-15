@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { Login, LogOut, Signup } from '../actions/user'
-import { resetRole } from './Role'
 
 export interface profileInterface {
     id: string,
@@ -96,7 +95,6 @@ const userslice = createSlice({
                     email: "",
                     name: ""
                 }
-                resetRole()
             })
             .addCase(LogOut.rejected, (state: user, action) => {
                 alert("logout rejected")
@@ -110,12 +108,16 @@ const userslice = createSlice({
     },
     reducers: {
         resetError: (state: user) => {
-            state.erroruser = {
-                message: "",
-                status: -1
-            }
-            state.loading = false
+            return {
+                ...state, // Spread the current state
+                erroruser: {
+                    message: "",  // Reset the message
+                    status: -1    // Reset the status
+                },
+                loading: false  // Set loading to false
+            };
         }
+
     }
 })
 

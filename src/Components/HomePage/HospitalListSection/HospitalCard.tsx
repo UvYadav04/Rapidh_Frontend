@@ -13,7 +13,7 @@ function HospitalCard({ data }: { data: hospitalInterface }) {
             </div>
             <div className="right flex flex-col place-content-start px-2">
                 <h1 className=' cursor-pointer xl:text-2xl lg:text-xl md:text-lg font-bold flex flex-col  text-teal-400' onClick={() => {
-                    router.push(`/RapidHostpital/Hospitals?search=${data.name}`)
+                    router.push(`/Hospitals?search=${data.name}`)
                 }} >{
                         data.name.length > 20 ? <>{data.name.slice(0, 20)}...</> : data.name
                     }
@@ -26,7 +26,7 @@ function HospitalCard({ data }: { data: hospitalInterface }) {
                     <p className='md:hidden sm:text-md text-[10px] mt-1 text-slate-400'>{data.contact.emergency} | {data.contact.appointments}</p>
                 </h1>
                 {/* <button onClick={() => {
-                    router.push(`/RapidHostpital/Hospitals?search=${data.name}`)
+                    router.push(`/Hospitals?search=${data.name}`)
                 }} className='bg-teal-500 text-white lg:text-lg md:text-md w-full xl:px-5 lg:px-3 px-10 ms-auto rounded-md mt-auto'>Book Now</button> */}
             </div>
         </div>

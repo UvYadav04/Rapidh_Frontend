@@ -27,9 +27,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog"
-import { Input } from "@/Components/ui/input"
-import { Label } from "@/Components/ui/label"
-import { Select } from '@mui/material'
 import StarRatings from 'react-star-ratings'
 
 interface reviewInput {
@@ -150,35 +147,24 @@ function Review() {
                                     {errorr === 1 ? <p className='text-red-400'>Review must be atleast 10 characters long.</p> : null}                                </DialogDescription>
                             </DialogHeader>
                             <DialogTitle>Add a review</DialogTitle>
-                            <div className="grid gap-4 py-4">
-                                <div className="grid grid-cols-4 items-center gap-4">
-                                    <Label htmlFor="review" className="text-right">
+                            <div className="flex flex-col gap-4 py-0">
+                                <div className="flex items-center gap-0 bg-red-500">
+                                    {/* <Label htmlFor="review" className="text-right">
                                         Review
-                                    </Label>
-                                    <Input id="review" value={review.review} onChange={(e) => setreview((prev) => {
+                                    </Label> */}
+                                    <textarea rows={4} id="review" value={review.review} onChange={(e) => setreview((prev) => {
                                         return { ...prev, review: e.target.value }
-                                    })} className="col-span-3" />
+                                    })} className=" w-full" placeholder='Enter a review' style={{ resize: 'none' }} />
                                 </div>
                                 <div className="flex  justify-center items-center gap-4">
-                                    {/* <Label htmlFor="username" className="text-right">
-                                        Rating
-                                    </Label> */}
-                                    {/* <Select id="username" className="text-md h-fit" onChange={(e) => setreview((prev) => {
-                                        return { ...prev, rating: (Number)(e.target.value) }
-                                    })} >
-                                        <option value={1}>1</option>
-                                        <option value={2}>2</option>
-                                        <option value={3}>3</option>
-                                        <option value={4}>4</option>
-                                        <option value={5}>5</option>
-                                    </Select> */}
+
                                     <StarRatings
                                         rating={review.rating}
-                                        starRatedColor="yellow"
+                                        starRatedColor="teal"
                                         starEmptyColor="rgb(110 116 139)"
                                         name='rating'
                                         // size={10}
-                                        starDimension="20px"
+                                        starDimension="30px"
                                         // isSelectable={true}
                                         changeRating={(rating) => setreview((prev) => {
                                             return { ...prev, rating: rating }

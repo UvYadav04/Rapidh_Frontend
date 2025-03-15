@@ -36,7 +36,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/RapidHostpital/Mybookings"
+    "src/app/Mybookings"
   ],
   "exclude": [
     "node_modules"

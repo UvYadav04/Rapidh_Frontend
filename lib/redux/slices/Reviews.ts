@@ -1,11 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getReviews } from "../actions/reviews";
-import reviewsdata from '../../../src/data/reviews'
-import reviews from "../../../src/data/reviews";
-import { resetError } from "./User";
-const data = [...reviewsdata]
-// console.log(typeof (data))
-//
+
 
 export interface reviewInterface {
     id: string,
@@ -54,8 +49,12 @@ const reviewSlice = createSlice({
     },
     reducers: {
         resetReviewError: (state) => {
-            state.error = null;
+            return {
+                ...state,  // Copy the existing state
+                error: null  // Reset error to null
+            };
         }
+
     }
 })
 

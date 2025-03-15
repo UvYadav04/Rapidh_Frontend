@@ -5,15 +5,11 @@ import Aretemis from '../../Images/Hospitals/hospital.jpg';
 import WardCard from '../HomePage/ServicesSection/WardCard';
 import OperationCard from './OperationCard';
 import '../Css/components.css';
-import { redirect } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../../lib/Store';
-import { useAuth } from '@/ContextProvider/LoginContext';
-import LoginLoader from '../Authentication/LoginLoader';
-import { fetchrole } from '../../../lib/redux/actions/Role';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../lib/Store';
+
 import { MdCancel } from 'react-icons/md';
-import { useBookingWindow } from '@/ContextProvider/BookingWindow';
 import BookingWindow from '../BookingWindow/BookingWindow';
 
 export interface OperationList {
@@ -95,11 +91,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
 
     const router = useRouter();
     const { profile } = useSelector((state: RootState) => state.user);
-    const { loginStatus, setLoginStatus } = useAuth();
-    const { error, role, loading } = useSelector((state: RootState) => state.role);
     const [window, setwindow] = useState<boolean>(false)
-
-    const dispatch = useDispatch<AppDispatch>();
 
     const handleOperation = () => {
         if (operation.operationdata === null) return setErrorIndex(2);
@@ -131,11 +123,6 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
         router.push(`Hospitals/Booking?user=${profile.id}&patient=${patientData}&hospital=${hospitalData}`);
     };
 
-    const editHospital = (hospitalDataObj: any) => {
-        const hospitalData = btoa(JSON.stringify(hospitalDataObj));
-        router.replace(`/RapidHostpital/addNewHospital?hospital=${hospitalData}`);
-    };
-
     useEffect(() => {
         if (profile.id !== "" && pendingBooking != -1) {
             alert("maalik pending")
@@ -156,8 +143,6 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
         }
     }, [popup])
 
-    if (loading) return <LoginLoader />;
-
     return (
         <div className="Card2 w-[100%] flex flex-row bg-white">
 
@@ -173,7 +158,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                         className="right-2 absolute top-2 cursor-pointer w-fit px-2 rounded-lg text-teal-400 "
                         onClick={() => setPopup(false)}
                     >
-                        <MdCancel size={25} />
+                        <MdCancel size={25} color='black' />
                     </h1>
                     <div className="intro flexflex-col justify-center text-black">
                         <div className="top flex flex-row">
@@ -183,11 +168,6 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                             <div className="About flex flex-col justify-start gap-0 w-3/4 px-2 xl:pt-2 lg:pt-1  pt-0">
                                 <h1 className="xl:text-4xl lg:text-3xl md:text-2xl text-xl text-teal-500 font-semibold flex justify-start items-center gap-5 ">
                                     {data.name}
-                                    {
-                                        role === "admin" ? <button onClick={() => editHospital(data)} className="bg-teal-500 text-white text-sm px-2 my-auto">
-                                            Edit
-                                        </button> : null
-                                    }
                                 </h1>
                                 <p className='mt-0'>{data.rating} ratings</p>
                                 <p className='xl:mt-2 lg:mt-1 mt-0 text-slate-500 lg:text-base md:text-md text-sm xl:leading-5 lg:leading-5 leading-5 md:block hidden'>{data.about}</p>

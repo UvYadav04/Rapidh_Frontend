@@ -2,12 +2,10 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../../../../lib/Store'
-import { redirect } from 'next/navigation'
-import { fetchrole } from '../../../../lib/redux/actions/Role'
-import Navbar from '../../../Components/HomePage/HeaderSection/Navbar'
+import { AppDispatch, RootState } from '../../../lib/Store'
+import Navbar from '../../Components/HomePage/HeaderSection/Navbar'
 import { MdCancel } from "react-icons/md";
-import LoginLoader from '../../../Components/Authentication/LoginLoader'
+import LoginLoader from '../../Components/Authentication/LoginLoader'
 import { useSearchParams } from 'next/navigation'
 
 interface wardsInterface {
@@ -66,21 +64,7 @@ function page() {
     const [hospital, sethospital] = useState<hospitalInterface>(initialState)
     const [errorIndex, setErrorIndex] = useState<number>(-1)
     const { role, loading, error } = useSelector((state: RootState) => state.role)
-    const dispatch = useDispatch<AppDispatch>()
     const params = useSearchParams()
-
-    // console.log(role)
-    // useEffect(() => {
-    //     console.log(role, loading, error)
-    //     if (!loading) {
-    //         if (Object.keys(error).length > 0)
-    //             redirect('/RapidHostpital/ErrorOccured')
-    //         else if (role !== "admin")
-    //             redirect('/RapidHostpital/Unauthorized')
-    //         else if (!role)
-    //             dispatch(fetchrole())
-    //     }
-    // }, [role, loading, error, dispatch])
 
     useEffect(() => {
         const encodedHospitalData = params.get("hospital")
