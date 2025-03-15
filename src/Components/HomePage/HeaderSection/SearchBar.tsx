@@ -30,7 +30,7 @@ function SearchBar() {
         }
         else if (hospitals && hospitals?.length === 0)
             dispatch(getHospitalList())
-    }, [hospitals])
+    }, [hospitals, Hospitalloading, Hospitalerror])
 
     useEffect(() => {
         const handleResize = () => {

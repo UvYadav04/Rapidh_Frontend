@@ -22,7 +22,7 @@ function HospitalsColumn() {
         }
         else if (!hospitals || hospitals.length === 0)
             dispatch(getHospitalList())
-    }, [hospitals])
+    }, [hospitals, Hospitalloading, Hospitalerror])
 
 
     if (Hospitalloading)
