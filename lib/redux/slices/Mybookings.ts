@@ -63,7 +63,7 @@ const bookingSlice = createSlice({
             });
     },
     reducers: {
-        rresetBookingError: (state) => {
+        resetBookingError: (state) => {
             return {
                 ...state,  // Copy the existing state
                 bookingerror: null  // Reset bookingerror to null

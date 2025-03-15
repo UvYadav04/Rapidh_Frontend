@@ -63,33 +63,7 @@ function page() {
     const [facility, setfacility] = useState<string>("")
     const [hospital, sethospital] = useState<hospitalInterface>(initialState)
     const [errorIndex, setErrorIndex] = useState<number>(-1)
-    const { role, loading, error } = useSelector((state: RootState) => state.role)
     const params = useSearchParams()
-
-    useEffect(() => {
-        const encodedHospitalData = params.get("hospital")
-        const data = encodedHospitalData ? JSON.parse(atob(encodedHospitalData)) : null;
-        // console.log(data)
-        if (data) {
-            sethospital((prev) => {
-                return {
-                    ...prev,
-                    name: data.name,
-                    about: data.about,
-                    contact: {
-                        appointment: data.contact.appointments,
-                        mobile: data.contact.emergency
-                    },
-                    operations: data.operations,
-                    wards: data.wards
-
-
-                }
-            })
-        }
-    }, [role])
-
-
 
     const enableError = (index: number) => {
         setTimeout(() => {
