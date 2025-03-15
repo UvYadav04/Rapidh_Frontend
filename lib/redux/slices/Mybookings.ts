@@ -47,9 +47,8 @@ const bookingSlice = createSlice({
                 state.loading = true;
             })
             .addCase(getMyBookings.fulfilled, (state, action) => {
-                alert("fulfilled")
                 state.loading = false;
-                console.log(action);
+                // console.log(action);
                 state.bookings = action.payload.bookings; // Safe to access bookings now
                 state.bookingerror = null;
             })

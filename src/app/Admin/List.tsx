@@ -4,7 +4,7 @@ import { FaChevronCircleUp } from "react-icons/fa";
 import { Booking } from '../../../lib/redux/slices/Mybookings';
 import Popup from '../Mybookings/Popup';
 function List({ item, index }: { item: any, index: number }) {
-    console.log(item)
+    // console.log(item)
     const [isactive, setactive] = useState<boolean>(false)
     return (
         <div key={item.user_id} className="w-full flex flex-col bg-slate-200 ">

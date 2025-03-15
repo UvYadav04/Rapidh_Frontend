@@ -28,13 +28,12 @@ const hospitalSlice = createSlice({
             .addCase(getHospitalList.fulfilled, (state: hospitals, action) => {
                 // alert("fullfilled")
                 state.Hospitalloading = false
-                console.log(action)
+                // console.log(action)
                 state.hospitals = action.payload.hospitals
             })
             .addCase(getHospitalList.rejected, (state: hospitals, action) => {
-                // alert("rejected")
                 state.Hospitalloading = false
-                console.log(action)
+                // console.log(action)
                 state.Hospitalerror = action
             })
 

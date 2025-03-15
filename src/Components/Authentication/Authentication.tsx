@@ -65,7 +65,7 @@ function Authentication() {
             if (profile.id !== "") {
                 setLoginStatus(0);
             } else if (erroruser.message !== "") {
-                console.log(erroruser)
+                // console.log(erroruser)
                 if (erroruser.status === 301) enablerror(6)
                 else enablerror(12);
                 dispatch(resetError());

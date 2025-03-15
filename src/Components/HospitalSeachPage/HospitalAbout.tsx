@@ -125,7 +125,6 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
 
     useEffect(() => {
         if (profile.id !== "" && pendingBooking != -1) {
-            alert("maalik pending")
             if (pendingBooking == 1)
                 handleOperation()
 

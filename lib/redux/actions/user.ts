@@ -22,7 +22,7 @@ export const Signup = createAsyncThunk(
 
             return data
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             return rejectWithValue("Somethign went wrong")
         }
     }
@@ -43,12 +43,12 @@ export const Login = createAsyncThunk(
             if (!response.ok)
                 return rejectWithValue({ message: "Error in logging in out", status: 404 })
             const data = await response.json()
-            console.log(data)
+            // console.log(data)
             if (data.status === "error")
                 return rejectWithValue({ message: data.msg, status: data.code })
             return data
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             return rejectWithValue({ message: "something went wrong our side. Please try again", status: 402 })
         }
     }

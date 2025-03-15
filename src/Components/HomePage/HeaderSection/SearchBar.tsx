@@ -24,7 +24,7 @@ function SearchBar() {
 
     useEffect(() => {
         if (Hospitalerror) {
-            console.log(Hospitalerror)
+            // console.log(Hospitalerror)
             dispatch(resetHospitalError())
             redirect('/ErrorOccured?message="hospitalError')
         }

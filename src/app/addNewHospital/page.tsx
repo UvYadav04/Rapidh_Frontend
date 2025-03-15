@@ -136,8 +136,6 @@ function page() {
         })
     }
 
-    if (loading)
-        return <LoginLoader />
     return (
         <div className='newhospital w-full flex flex-col'>
             <Navbar />

@@ -18,7 +18,7 @@ function page() {
     const { bookings, loading, bookingerror } = useSelector((state: RootState) => state.mybookings)
     const router = useRouter()
 
-    console.log(bookings)
+    // console.log(bookings)
 
     useEffect(() => {
         if (!bookings || bookings.length === 0) {
@@ -33,7 +33,7 @@ function page() {
 
 
     if (bookingerror) {
-        console.log(bookingerror)
+        // console.log(bookingerror)
         dispatch(resetBookingError())
         return router.replace("ErrorOccured?bookingerror=true")
     }

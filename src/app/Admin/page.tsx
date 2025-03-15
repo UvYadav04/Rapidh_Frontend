@@ -58,7 +58,7 @@ const page = () => {
             setrole(data.role)
 
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             router.replace('/ErrorOccured?part=3')
         }
     }
@@ -105,7 +105,7 @@ const page = () => {
             setdata((prev) => [...prev, ...userdata.users])
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         } finally {
             isFetching.current = false; // Allow fetching again
         }

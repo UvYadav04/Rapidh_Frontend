@@ -52,13 +52,12 @@ function BookingWindow({ setwindow }: { setwindow: Dispatch<SetStateAction<boole
                 return router.replace('/ErrorOccured');
 
             const data = await response.json()
-            console.log(data)
+            // console.log(data)
             setchecked(true)
             if (data.status === "error")
                 return router.replace('/ErrorOccured');
 
             if (data.exists) {
-                alert("maalik exists")
                 return setexists(true)
             }
             setbooking(0)

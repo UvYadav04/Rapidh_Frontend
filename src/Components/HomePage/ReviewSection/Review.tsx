@@ -72,7 +72,7 @@ function Review() {
 
             const data = await response.json()
             if (data.status === "error") {
-                console.log(data)
+                // console.log(data)
                 return alert("something went wrong")
             }
 
@@ -86,7 +86,7 @@ function Review() {
     }
 
     useEffect(() => {
-        console.log(profile)
+        // console.log(profile)
         if (profile.id === "")
             seterror(2)
     }, [profile])

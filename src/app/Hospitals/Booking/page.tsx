@@ -76,7 +76,7 @@ function page() {
                 finaldata = { ...finaldata, reason: patient.reason, days: patientData.Days ? patientData.Days : "not sure" }
             if (patientData.Operation)
                 finaldata = { ...finaldata, operationdata: patientData.operationdata?.id }
-            console.log(finaldata)
+            // console.log(finaldata)
             setloading(true)
             const response = await fetch("http://localhost:83/api/patient/newBooking", {
                 method: "POST",
@@ -92,17 +92,17 @@ function page() {
                 return router.replace('/ErrorOccured');
 
             const data = await response.json()
-            console.log(data)
+            // console.log(data)
             if (data.status === "error") {
-                console.log("error maalikg")
+                // console.log("error maalikg")
                 return router.replace('/ErrorOccured');
             }
-            alert("hurray booking successfull")
+            // alert("hurray booking successfull")
             return router.replace('/')
 
 
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             return router.replace('/ErrorOccured');
         }
     }

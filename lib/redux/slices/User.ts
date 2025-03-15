@@ -44,8 +44,8 @@ const userslice = createSlice({
                 state.loading = true
             })
             .addCase(Signup.fulfilled, (state: user, action) => {
-                alert("signup fullfilled")
-                console.log(action)
+                // alert("signup fullfilled")
+                // console.log(action)
                 state.loading = false
                 state.profile = {
                     id: action.payload.user.user_id,
@@ -66,7 +66,7 @@ const userslice = createSlice({
                 // alert("login pending")
             })
             .addCase(Login.fulfilled, (state: user, action) => {
-                alert("login fullfilled")
+                // alert("login fullfilled")
                 // console.log(action)
                 state.loading = false
                 state.profile = {
@@ -76,8 +76,8 @@ const userslice = createSlice({
                 }
             })
             .addCase(Login.rejected, (state: user, action: any) => {
-                alert("login rejected")
-                console.log(action)
+                // alert("login rejected")
+                // console.log(action)
                 state.loading = false
                 state.erroruser = {
                     message: action.payload.message,
@@ -88,7 +88,7 @@ const userslice = createSlice({
                 state.loading = true
             })
             .addCase(LogOut.fulfilled, (state: user) => {
-                alert("logout fullfilled")
+                // alert("logout fullfilled")
                 state.loading = false
                 state.profile = {
                     id: "",
@@ -97,9 +97,9 @@ const userslice = createSlice({
                 }
             })
             .addCase(LogOut.rejected, (state: user, action) => {
-                alert("logout rejected")
+                // alert("logout rejected")
                 state.loading = false
-                console.log(action)
+                // console.log(action)
                 state.erroruser = {
                     message: action.error.message,
                     // status: action.status
