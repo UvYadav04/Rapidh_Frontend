@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 function page() {
@@ -9,6 +10,7 @@ function page() {
                 <p className="text-gray-600 mt-2">
                     We encountered an unexpected issue. Please try again later.
                 </p>
+                <Link href={'/'}>Home</Link>
             </div>
         </div>
     )
