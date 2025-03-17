@@ -22,11 +22,11 @@ const hospitalSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getHospitalList.pending, (state: hospitals) => {
-                // alert("pending")
+                // ("pending")
                 state.Hospitalloading = true
             })
             .addCase(getHospitalList.fulfilled, (state: hospitals, action) => {
-                // alert("fullfilled")
+                // ("fullfilled")
                 state.Hospitalloading = false
                 // console.log(action)
                 state.hospitals = action.payload.hospitals

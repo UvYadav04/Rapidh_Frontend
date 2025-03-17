@@ -5,7 +5,7 @@ export const getMyBookings = createAsyncThunk(
     'bookings/getmybookings',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await fetchWithTimeout(`http://localhost:83/api/patient/my-bookings`, {
+            const response = await fetchWithTimeout(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/patient/my-bookings`, {
                 method: "GET",
                 credentials: 'include'
             })

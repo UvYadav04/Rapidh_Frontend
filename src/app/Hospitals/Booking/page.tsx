@@ -78,7 +78,7 @@ function page() {
                 finaldata = { ...finaldata, operationdata: patientData.operationdata?.id }
             // console.log(finaldata)
             setloading(true)
-            const response = await fetch("http://localhost:83/api/patient/newBooking", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/patient/newBooking`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

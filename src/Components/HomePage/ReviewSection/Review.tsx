@@ -67,7 +67,7 @@ function Review() {
                 return enableError(2)
             setreview({ review: "", rating: 3 })
             setloading(true)
-            const response = await fetch("http://localhost:83/api/createReview", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/createReview`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -88,6 +88,7 @@ function Review() {
             dispatch(getReviews())
 
         } catch (error) {
+            console.log(error)
             setloading(false)
             return enableError(9)
         }

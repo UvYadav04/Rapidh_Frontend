@@ -31,18 +31,18 @@ const reviewSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getReviews.pending, (state: reviews) => {
-                // alert("reviews pending")
+                // ("reviews pending")
                 state.loading = true
             })
             .addCase(getReviews.fulfilled, (state: reviews, action) => {
-                // alert("reviews fulfilled")
+                // ("reviews fulfilled")
                 // console.log(action)
                 state.loading = false
                 state.checked = true
                 state.reviews = action.payload.reviews
             })
             .addCase(getReviews.rejected, (state: reviews, action: any) => {
-                // alert("reviews rejected")
+                // ("reviews rejected")
                 state.loading = false
                 state.error = action.payload.message
             })

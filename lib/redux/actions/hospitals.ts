@@ -24,8 +24,7 @@ export const getHospitalList = createAsyncThunk(
     'hospitals/gethospitals',
     async (_, { dispatch, rejectWithValue }) => {
         try {
-            alert("fetching")
-            const response = await fetchWithTimeout(`http://localhost:83/api/fetch/hospitals`, {
+            const response = await fetchWithTimeout(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/fetch/hospitals`, {
                 method: "GET",
             }, 5000);  // Set the timeout to 5 seconds (5000 ms)
 

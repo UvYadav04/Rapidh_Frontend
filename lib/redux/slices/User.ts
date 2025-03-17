@@ -40,11 +40,11 @@ const userslice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(Signup.pending, (state: user) => {
-                // alert("sign up pending")
+                // ("sign up pending")
                 state.loading = true
             })
             .addCase(Signup.fulfilled, (state: user, action) => {
-                // alert("signup fullfilled")
+                // ("signup fullfilled")
                 // console.log(action)
                 state.loading = false
                 state.profile = {
@@ -54,7 +54,7 @@ const userslice = createSlice({
                 }
             })
             .addCase(Signup.rejected, (state: user, action) => {
-                // alert("signup rejected")
+                // ("signup rejected")
                 // console.log(action)
                 state.loading = false
                 state.erroruser = {
@@ -63,10 +63,10 @@ const userslice = createSlice({
             })
             .addCase(Login.pending, (state: user) => {
                 state.loading = true
-                // alert("login pending")
+                // ("login pending")
             })
             .addCase(Login.fulfilled, (state: user, action) => {
-                // alert("login fullfilled")
+                // ("login fullfilled")
                 // console.log(action)
                 state.loading = false
                 state.profile = {
@@ -76,7 +76,7 @@ const userslice = createSlice({
                 }
             })
             .addCase(Login.rejected, (state: user, action: any) => {
-                // alert("login rejected")
+                // ("login rejected")
                 // console.log(action)
                 state.loading = false
                 state.erroruser = {
@@ -88,7 +88,7 @@ const userslice = createSlice({
                 state.loading = true
             })
             .addCase(LogOut.fulfilled, (state: user) => {
-                // alert("logout fullfilled")
+                // ("logout fullfilled")
                 state.loading = false
                 state.profile = {
                     id: "",
@@ -97,7 +97,7 @@ const userslice = createSlice({
                 }
             })
             .addCase(LogOut.rejected, (state: user, action) => {
-                // alert("logout rejected")
+                // ("logout rejected")
                 state.loading = false
                 // console.log(action)
                 state.erroruser = {

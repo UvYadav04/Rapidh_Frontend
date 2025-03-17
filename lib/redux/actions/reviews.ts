@@ -6,8 +6,7 @@ export const getReviews = createAsyncThunk(
     async (_, { dispatch, rejectWithValue }) => {
 
         try {
-            alert("fetching review")
-            const response = await fetchWithTimeout(`http://localhost:83/api/fetch/allReviews`, {
+            const response = await fetchWithTimeout(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/fetch/allReviews`, {
                 method: "GET"
             })
 
@@ -32,7 +31,7 @@ export const getReviews = createAsyncThunk(
 //     'reviews/newreview',
 //     async ({ userId, review }: { userId: any, review: string }, { dispatch, rejectWithValue }: { dispatch: any, rejectWithValue: any }) => {
 //         try {
-//             const response = await fetchWithTimeout(`http://localhost:83/api/createReview`, {
+//             const response = await fetchWithTimeout(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/createReview`, {
 //                 method: "POST",
 //                 headers: {
 //                     'Content-type': 'application/json'
