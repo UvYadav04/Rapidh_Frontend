@@ -85,7 +85,7 @@ function BookingWindow({ setwindow }: { setwindow: Dispatch<SetStateAction<boole
     return (
         <div className='min-h-fit m-w-fit w-[100vw] h-[100vh] bg-transparent fixed top-0 left-0 z-[45] flex place-content-center place-items-center booking'>
             {
-                index == 1 ? <ServerError /> : <div className="bookingbox opacity-100 p-4 bg-slate-200 border-2 border-slate-400 w-1/4 h-44 flex flex-col justify-start place-items-center gap-4">
+                index == 1 ? <ServerError /> : <div className="bookingbox opacity-100 p-4 bg-slate-200 border-2 border-slate-400 lg:w-4/12 md:w-5/12 sm:7/12 w-8/12 md:h-44 h-32 flex flex-col justify-start place-items-center md:gap-4 gap-2">
                     {checked && exists && <p className='text-red-400 text-sm mt-0 w-full text-start'>This email is aleady registered.</p>}
                     {checked && !exists && <p className='text-red-400 text-sm mt-0 w-full text-start'>Welcome, please create an account to proceed.</p>}
                     <input type="text" disabled={checked || loading} name='email' placeholder='enter email' value={email} onChange={(e) => setemail(e.target.value)} className='focus:outline-none bg-slate-300 rounded-md px-2 py-1 w-full' />
