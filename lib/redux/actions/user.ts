@@ -1,10 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
+import { fetchWithTimeout } from "./hospitals"
 
 export const Signup = createAsyncThunk(
     'user/createAccount',
     async ({ name, email, password }: { name: string, email: string, password: string }, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:83/api/signup`, {
+            const response = await fetchWithTimeout(`http://localhost:83/api/signup`, {
                 method: "POST",
                 credentials: "include", // Important for cookies
                 headers: {
@@ -31,7 +32,7 @@ export const Login = createAsyncThunk(
     'user/loginaccount',
     async ({ email, password }: { email: string, password: string }, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:83/api/login`, {
+            const response = await fetchWithTimeout(`http://localhost:83/api/login`, {
                 method: "POST",
                 credentials: "include", // Important for cookies
                 headers: {
@@ -57,7 +58,7 @@ export const LogOut = createAsyncThunk(
     'user/logoutaccount',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:83/api/logout`, {
+            const response = await fetchWithTimeout(`http://localhost:83/api/logout`, {
                 credentials: "include", // Important for cookies
             })
 

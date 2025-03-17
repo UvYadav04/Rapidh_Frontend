@@ -22,12 +22,13 @@ function LandingPage() {
 
     useEffect(() => {
         if (Hospitalerror) {
+            console.log(Hospitalerror)
             dispatch(resetHospitalError())
-            redirect('/ErrorOccured')
+            redirect('/ErrorOccured?message=Hospital Error on Landing Page')
         }
         else if (!hospitals || hospitals.length === 0)
             dispatch(getHospitalList())
-    }, [hospitals])
+    }, [hospitals, Hospitalerror, Hospitalloading])
 
     const handlefocus = () => {
         if (focused)

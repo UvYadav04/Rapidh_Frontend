@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import LoginLoader from '@/Components/Authentication/LoginLoader'
 import { getHospitalList } from '../../../lib/redux/actions/hospitals'
 import { AppDispatch, RootState } from '../../../lib/Store'
+import { resetHospitalError } from '../../../lib/redux/slices/Hospitals'
 function page() {
     const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
     const [searchinput, setsearchinput] = useState<string>("")
@@ -21,8 +22,10 @@ function page() {
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
-        if (Hospitalerror)
-            redirect('/ErrorOccured')
+        if (Hospitalerror) {
+            dispatch(resetHospitalError())
+            redirect('/ErrorOccured?message=Error on hospital Search page')
+        }
         else if (hospitals.length === 0)
             dispatch(getHospitalList())
     }, [hospitals])

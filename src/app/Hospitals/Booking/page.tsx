@@ -6,6 +6,7 @@ import './page.css'
 import Navbar from '@/Components/HomePage/HeaderSection/Navbar'
 import { RootState } from '../../../../lib/Store'
 import LoginLoader from '@/Components/Authentication/LoginLoader'
+import Notification from '@/Components/Notification/Notification'
 
 interface personalInfo {
     name: string,
@@ -23,7 +24,7 @@ function page() {
     const HospitalData = encodedHospitalData ? JSON.parse(atob(encodedHospitalData)) : null;
     const { profile } = useSelector((state: RootState) => state.user)
     const [patient, setPatient] = useState<personalInfo>({ name: "", date: undefined, reason: "" })
-    const [errorIndex, setindex] = useState<number>(-1)
+    const [index, setindex] = useState<number>(-1)
     const hasRunOnce = useRef(false); // Ref to track if the effect has run
     const [loading, setloading] = useState<boolean>(false)
 
@@ -33,8 +34,7 @@ function page() {
 
     useEffect(() => {
         if (!HospitalData || !patientData || !userId)
-            return redirect('/ErrorOccured')
-
+            return redirect('/ErrorOccured?message=Data tampered before booking')
 
         if (profile.id === "" || !userId || profile.id !== userId)
             return router.replace('/Unauthorized')
@@ -44,15 +44,15 @@ function page() {
     // console.log(patientData)
 
 
-    useEffect(() => {
-        if (hasRunOnce.current) return; // Skip the effect if it has already run
-        const sessionKey = sessionStorage.getItem("sessionKey")
-        if (!sessionKey)
-            return router.back()
-        sessionStorage.removeItem("sessionKey")
+    // useEffect(() => {
+    //     if (hasRunOnce.current) return; // Skip the effect if it has already run
+    //     const sessionKey = sessionStorage.getItem("sessionKey")
+    //     if (!sessionKey)
+    //         return router.replace('/Unauthorized')
+    //     sessionStorage.removeItem("sessionKey")
 
-        hasRunOnce.current = true;
-    }, []);
+    //     hasRunOnce.current = true;
+    // }, []);
 
 
     const enableError = (t: number) => {
@@ -89,21 +89,20 @@ function page() {
             setloading(false)
 
             if (!response.ok)
-                return router.replace('/ErrorOccured');
+                return enableError(9)
 
             const data = await response.json()
-            // console.log(data)
             if (data.status === "error") {
-                // console.log("error maalikg")
-                return router.replace('/ErrorOccured');
+                return enableError(9)
             }
-            // alert("hurray booking successfull")
-            return router.replace('/')
-
+            enableError(11)
+            setTimeout(() => {
+                return router.replace('/')
+            }, 3000);
 
         } catch (error) {
-            // console.log(error)
-            return router.replace('/ErrorOccured');
+            setloading(false)
+            return enableError(9)
         }
     }
 
@@ -117,6 +116,12 @@ function page() {
 
     if (loading)
         return <LoginLoader />
+
+    if (index == 9)
+        return <Notification status='failure' />
+
+    if (index == 11)
+        return <Notification status='success' />
 
     return (
         <div className='w-full text-black flex flex-col place-items-center place-content-center gap-0'>
@@ -218,9 +223,9 @@ function page() {
                     }
                 </tbody>
             </table>
-            {errorIndex == 1 ? <p className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 text-start text-red-500'>Enter the name of the patient.</p> : null}
-            {errorIndex == 2 ? <p className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 text-start text-red-500'>Select a date please.</p> : null}
-            {errorIndex == 3 ? <p className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 text-start text-red-500'>Reason must be atleast 20 characters long.</p> : null}
+            {index == 1 ? <p className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 text-start text-red-500'>Enter the name of the patient.</p> : null}
+            {index == 2 ? <p className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 text-start text-red-500'>Select a date please.</p> : null}
+            {index == 3 ? <p className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 text-start text-red-500'>Reason must be atleast 20 characters long.</p> : null}
 
             <div className="navigation flex justify-between gap-5 place-items-center">
                 <button onClick={() => {

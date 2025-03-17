@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchWithTimeout = async (url: string, options = {}, timeout = 5000) => {
+export const fetchWithTimeout = async (url: string, options = {}, timeout = 20000) => {
     const controller = new AbortController();  // Create an AbortController instance
     const timeoutId = setTimeout(() => controller.abort(), timeout);  // Set the timeout
 
@@ -24,6 +24,7 @@ export const getHospitalList = createAsyncThunk(
     'hospitals/gethospitals',
     async (_, { dispatch, rejectWithValue }) => {
         try {
+            alert("fetching")
             const response = await fetchWithTimeout(`http://localhost:83/api/fetch/hospitals`, {
                 method: "GET",
             }, 5000);  // Set the timeout to 5 seconds (5000 ms)

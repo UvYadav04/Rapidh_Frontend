@@ -17,8 +17,9 @@ function HospitalsColumn() {
 
     useEffect(() => {
         if (Hospitalerror) {
+            console.log(Hospitalerror)
             dispatch(resetHospitalError())
-            redirect('/ErrorOccured')
+            redirect('/ErrorOccured?message=Hospital Error on Hospital List section')
         }
         else if (!hospitals || hospitals.length === 0)
             dispatch(getHospitalList())

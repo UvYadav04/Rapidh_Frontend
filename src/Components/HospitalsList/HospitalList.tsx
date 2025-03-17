@@ -14,7 +14,7 @@ function HospitalList({ searchinput, city }: { searchinput: string, city: string
     useEffect(() => {
         if (Hospitalerror) {
             dispatch(resetHospitalError())
-            redirect('/ErrorOccured')
+            redirect('/ErrorOccured?message=Error in listing hospitals on search')
         }
         else if (hospitals.length === 0)
             dispatch(getHospitalList())

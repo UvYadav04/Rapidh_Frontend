@@ -4,17 +4,25 @@ import React, { ReactElement, useEffect } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, AppStore, RootState } from '../../../../lib/Store';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useAuth } from '@/ContextProvider/LoginContext';
 import { LogOut } from '../../../../lib/redux/actions/user';
 import Sidebar from './Sidebar';
 import { resetBooking } from '../../../../lib/redux/slices/Mybookings';
+import { resetError } from '../../../../lib/redux/slices/User';
 
 function Navbar() {
     const router = useRouter();
     const { loading, erroruser, profile } = useSelector((state: RootState) => state.user);
     const { loginStatus, setLoginStatus } = useAuth();
     const dispatch = useDispatch<AppDispatch>()
+
+    // useEffect(() => {
+    //     if (erroruser.message !== "") {
+    //         dispatch(resetError())
+    //         redirect(`/ErrorOccured?message=Profile error in navbar`)
+    //     }
+    // })
     return (
         <div className=" flex justify-center lg:w-full w-fit bg-[#EDF6F9] items-center lg:mt-2 mt-0  sticky top-0 left-0">
             <Sidebar />
@@ -29,10 +37,10 @@ function Navbar() {
                             title="My Bookings"
                             onClick={() => router.push(`/Mybookings?userid=${profile.id}`)}
                         />
-                        <MenuItem
+                        {/* <MenuItem
                             title="Admin Panel"
                             onClick={() => router.push(`/Admin`)}
-                        />
+                        /> */}
                     </>
                 )}
 
@@ -41,7 +49,8 @@ function Navbar() {
             <div
                 className="text-md lg:flex hidden text-black rounded-s-full w-fit  bg-teal-500 ps-3 text-2xl py-2  items-center gap-2 pe-14 relative group"
                 onClick={() => {
-                    setLoginStatus(loginStatus === 0 ? 1 : 0);
+                    if (profile.id === "")
+                        setLoginStatus(loginStatus === 0 ? 1 : 0);
                 }}
             >
                 <FaUserCircle color="white" className='h-full' />

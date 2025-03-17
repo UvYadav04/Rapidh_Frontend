@@ -26,7 +26,7 @@ function SearchBar() {
         if (Hospitalerror) {
             // console.log(Hospitalerror)
             dispatch(resetHospitalError())
-            redirect('/ErrorOccured?message="hospitalError')
+            redirect('/ErrorOccured?message=hospitalError in searchbar')
         }
         else if (hospitals && hospitals?.length === 0)
             dispatch(getHospitalList())

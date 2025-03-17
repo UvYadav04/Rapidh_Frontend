@@ -21,22 +21,20 @@ function page() {
     // console.log(bookings)
 
     useEffect(() => {
-        if (!bookings || bookings.length === 0) {
+        if (bookingerror) {
+            dispatch(resetBookingError())
+            return router.replace("ErrorOccured?Error in finding bookings")
+        }
+        else if (!bookings || bookings.length === 0) {
             dispatch(getMyBookings())
         }
-    }, [])
+    }, [bookings, bookingerror, loading])
 
     useEffect(() => {
         if (profile.id === "" || profile.id !== userid)
             return router.replace('Unauthorized')
     }, [profile])
 
-
-    if (bookingerror) {
-        // console.log(bookingerror)
-        dispatch(resetBookingError())
-        return router.replace("ErrorOccured?bookingerror=true")
-    }
 
     if (loading)
         return <LoginLoader />
