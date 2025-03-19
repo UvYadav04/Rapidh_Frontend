@@ -13,6 +13,7 @@ export const fetchWithTimeout = async (url: string, options = {}, timeout = 2000
         clearTimeout(timeoutId);  // Clear the timeout once the fetch completes
         return response;  // Return the response if the request is successful
     } catch (error: any) {
+        console.log(error)
         if (error.name === 'AbortError') {
             throw new Error('Request timed out');
         }
@@ -24,7 +25,7 @@ export const getHospitalList = createAsyncThunk(
     'hospitals/gethospitals',
     async (_, { dispatch, rejectWithValue }) => {
         try {
-            const response = await fetchWithTimeout(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/fetch/hospitals`, {
+            const response = await fetchWithTimeout(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/client/fetch/hospitals`, {
                 method: "GET",
             }, 5000);  // Set the timeout to 5 seconds (5000 ms)
 

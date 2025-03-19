@@ -35,23 +35,24 @@ const reviewSlice = createSlice({
                 state.loading = true
             })
             .addCase(getReviews.fulfilled, (state: reviews, action) => {
-                // ("reviews fulfilled")
-                // console.log(action)
+                console.log(action)
                 state.loading = false
                 state.checked = true
                 state.reviews = action.payload.reviews
             })
             .addCase(getReviews.rejected, (state: reviews, action: any) => {
-                // ("reviews rejected")
+                // `("reviews rejected")
+                console.log(action)
                 state.loading = false
-                state.error = action.payload.message
+                state.error = action.payload
             })
     },
     reducers: {
         resetReviewError: (state) => {
             return {
                 ...state,  // Copy the existing state
-                error: null  // Reset error to null
+                error: null,// Reset error to null
+                checked: false
             };
         }
 

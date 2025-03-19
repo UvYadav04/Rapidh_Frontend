@@ -20,7 +20,9 @@ import { useEffect, useState } from 'react';
 import { LogOut } from '../../../../lib/redux/actions/user';
 import { resetBooking } from '../../../../lib/redux/slices/Mybookings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
 import StarIcon from '@mui/icons-material/Star';
+import { useAuth } from '@/ContextProvider/LoginContext';
 interface sidebaritems {
     text: string,
     path: string,
@@ -29,7 +31,7 @@ interface sidebaritems {
 
 export default function Sidebar() {
     const dispatch = useDispatch<AppDispatch>()
-
+    const { loginStatus, setLoginStatus } = useAuth()
     const [open, setOpen] = useState(false);
     const { profile, erroruser, loading } = useSelector((state: RootState) => state.user)
     const [items, setitems] = useState<sidebaritems[]>(
@@ -59,32 +61,41 @@ export default function Sidebar() {
                 ))}
             </List>
             <Divider />
-            {profile.id !== "" && <List>
-                <ListItem disablePadding>
-                    <ListItemButton component={Link} href={'/Mybookings'} >
-                        <ListItemIcon>
-                            <StarIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={"My Bookings"} />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                    <ListItemButton onClick={() => {
-                        () => {
-                            dispatch(LogOut())
-                            dispatch(resetBooking())
-                        }
+            <List>
+                {profile.id !== "" ? (
+                    <>
+                        <ListItem disablePadding>
+                            <ListItemButton component={Link} href={'/Mybookings'} >
+                                <ListItemIcon>
+                                    <StarIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={"My Bookings"} />
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem disablePadding>
+                            <ListItemButton onClick={() => {
+                                dispatch(LogOut())
+                                dispatch(resetBooking())
 
-                    }} >
-                        <ListItemIcon>
-                            <LogoutIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={"LogOut"} />
-                    </ListItemButton>
-                </ListItem>
-
-            </List>}
-        </Box>
+                            }} >
+                                <ListItemIcon>
+                                    <LogoutIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={"LogOut"} />
+                            </ListItemButton>
+                        </ListItem>
+                    </>)
+                    : <ListItem disablePadding>
+                        <ListItemButton onClick={() => setLoginStatus(1)} >
+                            <ListItemIcon>
+                                <LoginIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={"Login"} />
+                        </ListItemButton>
+                    </ListItem>
+                }
+            </List>
+        </Box >
     );
 
     return (

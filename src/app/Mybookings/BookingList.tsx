@@ -1,17 +1,21 @@
-'use client'
-import { Booking } from "../../../lib/redux/slices/Mybookings"
-import React, { useEffect, useState } from 'react'
-import Popup from "./Popup"
+import { useState } from "react";
+import { Booking } from "../../../lib/redux/slices/Mybookings";
+import Popup from "./Popup";
 
 function BookingList({ item }: { item: Booking }) {
-    const [pop, setpop] = useState<boolean>(false)
+    const [pop, setpop] = useState<boolean>(false);
+
     return (
-        <div className='w-full bg-slate-300 flex flex-col px-2 py-1 rounded-sm' >
-            <h1 className='text-3xl text-teal-500 font-bold cursor-pointer' onClick={() => setpop(true)}>{item.HospitalName.toLocaleUpperCase()}</h1>
-            <h6 className='text-slate-800'>{item.AdmissionDate}</h6>
-            {pop ? <Popup item={item} setpop={setpop} /> : null
-            }
-        </div >
-    )
+        <>
+            <tr className="bg-white hover:bg-gray-100 border border-gray-400 cursor-pointer group relative" onClick={() => setpop(true)}>
+                <td className="border border-gray-400 px-4 py-2">{item.HospitalName}</td>
+                <td className="border border-gray-400 px-4 py-2">{item.AdmissionDate}</td>
+                <td className="border border-gray-400 px-4 py-2">{item.Name}</td>
+                <td className="border border-gray-400 px-4 py-2 text-right">{item.TotalPrice}</td>
+            </tr>
+            {pop && <Popup item={item} setpop={setpop} />}
+        </>
+    );
 }
-export default BookingList
+
+export default BookingList;

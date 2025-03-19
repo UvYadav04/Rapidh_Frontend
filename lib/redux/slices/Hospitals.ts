@@ -26,9 +26,9 @@ const hospitalSlice = createSlice({
                 state.Hospitalloading = true
             })
             .addCase(getHospitalList.fulfilled, (state: hospitals, action) => {
-                // ("fullfilled")
+                alert("fullfilled")
                 state.Hospitalloading = false
-                // console.log(action)
+                console.log(action)
                 state.hospitals = action.payload.hospitals
             })
             .addCase(getHospitalList.rejected, (state: hospitals, action) => {
@@ -40,7 +40,10 @@ const hospitalSlice = createSlice({
     },
     reducers: {
         resetHospitalError: (state) => {
-            state.Hospitalerror = null
+            return {
+                ...state,
+                Hospitalerror: null
+            }
         }
     }
 })

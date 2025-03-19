@@ -30,6 +30,7 @@ import {
 import StarRatings from 'react-star-ratings'
 import { useRouter } from 'next/navigation'
 import ServerError from '@/Components/Authentication/ServerError'
+import { resetReviewError } from '../../../../lib/redux/slices/Reviews'
 
 interface reviewInput {
     rating: number,
@@ -51,6 +52,13 @@ function Review() {
             dispatch(getReviews())
 
     }, [loading, error, reviews])
+    useEffect(() => {
+        if (error) {
+            dispatch(resetReviewError())
+            dispatch(getReviews())
+
+        }
+    }, [])
 
     const enableError = (t: number) => {
         setTimeout(() => {
@@ -67,7 +75,7 @@ function Review() {
                 return enableError(2)
             setreview({ review: "", rating: 3 })
             setloading(true)
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/createReview`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/client/createReview`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -102,14 +110,16 @@ function Review() {
 
 
     if (error)
-        <div className="flex items-center justify-center p-4">
-            <div className="bg-red-100 border-l-4 text-slate-700 p-4 flex place-content-center place-items-center max-w-md w-full rounded-lg shadow-md flex-col">
-                <div className="flex items-center">
-                    <span className="font-semibold">Error in Review Section</span>
+        return (
+            <div className="flex items-center justify-center p-4">
+                <div className="bg-red-100 border-l-4 text-slate-700 p-4 flex place-content-center place-items-center max-w-md w-full rounded-lg shadow-md flex-col">
+                    <div className="flex items-center">
+                        <span className="font-semibold">Error in Review Section</span>
+                    </div>
+                    <button onClick={() => router.refresh()} className="mt-2 text-sm bg-blue-500 px-3 py-1 rounded-sm">Refresh</button>
                 </div>
-                <button onClick={() => router.refresh()} className="mt-2 text-sm bg-blue-500 px-3 py-1 rounded-sm">Refresh</button>
             </div>
-        </div>
+        )
 
 
     return (
@@ -154,7 +164,7 @@ function Review() {
                         <div className="w-fit h-fit flex">
                             <Dialog>
                                 <DialogTrigger asChild>
-                                    <Button className='bg-teal-400 px-6 py-1 text-lg' variant="outline">{reviews.length > 0 ? "Add review" : "Add first review    "}</Button>
+                                    <Button className='bg-teal-400 px-6 py-1 text-lg' variant="outline">{reviews?.length > 0 ? "Add review" : "Add first review    "}</Button>
                                 </DialogTrigger>
                                 <DialogContent className="sm:max-w-[425px]">
 

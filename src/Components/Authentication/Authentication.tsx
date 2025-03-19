@@ -90,8 +90,8 @@ function Authentication() {
     if (loginStatus === 0) return null
 
     return (
-        <div className="w-[100vw] h-[100vh] fixed top-0 left-0 bg-[rgba(0,0,0,0.5)] place-content-center place-items-center z-50">
-            <div className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-11/12 w-11/12 h-2/3 min-w-fit min-h-fit my-auto mx-auto bg-slate-300 text-white place-content-center place-items-center rounded-md relative'>
+        <div className="w-[100vw] h-[100vh] fixed  top-0 left-0 bg-[rgba(0,0,0,0.5)] place-content-center place-items-center z-50 ">
+            <div className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-11/12 w-11/12 h-2/3 min-w-fit min-h-fit my-auto mx-auto bg-slate-300 text-white place-content-center place-items-center rounded-md relative py-10'>
                 <button className={`absolute right-1 top-2 `} onClick={() => setLoginStatus(0)}> <MdCancel color='rgb(20 184 166)' size={30} /> </button>
                 {index === 12 ? <ServerError /> : loading ? <LoginLoader /> : login ? (
                     <div className="login xl:w-6/12 lg:w-7/12 md:w-7/12 sm:w-9/12 w-11/12 h-fit bg-slate-200 flex flex-col justify-start gap-10 border-2 border-slate-400 px-5 pt-10 pb-5 relative">

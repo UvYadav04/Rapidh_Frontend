@@ -24,7 +24,7 @@ function Navbar() {
     //     }
     // })
     return (
-        <div className=" flex justify-center lg:w-full w-fit bg-[#EDF6F9] items-center lg:mt-2 mt-0  sticky top-0 left-0">
+        <div className=" flex justify-end lg:w-full w-fit bg-[#EDF6F9] items-center lg:mt-2 mt-0  sticky top-0 left-0">
             <Sidebar />
             <ul className=" gap-10 lg:flex hidden text-teal-500 font-semibold text-lg ms-8 flex-1 justify-center">
                 <MenuItem title="Home" onClick={() => router.push('/')} />

@@ -66,7 +66,7 @@ function LandingPage() {
             </div >
             <div className="suggestions flex flex-wrap justify-center lg:gap-4 gap-2 xl:mt-3 lg:mt-2 sm:mt-1 mt-0 xl:w-7/12 lg:w-8/12 md:w-9/12 sm:w-10/12 w-11/12">
                 {
-                    hospitals?.slice(0, 5).map((item: hospitalInterface, index) => {
+                    hospitals?.slice(0, 5).map((item: hospitalInterface, index: number) => {
                         return <button className='bg-teal-500 xl:px-2 lg:px-1 px-2 lg:text-md md:text-[14px] sm:text-base text-[12px] lg:py-1 py-1 rounded-md' onClick={() => setinput(item.operations[0].name)} key={index}>{item.operations[0].name}</button>
                     })
                 }

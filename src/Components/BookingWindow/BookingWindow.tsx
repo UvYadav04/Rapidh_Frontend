@@ -48,7 +48,7 @@ function BookingWindow({ setwindow }: { setwindow: Dispatch<SetStateAction<boole
             if (!validity)
                 return
             setloading(true)
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/emailExists`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/client/emailExists`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

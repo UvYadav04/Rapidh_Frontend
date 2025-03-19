@@ -6,11 +6,12 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { getMyBookings } from '../../../lib/redux/actions/bookings'
 import LoginLoader from '@/Components/Authentication/LoginLoader'
 import Navbar from '@/Components/HomePage/HeaderSection/Navbar'
-import { resetBookingError } from '../../../lib/redux/slices/Mybookings'
+import { Booking, resetBookingError } from '../../../lib/redux/slices/Mybookings'
 import './page.css'
 import BookingList from './BookingList'
+import Header from '@/Components/HomePage/HeaderSection/Header'
 
-function page() {
+function Page() {
     const dispatch = useDispatch<AppDispatch>()
     const params = useSearchParams()
     const userid = params.get("userid")
@@ -18,7 +19,6 @@ function page() {
     const { bookings, loading, bookingerror } = useSelector((state: RootState) => state.mybookings)
     const router = useRouter()
 
-    // console.log(bookings)
 
     useEffect(() => {
         if (bookingerror) {
@@ -33,27 +33,38 @@ function page() {
     useEffect(() => {
         if (profile.id === "" || profile.id !== userid)
             return router.replace('Unauthorized')
-    }, [profile])
+    }, [profile, params])
 
-
-    if (loading)
-        return <LoginLoader />
+    if (loading) return <LoginLoader />
 
     return (
         <div className='mybookings flex flex-col w-full h-fit place-items-center place-content-center gap-10 '>
-            <Navbar />
+            <Header />
             <h1 className='text-3xl text-slate-700 font-semibold'>My Bookings</h1>
-            <div className="list flex flex-col w-[80%] mt-18 gap-4">
-                {
-                    bookings ? bookings.map((item) => {
-                        return <BookingList item={item} />
-                    }) : null
-                }
+            <div className="xl:w-8/12 lg:w-9/12 md:w-10/12 w-11/12 bg-slate-300 rounded-sm overflow-x-auto">
+                <table className="min-w-full border-collapse border border-gray-400 text-left text-sm md:text-base">
+                    <thead>
+                        <tr className="bg-gray-200">
+                            <th className="border border-gray-400 px-4 py-2 min-w-[150px]">Hospital</th>
+                            <th className="border border-gray-400 px-4 py-2 min-w-[150px]">Date</th>
+                            <th className="border border-gray-400 px-4 py-2 min-w-[150px]">Patient</th>
+                            <th className="border border-gray-400 px-4 py-2 min-w-[150px] text-right">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {bookings?.map((item: Booking, index: number) => {
+                            return <BookingList item={item} key={index} />
+                        })}
+                        {bookings?.length === 0 && (
+                            <tr>
+                                <td colSpan={4} className="border border-gray-400 px-4 py-2 text-center">No bookings found.</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
             </div>
         </div>
     )
 }
 
-export default page
-
-
+export default Page

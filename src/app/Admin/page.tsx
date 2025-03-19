@@ -35,7 +35,7 @@ const page = () => {
     const getRole = async () => {
         try {
             setloader(true)
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/fetchRole`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/client/fetchRole`, {
                 credentials: 'include',
                 method: "POST",
                 headers: {
@@ -83,7 +83,7 @@ const page = () => {
         isFetching.current = true;
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/fetch/admin/users?skip=${data.length}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/client/fetch/admin/users?skip=${data.length}`, {
                 credentials: 'include'
             });
 
