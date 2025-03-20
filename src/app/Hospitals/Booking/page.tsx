@@ -1,12 +1,13 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
 import { redirect, useRouter, useSearchParams } from 'next/navigation'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './page.css'
 import Navbar from '@/Components/HomePage/HeaderSection/Navbar'
-import { RootState } from '../../../../lib/Store'
+import { AppDispatch, RootState } from '../../../../lib/Store'
 import LoginLoader from '@/Components/Authentication/LoginLoader'
 import Notification from '@/Components/Notification/Notification'
+import { getMyBookings } from '../../../../lib/redux/actions/bookings'
 
 interface personalInfo {
     name: string,
@@ -27,7 +28,7 @@ function page() {
     const [index, setindex] = useState<number>(-1)
     const hasRunOnce = useRef(false); // Ref to track if the effect has run
     const [loading, setloading] = useState<boolean>(false)
-
+    const dispatch = useDispatch<AppDispatch>()
 
     const totalOperationCharges = () => HospitalData?.admissionCharges + patientData?.operationdata.operationCharges + patientData?.Ward.charge;
     const totalAdmitCharges = () => (Number)(HospitalData?.admissionCharges) + (Number)(patientData?.Ward.charge);
@@ -95,7 +96,8 @@ function page() {
             if (data.status === "error") {
                 return enableError(9)
             }
-            enableError(11)
+            enableError(11) // this is not an error but to pull success notification from top
+            dispatch(getMyBookings())
             setTimeout(() => {
                 return router.replace('/')
             }, 3000);
