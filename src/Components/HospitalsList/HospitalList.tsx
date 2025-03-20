@@ -11,14 +11,14 @@ function HospitalList({ searchinput, city }: { searchinput: string, city: string
     const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
     const dispatch = useDispatch<AppDispatch>()
 
-    useEffect(() => {
-        if (Hospitalerror) {
-            dispatch(resetHospitalError())
-            redirect('/ErrorOccured?message=Error in listing hospitals on search')
-        }
-        else if (hospitals.length === 0)
-            dispatch(getHospitalList())
-    }, [hospitals])
+    // useEffect(() => {
+    //     if (Hospitalerror) {
+    //         dispatch(resetHospitalError())
+    //         redirect('/ErrorOccured?message=Error in listing hospitals on search')
+    //     }
+    //     else if (hospitals.length === 0)
+    //         dispatch(getHospitalList())
+    // }, [hospitals])
     return (
         <div className='w-full flex flex-col bg-slate-200 rounded-md max-h-[200px] overflow-y-scroll' style={{ scrollbarWidth: "none" }}>
             {

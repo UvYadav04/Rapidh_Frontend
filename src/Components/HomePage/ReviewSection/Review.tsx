@@ -56,7 +56,6 @@ function Review() {
         if (error) {
             dispatch(resetReviewError())
             dispatch(getReviews())
-
         }
     }, [])
 
@@ -85,10 +84,13 @@ function Review() {
             })
             setloading(false)
 
+            console.log(response)
+
             if (!response.ok)
                 return enableError(9)
 
             const data = await response.json()
+            console.log(data)
             if (data.status === "error")
                 return enableError(9)
 

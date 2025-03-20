@@ -22,7 +22,8 @@ function Page() {
 
     useEffect(() => {
         if (bookingerror) {
-            dispatch(resetBookingError())
+            console.log(bookingerror)
+            // dispatch(resetBookingError())
             return router.replace("ErrorOccured?Error in finding bookings")
         }
         else if (!bookings || bookings.length === 0) {

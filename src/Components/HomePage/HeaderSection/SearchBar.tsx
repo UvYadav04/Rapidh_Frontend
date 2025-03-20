@@ -22,15 +22,15 @@ function SearchBar() {
     const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
     const dispatch = useDispatch<AppDispatch>()
 
-    useEffect(() => {
-        if (Hospitalerror) {
-            // console.log(Hospitalerror)
-            dispatch(resetHospitalError())
-            redirect('/ErrorOccured?message=hospitalError in searchbar')
-        }
-        else if (hospitals && hospitals?.length === 0)
-            dispatch(getHospitalList())
-    }, [hospitals, Hospitalloading, Hospitalerror])
+    // useEffect(() => {
+    //     if (Hospitalerror) {
+    //         // console.log(Hospitalerror)
+    //         dispatch(resetHospitalError())
+    //         redirect('/ErrorOccured?message=hospitalError in searchbar')
+    //     }
+    //     else if (hospitals && hospitals?.length === 0)
+    //         dispatch(getHospitalList())
+    // }, [hospitals, Hospitalloading, Hospitalerror])
 
     useEffect(() => {
         const handleResize = () => {

@@ -44,15 +44,15 @@ function page() {
     // console.log(patientData)
 
 
-    // useEffect(() => {
-    //     if (hasRunOnce.current) return; // Skip the effect if it has already run
-    //     const sessionKey = sessionStorage.getItem("sessionKey")
-    //     if (!sessionKey)
-    //         return router.replace('/Unauthorized')
-    //     sessionStorage.removeItem("sessionKey")
+    useEffect(() => {
+        if (hasRunOnce.current) return; // Skip the effect if it has already run
+        const sessionKey = sessionStorage.getItem("sessionKey")
+        if (!sessionKey)
+            return router.replace('/Unauthorized')
+        sessionStorage.removeItem("sessionKey")
 
-    //     hasRunOnce.current = true;
-    // }, []);
+        hasRunOnce.current = true;
+    }, []);
 
 
     const enableError = (t: number) => {

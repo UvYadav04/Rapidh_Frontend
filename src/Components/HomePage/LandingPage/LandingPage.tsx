@@ -20,15 +20,15 @@ function LandingPage() {
     const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
     const dispatch = useDispatch<AppDispatch>()
 
-    useEffect(() => {
-        if (Hospitalerror) {
-            console.log(Hospitalerror)
-            dispatch(resetHospitalError())
-            redirect('/ErrorOccured?message=Hospital Error on Landing Page')
-        }
-        else if (!hospitals || hospitals.length === 0)
-            dispatch(getHospitalList())
-    }, [hospitals, Hospitalerror, Hospitalloading])
+    // useEffect(() => {
+    //     if (Hospitalerror) {
+    //         console.log(Hospitalerror)
+    //         dispatch(resetHospitalError())
+    //         redirect('/ErrorOccured?message=Hospital Error on Landing Page')
+    //     }
+    //     else if (!hospitals || hospitals.length === 0)
+    //         dispatch(getHospitalList())
+    // }, [hospitals, Hospitalerror, Hospitalloading])
 
     const handlefocus = () => {
         if (focused)

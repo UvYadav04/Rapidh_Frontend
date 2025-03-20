@@ -15,15 +15,15 @@ function HospitalsColumn() {
     const dispatch = useDispatch<AppDispatch>()
     const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
 
-    useEffect(() => {
-        if (Hospitalerror) {
-            console.log(Hospitalerror)
-            dispatch(resetHospitalError())
-            redirect('/ErrorOccured?message=Hospital Error on Hospital List section')
-        }
-        else if (!hospitals || hospitals.length === 0)
-            dispatch(getHospitalList())
-    }, [hospitals, Hospitalloading, Hospitalerror])
+    // useEffect(() => {
+    //     if (Hospitalerror) {
+    //         console.log(Hospitalerror)
+    //         dispatch(resetHospitalError())
+    //         redirect('/ErrorOccured?message=Hospital Error on Hospital List section')
+    //     }
+    //     else if (!hospitals || hospitals.length === 0)
+    //         dispatch(getHospitalList())
+    // }, [hospitals, Hospitalloading, Hospitalerror])
 
 
     if (Hospitalloading)

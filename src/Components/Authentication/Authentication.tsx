@@ -63,7 +63,7 @@ function Authentication() {
     useEffect(() => {
         if (!loading) {
             if (erroruser.message !== "") {
-                // console.log(erroruser)
+                console.log(erroruser)
                 if (erroruser.status === 301) enablerror(6)
                 else enablerror(12);
                 dispatch(resetError());
