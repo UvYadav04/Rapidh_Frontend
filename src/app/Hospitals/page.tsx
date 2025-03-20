@@ -38,19 +38,21 @@ function page() {
     }, []);
 
     useMemo(() => {
-        if (pricefilter == 0) {
-            filteredHospitalData.sort((a, b) => a.name.localeCompare(b.name));
+        let sortedData = [...filteredHospitalData]; // Create a new copy to avoid mutating state
+
+        if (pricefilter === 0) {
+            sortedData.sort((a, b) => a.name.localeCompare(b.name));
         }
-        if (pricefilter == 1) {
-            filteredHospitalData?.sort((a, b) => a.admissionCharges - b.admissionCharges)
+        if (pricefilter === 1) {
+            sortedData.sort((a, b) => a.admissionCharges - b.admissionCharges);
         }
-        if (pricefilter == -1) {
-            filteredHospitalData?.sort((a, b) => b.admissionCharges - a.admissionCharges)
+        if (pricefilter === -1) {
+            sortedData.sort((a, b) => b.admissionCharges - a.admissionCharges);
         }
 
-        setfilteredHospitalData([...filteredHospitalData])
+        setfilteredHospitalData(sortedData); // Update state with new sorted array
+    }, [pricefilter, filteredHospitalData]); // Ensure dependency array includes filteredHospitalData
 
-    }, [pricefilter])
 
     useEffect(() => {
         const hname = params.get("search")

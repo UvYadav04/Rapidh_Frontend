@@ -28,7 +28,7 @@ function Navbar() {
             <Sidebar />
             <ul className=" gap-10 lg:flex hidden text-teal-500 font-semibold text-lg ms-8 flex-1 justify-center">
                 <MenuItem title="Home" onClick={() => router.push('/')} />
-                <MenuItem title="Hospitals" />
+                <MenuItem title="Hospitals" onClick={() => router.push('/Hospitals')} />
                 <MenuItem title="Consult" />
                 <MenuItem title="Privacy Policy" />
                 {profile?.id && (
