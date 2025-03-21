@@ -22,8 +22,8 @@ function Page() {
 
     useEffect(() => {
         if (bookingerror) {
-            console.log(bookingerror)
-            // dispatch(resetBookingError())
+            // console.log(bookingerror)
+            dispatch(resetBookingError())
             return router.replace("ErrorOccured?Error in finding bookings")
         }
         else if (!bookings || bookings.length === 0) {
@@ -42,14 +42,14 @@ function Page() {
         <div className='mybookings flex flex-col w-full h-fit place-items-center place-content-center gap-10 '>
             <Header />
             <h1 className='text-3xl text-slate-700 font-semibold'>My Bookings</h1>
-            <div className="xl:w-8/12 lg:w-9/12 md:w-10/12 w-11/12 bg-slate-300 rounded-sm overflow-x-auto">
-                <table className="min-w-full border-collapse border border-gray-400 text-left text-sm md:text-base">
+            <div className="xl:w-11/12 lg:w-9/12 md:w-10/12 w-11/12 bg-slate-300 rounded-sm overflow-x-auto overflow-y-scroll  max-h-[70vh]" style={{ scrollbarWidth: 'none' }}>
+                <table className="min-w-full border-collapse border border-gray-400 md:text-center text-left text-sm md:text-base">
                     <thead>
                         <tr className="bg-gray-200">
                             <th className="border border-gray-400 px-4 py-2 min-w-[150px]">Hospital</th>
                             <th className="border border-gray-400 px-4 py-2 min-w-[150px]">Date</th>
                             <th className="border border-gray-400 px-4 py-2 min-w-[150px]">Patient</th>
-                            <th className="border border-gray-400 px-4 py-2 min-w-[150px] text-right">Amount</th>
+                            <th className="border border-gray-400 px-4 py-2 min-w-[150px] ">Amount</th>
                         </tr>
                     </thead>
                     <tbody>

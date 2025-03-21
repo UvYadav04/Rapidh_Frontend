@@ -41,7 +41,7 @@ export const Login = createAsyncThunk(
                 body: JSON.stringify({ email, password })
             })
 
-            console.log("response in login : ", response)
+            // console.log("response in login : ", response)
 
             if (!response.ok)
                 return rejectWithValue({ message: "Error in logging in", status: 404 })
@@ -68,7 +68,7 @@ export const LogOut = createAsyncThunk(
                 return rejectWithValue({ message: "Error in logging out", status: 404 })
 
             const data = await response.json()
-            console.log(data)
+            // console.log(data)
             if (data.status !== "success")
                 return rejectWithValue({ message: data.message, status: data.code })
             return data

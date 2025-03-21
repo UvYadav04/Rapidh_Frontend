@@ -20,6 +20,7 @@ const Review = lazy(() => import('@/Components/HomePage/ReviewSection/Review'))
 import { getHospitalList } from '../../../lib/redux/actions/hospitals'
 import { redirect } from 'next/navigation'
 import { resetHospitalError } from '../../../lib/redux/slices/Hospitals'
+import Notification from '@/Components/Notification/Notification'
 
 function Page() {
     const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)

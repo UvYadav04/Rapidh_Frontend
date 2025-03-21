@@ -10,6 +10,8 @@ export const getMyBookings = createAsyncThunk(
                 credentials: 'include'
             })
 
+            // console.log(response)
+
             if (!response.ok)
                 return rejectWithValue("unable to fetch request")
 

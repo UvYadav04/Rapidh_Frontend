@@ -65,7 +65,7 @@ export default function Sidebar() {
                 {profile.id !== "" ? (
                     <>
                         <ListItem disablePadding>
-                            <ListItemButton component={Link} href={'/Mybookings'} >
+                            <ListItemButton component={Link} href={`/Mybookings?userid=${profile.id}`} >
                                 <ListItemIcon>
                                     <StarIcon />
                                 </ListItemIcon>

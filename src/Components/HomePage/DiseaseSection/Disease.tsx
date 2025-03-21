@@ -15,7 +15,7 @@ function Disease() {
                 <div className="row1 flex justify-evenly lg:gap-10 md:gap-8 sm:gap-5 gap-3">
                     <DiseaseCard image={tuberculosis} title={"Tuberculosis"} />
                     <DiseaseCard image={appendix} title={"Appendix"} />
-                    <DiseaseCard image={transplant} title={"Organ Transplant"} />
+                    <DiseaseCard image={transplant} title={"Transplantation"} />
                     <DiseaseCard image={tumour} title={"Brain Tumour"} />
                 </div>
                 <div className="row2 flex justify-evenly lg:gap-10 md:gap-8 sm:gap-5 gap-3">

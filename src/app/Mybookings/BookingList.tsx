@@ -11,7 +11,7 @@ function BookingList({ item }: { item: Booking }) {
                 <td className="border border-gray-400 px-4 py-2">{item.HospitalName}</td>
                 <td className="border border-gray-400 px-4 py-2">{item.AdmissionDate}</td>
                 <td className="border border-gray-400 px-4 py-2">{item.Name}</td>
-                <td className="border border-gray-400 px-4 py-2 text-right">{item.TotalPrice}</td>
+                <td className="border border-gray-400 px-4 py-2 ">{item.TotalPrice}</td>
             </tr>
             {pop && <Popup item={item} setpop={setpop} />}
         </>

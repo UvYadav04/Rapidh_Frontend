@@ -11,6 +11,7 @@ import LoginLoader from '@/Components/Authentication/LoginLoader'
 import { getHospitalList } from '../../../lib/redux/actions/hospitals'
 import { AppDispatch, RootState } from '../../../lib/Store'
 import { resetHospitalError } from '../../../lib/redux/slices/Hospitals'
+import Notification from '@/Components/Notification/Notification'
 
 function Page() {
     const { hospitals, Hospitalloading, Hospitalerror } = useSelector((state: RootState) => state.hospitals)
@@ -71,7 +72,6 @@ function Page() {
         <div className='hospitals page w-full flex flex-col justify-start max-w-full place-items-center'>
 
             <Authentication />
-
             <Header />
             <div className="hospitalList w-[90%] mt-10 relative">
                 <div className="filters flex md:flex-row flex-col sticky justify-end gap-2 rounded-md top-0 xl:px-20 lg:px-16 md:px-12 sm:px-8 px-4 py-2 w-full bg-slate-200">

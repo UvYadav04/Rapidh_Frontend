@@ -14,7 +14,7 @@ export const getReviews = createAsyncThunk(
                 rejectWithValue("failed to fetch reviews")
 
             const data = await response.json()
-            console.log(data)
+            // console.log(data)
 
             if (data.status === "error")
                 return rejectWithValue("failed to fetch review from server")

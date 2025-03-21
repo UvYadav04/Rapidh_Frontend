@@ -13,7 +13,7 @@ function DiseaseCard({ image, title }: { image: any, title: string }) {
             return router.push(`/Hospitals?search=${title}`)
         }} >
             <Image src={image} alt='image' className='w-1/2' color='teal' />
-            <h1 className='text-white font-serif font-semibold xl:text-xl lg:text-lg md:text-md text-[10px] mt-auto'>{title}</h1>
+            <h1 className='text-white font-serif font-semibold text-center xl:text-xl lg:text-lg md:text-md text-[10px] mt-auto'>{title}</h1>
         </div>
     )
 }

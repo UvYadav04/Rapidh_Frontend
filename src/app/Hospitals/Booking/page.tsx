@@ -8,6 +8,8 @@ import { AppDispatch, RootState } from '../../../../lib/Store'
 import LoginLoader from '@/Components/Authentication/LoginLoader'
 import Notification from '@/Components/Notification/Notification'
 import { getMyBookings } from '../../../../lib/redux/actions/bookings'
+import { fetchWithTimeout } from '../../../../lib/redux/actions/hospitals'
+import ServerError from '@/Components/Authentication/ServerError'
 
 interface personalInfo {
     name: string,
@@ -45,15 +47,15 @@ function page() {
     // console.log(patientData)
 
 
-    useEffect(() => {
-        if (hasRunOnce.current) return; // Skip the effect if it has already run
-        const sessionKey = sessionStorage.getItem("sessionKey")
-        if (!sessionKey)
-            return router.replace('/Unauthorized')
-        sessionStorage.removeItem("sessionKey")
+    // useEffect(() => {
+    //     if (hasRunOnce.current) return; // Skip the effect if it has already run
+    //     const sessionKey = sessionStorage.getItem("sessionKey")
+    //     if (!sessionKey)
+    //         return router.replace('/Unauthorized')
+    //     sessionStorage.removeItem("sessionKey")
 
-        hasRunOnce.current = true;
-    }, []);
+    //     hasRunOnce.current = true;
+    // }, []);
 
 
     const enableError = (t: number) => {
@@ -66,47 +68,71 @@ function page() {
     const handleproceed = async () => {
         try {
             if (patient.name === "")
-                return enableError(1)
+                return enableError(1);
             if (patient.date === undefined)
-                return enableError(2)
+                return enableError(2);
             if (patientData.Admit && patient.reason.length < 20)
-                return enableError(3)
+                return enableError(3);
 
-            let finaldata = { ...patientData, userId, hospitalId: HospitalData.id, Ward: patientData.Ward.id, name: patient.name, date: patient.date, price: patientData.Admit ? totalAdmitCharges() : totalOperationCharges() }
+            let finaldata = {
+                ...patientData,
+                userId,
+                hospitalId: HospitalData.id,
+                Ward: patientData.Ward.id,
+                name: patient.name,
+                date: patient.date,
+                price: patientData.Admit ? totalAdmitCharges() : totalOperationCharges(),
+            };
+
             if (patientData.Admit)
-                finaldata = { ...finaldata, reason: patient.reason, days: patientData.Days ? patientData.Days : "not sure" }
+                finaldata = { ...finaldata, reason: patient.reason, days: patientData.Days ? patientData.Days : "not sure" };
             if (patientData.Operation)
-                finaldata = { ...finaldata, operationdata: patientData.operationdata?.id }
-            // console.log(finaldata)
-            setloading(true)
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/client/patient/newBooking`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include',
-                body: JSON.stringify({ ...finaldata })
-            })
-            setloading(false)
+                finaldata = { ...finaldata, operationdata: patientData.operationdata?.id };
 
-            if (!response.ok)
-                return enableError(9)
+            setloading(true);
 
-            const data = await response.json()
-            if (data.status === "error") {
-                return enableError(9)
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 8000); // Timeout after 8 seconds
+
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/client/patient/newBooking`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ ...finaldata }),
+                    signal: controller.signal, // Attach the abort signal
+                });
+
+                clearTimeout(timeout); // Clear timeout if request completes
+
+                if (!response.ok)
+                    return enableError(9);
+
+                const data = await response.json();
+                if (data.status === "error") {
+                    return enableError(9);
+                }
+
+                enableError(11); // Show success notification
+                dispatch(getMyBookings());
+                setTimeout(() => router.replace('/'), 3000);
+
+            } catch (catcherror: any) {
+                if (catcherror.name === "AbortError") {
+                    return enableError(10); // Error for timeout
+                }
+                return enableError(9);
+            } finally {
+                setloading(false);
             }
-            enableError(11) // this is not an error but to pull success notification from top
-            dispatch(getMyBookings())
-            setTimeout(() => {
-                return router.replace('/')
-            }, 3000);
-
         } catch (error) {
-            setloading(false)
-            return enableError(9)
+            setloading(false);
+            return enableError(9);
         }
-    }
+    };
+
 
     const handlePatient = ((e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -118,6 +144,9 @@ function page() {
 
     if (loading)
         return <LoginLoader />
+
+    if (index == 10)
+        return <ServerError />
 
     if (index == 9)
         return <Notification status='failure' />
@@ -165,8 +194,9 @@ function page() {
                                     <td>{patientData.Days ? patientData?.Days : "Not Sure"}</td>
                                 </tr>
                                 <tr>
-                                    <td>Requirements : </td>
-                                    <td>{patientData.Requirements === "" ? "NA" : patientData?.Requirements}</td>
+                                    <td className='float-start' >Requirements : </td>
+                                    <td className='max-w-32 break-words max-h-10 overflow-y-auto'>
+                                        {patientData.Requirements === "" ? "NA" : patientData?.Requirements}</td>
                                 </tr>
                                 <tr>
                                     <td>Admission Charges : </td>
@@ -177,8 +207,8 @@ function page() {
                                     <td>{patientData?.Ward?.charge}</td>
                                 </tr>
                                 <tr >
-                                    <td>Reason to admit</td>
-                                    <td className=' p-0 bg-slate-100'><input type="text" name='reason' className='bg-transparent focus:outline-none w-full m-0' placeholder='enter reason to admit' value={patient.reason} onChange={(e) => handlePatient(e)} /></td>
+                                    <td>Reason to admit : </td>
+                                    <td className=' bg-slate-100'><input type="text" name='reason' className='bg-transparent focus:outline-none w-full m-0' placeholder='enter reason to admit' value={patient.reason} onChange={(e) => handlePatient(e)} /></td>
 
                                 </tr>
                                 <tr className='bg-slate-100'>

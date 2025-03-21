@@ -7,12 +7,12 @@ function Popup({ item, setpop }: { item: Booking, setpop: Dispatch<SetStateActio
     const router = useRouter()
     return (
 
-        <div className="absolute w-full h-full top-0 left-0 flex place-content-center place-items-center bg-slate-300/50">
-            <div className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 bill text-lg mt-20 min-h-fit bg-white py-2 px-3 flex flex-col relative  z-30'>
-                <MdCancel size={25} color='black' className="cursor-pointer absolute right-0 top-0 bg-white" onClick={() => {
+        <div className="absolute w-full h-full top-0 left-0 flex place-content-center place-items-center bg-transparent">
+            <div className='xl:w-6/12 lg:w-7/12 md:w-8/12 sm:w-10/12 w-11/12 bill text-lg mt-20 min-h-fit bg-slate-200 py-2 px-3 flex flex-col relative  z-30'>
+                <MdCancel size={25} color='black' className="cursor-pointer absolute right-0 top-0 bg-slate-200" onClick={() => {
                     setpop(false)
                 }} />
-                <table className='w-full'>
+                <table className='w-full text-left'>
                     <tbody  >
                         <tr >
                             <td>Patient Name</td>
@@ -46,16 +46,16 @@ function Popup({ item, setpop }: { item: Booking, setpop: Dispatch<SetStateActio
                                         <td>{item.DaysToAdmit === 0 ? "Not specified" : item.DaysToAdmit}</td>
                                     </tr>
                                     <tr>
-                                        <td>Other Requirements : </td>
-                                        <td>{item.Requirements !== "" ? item.Requirements : "No Requirements"}</td>
+                                        <td className='float-start'>Other Requirements : </td>
+                                        <td className='max-w-32 break-words '>{item.Requirements !== "" ? item.Requirements : "No Requirements"}</td>
                                     </tr>
                                     <tr>
                                         <td>Ward Bed Charges : </td>
                                         <td>{item.ChargePerDay}</td>
                                     </tr>
                                     <tr >
-                                        <td>Reason to admit</td>
-                                        <td className=' p-0'>{item.ReasonToAdmit}</td>
+                                        <td>Reason to admit : </td>
+                                        <td >{item.ReasonToAdmit}</td>
 
                                     </tr>
                                     <tr className='bg-slate-300'>
@@ -77,7 +77,7 @@ function Popup({ item, setpop }: { item: Booking, setpop: Dispatch<SetStateActio
                                         <td>Allergy : </td>
                                         <td>{item.Allergy !== "" ? item.Allergy : "No Allergy"}</td>
                                     </tr>
-                                    <tr>
+                                    <tr className='bg-red-500'>
                                         <td>Other Requirements : </td>
                                         <td>{item.Requirements !== "" ? item.Requirements : "No Requirements"}</td>
                                     </tr>

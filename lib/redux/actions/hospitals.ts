@@ -13,7 +13,7 @@ export const fetchWithTimeout = async (url: string, options = {}, timeout = 2000
         clearTimeout(timeoutId);  // Clear the timeout once the fetch completes
         return response;  // Return the response if the request is successful
     } catch (error: any) {
-        console.log(error)
+        // console.log(error)
         if (error.name === 'AbortError') {
             throw new Error('Request timed out');
         }

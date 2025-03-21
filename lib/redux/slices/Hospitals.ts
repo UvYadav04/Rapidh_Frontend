@@ -27,7 +27,7 @@ const hospitalSlice = createSlice({
             })
             .addCase(getHospitalList.fulfilled, (state: hospitals, action) => {
                 state.Hospitalloading = false
-                console.log(action)
+                // console.log(action)
                 state.hospitals = action.payload.hospitals
             })
             .addCase(getHospitalList.rejected, (state: hospitals, action) => {

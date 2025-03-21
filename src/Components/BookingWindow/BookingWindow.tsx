@@ -42,42 +42,60 @@ function BookingWindow({ setwindow }: { setwindow: Dispatch<SetStateAction<boole
 
     const checkEmail = async () => {
         try {
-            if (email === "")
-                return
-            const validity = validator.validate(email)
-            if (!validity)
-                return
-            setloading(true)
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/client/emailExists`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include',
-                body: JSON.stringify({ email: email })
-            })
-            setloading(false)
+            if (email === "") return;
 
-            if (!response.ok)
-                return enablerror(1)
+            const validity = validator.validate(email);
+            if (!validity) return;
 
-            const data = await response.json()
-            setchecked(true)
-            if (data.status === "error")
-                return enablerror(1)
+            setloading(true);
 
-            if (data.exists) {
-                return setexists(true)
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 8000); // Timeout after 8 seconds
+
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/client/emailExists`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ email: email }),
+                    signal: controller.signal, // Attach abort signal
+                });
+
+                clearTimeout(timeout); // Clear timeout if request completes
+
+                if (!response.ok) return enablerror(1);
+
+                const data = await response.json();
+                setchecked(true);
+
+                if (data.status === "error") return enablerror(1);
+
+                if (data.exists) {
+                    return setexists(true);
+                }
+
+                // console.log("reaching here");
+                setbooking(0);
+
+            } catch (catcherror: any) {
+                if (catcherror.name === "AbortError") {
+                    // console.log("Request timed out");
+                    return enablerror(1); // Use a different error code for timeout
+                }
+                // console.log("error: ", catcherror);
+                return enablerror(1);
+            } finally {
+                setloading(false);
             }
-            console.log("reaching here")
-            setbooking(0)
-
         } catch (error) {
-            setloading(false)
-            console.log("error : ", error)
-            return enablerror(1)
+            setloading(false);
+            // console.log("error: ", error);
+            return enablerror(1);
         }
-    }
+    };
+
 
     if (loading)
         return <LoginLoader />

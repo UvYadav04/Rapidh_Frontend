@@ -35,14 +35,14 @@ const reviewSlice = createSlice({
                 state.loading = true
             })
             .addCase(getReviews.fulfilled, (state: reviews, action) => {
-                console.log(action)
+                // console.log(action)
                 state.loading = false
                 state.checked = true
                 state.reviews = action.payload.reviews
             })
             .addCase(getReviews.rejected, (state: reviews, action: any) => {
                 // `("reviews rejected")
-                console.log(action)
+                // console.log(action)
                 state.loading = false
                 state.error = action.payload
             })
