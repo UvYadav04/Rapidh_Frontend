@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../../lib/Store'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -31,6 +31,17 @@ function Page() {
         }
     }, [bookings, bookingerror, loading])
 
+    const sortedData = useMemo(() => {
+        if (!bookings) return []; // Handle null case safely
+
+        return [...bookings].sort((a, b) =>
+            new Date(b.AdmissionDate).getTime() - new Date(a.AdmissionDate).getTime()
+        );
+    }, [bookings]);
+
+
+
+
     useEffect(() => {
         if (profile.id === "" || profile.id !== userid)
             return router.replace('Unauthorized')
@@ -53,7 +64,7 @@ function Page() {
                         </tr>
                     </thead>
                     <tbody>
-                        {bookings?.map((item: Booking, index: number) => {
+                        {sortedData?.map((item: Booking, index: number) => {
                             return <BookingList item={item} key={index} />
                         })}
                         {bookings?.length === 0 && (
