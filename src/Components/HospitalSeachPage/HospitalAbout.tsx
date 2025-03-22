@@ -374,7 +374,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
 
                                 </div>
                                 <div className="questions w-full flex flex-col gap-2 mt-3">
-                                    <p className="flex sm:flex-row flex-col sm:gap-3 gap-1 text-slate-700">
+                                    <div className="flex sm:flex-row flex-col sm:gap-3 gap-1 text-slate-700">
                                         <label>Do the Patient have diabetes ?</label>
                                         <div className="buttons flex gap-2">
                                             <button
@@ -392,8 +392,8 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                                 No
                                             </button>
                                         </div>
-                                    </p>
-                                    <p className="flex sm:flex-row flex-col sm:gap-3 gap-1 text-slate-700">
+                                    </div>
+                                    <div className="flex sm:flex-row flex-col sm:gap-3 gap-1 text-slate-700">
                                         <label>Do the Patient have taken treatment before ?</label>
                                         <div className="buttons flex gap-2">
                                             <button
@@ -411,7 +411,7 @@ function HospitalCard2({ data }: { data: hospitalInterface }) {
                                                 No
                                             </button>
                                         </div>
-                                    </p>
+                                    </div>
                                     <div className="relative mb-1 md:w-1/3 sm:w-2/4 w-full">
                                         <input
                                             type="number"

@@ -26,7 +26,7 @@ function page() {
     const encodedHospitalData = params.get("hospital")
     const HospitalData = encodedHospitalData ? JSON.parse(atob(encodedHospitalData)) : null;
     const { profile } = useSelector((state: RootState) => state.user)
-    const [patient, setPatient] = useState<personalInfo>({ name: "", date: undefined, reason: "" })
+    const [patient, setPatient] = useState<personalInfo>({ name: "", date: new Date().getDate().toString().split('T')[0], reason: "" })
     const [index, setindex] = useState<number>(-1)
     const hasRunOnce = useRef(false); // Ref to track if the effect has run
     const [loading, setloading] = useState<boolean>(false)
@@ -47,15 +47,15 @@ function page() {
     // console.log(patientData)
 
 
-    // useEffect(() => {
-    //     if (hasRunOnce.current) return; // Skip the effect if it has already run
-    //     const sessionKey = sessionStorage.getItem("sessionKey")
-    //     if (!sessionKey)
-    //         return router.replace('/Unauthorized')
-    //     sessionStorage.removeItem("sessionKey")
+    useEffect(() => {
+        if (hasRunOnce.current) return; // Skip the effect if it has already run
+        const sessionKey = sessionStorage.getItem("sessionKey")
+        if (!sessionKey)
+            return router.replace('/Unauthorized')
+        sessionStorage.removeItem("sessionKey")
 
-    //     hasRunOnce.current = true;
-    // }, []);
+        hasRunOnce.current = true;
+    }, []);
 
 
     const enableError = (t: number) => {
@@ -106,11 +106,12 @@ function page() {
                 });
 
                 clearTimeout(timeout); // Clear timeout if request completes
-
+                console.log(response)
                 if (!response.ok)
                     return enableError(9);
 
                 const data = await response.json();
+                console.log(data)
                 if (data.status === "error") {
                     return enableError(9);
                 }
